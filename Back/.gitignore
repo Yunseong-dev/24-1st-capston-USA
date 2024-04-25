@@ -56,3 +56,7 @@ gradle-app.setting
 # Ignore HELP.md files
 HELP.md
 
+# application.yml
+*.yml
+application.yml
+
