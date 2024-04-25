@@ -1,9 +1,9 @@
 package com.capstone.usa.Repository;
 
-import com.capstone.usa.Model.Member;
+import com.capstone.usa.Model.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface MemberRepository extends JpaRepository<Member, String> {
+public interface UserRepository extends JpaRepository<User, String> {
 }
