@@ -59,4 +59,5 @@ HELP.md
 # application.yml
 *.yml
 application.yml
+Back/src/main/resources/application.yml
 
