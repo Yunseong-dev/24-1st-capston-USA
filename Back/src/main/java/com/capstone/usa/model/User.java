@@ -1,4 +1,4 @@
-package com.capstone.usa.Model;
+package com.capstone.usa.model;
 
 
 import jakarta.persistence.*;

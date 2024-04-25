@@ -1,6 +1,6 @@
-package com.capstone.usa.Repository;
+package com.capstone.usa.repository;
 
-import com.capstone.usa.Model.User;
+import com.capstone.usa.model.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
