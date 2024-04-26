@@ -18,6 +18,6 @@ public class CustomUserDetailsService implements UserDetailsService {
         if (!userRepository.existsById(username)) {
             throw new UsernameNotFoundException(username + "에 해당하는 사용자가 존재하지 않습니다.");
         }
-        return (UserDetails) userRepository.findById(username).get();
+        return userRepository.findById(username).get();
     }
 }
