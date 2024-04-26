@@ -20,8 +20,6 @@ public class UserService {
     private UserRepository userRepository;
     private final JwtUtil jwtUtil;
 
-
-
     public User createUser(CreateUserDto dto) {
         if (userRepository.findByPhoneNumber(dto.getPhoneNumber()) != null) {
             throw new IllegalArgumentException("이미 존재하는 전화번호입니다.");
