@@ -1,20 +1,20 @@
-import { useState } from 'react';
-import { customAxios } from "../utils/axios";
-import { useNavigate } from 'react-router-dom';
+import { useState } from 'react'
+import { customAxios } from "../utils/axios"
+import { useNavigate } from 'react-router-dom'
 
 const test = () => {
-   const [name, setName] = useState("");
-   const [phoneNumber, setPhone] = useState("");
+   const [name, setName] = useState("")
+   const [phoneNumber, setPhone] = useState("")
    const [verNumber, setVerNumber] = useState("")
 
-   const navigate = useNavigate();
+   const navigate = useNavigate()
 
    const isValidPhoneNumber = (phoneNumber: string) => {
       const regex = /^\d{11}$/
       return regex.test(phoneNumber)
    }
 
-   const joinHandler = async (e: { preventDefault: () => void; }) => {
+   const joinHandler = async (e: { preventDefault: () => void }) => {
       e.preventDefault()
 
       try {
@@ -32,19 +32,20 @@ const test = () => {
             name,
             phoneNumber,
             verNumber
-         });
+         })
 
          alert("회원가입에 성공하였습니다")
          navigate('/')
 
       } catch (error: any) {
-         if (error.response.status === 500) {
-            alert("이미 존재하는 전화번호 입니다.")
+         if (error.response && error.response.data) {
+            const errorMessage = error.response.data
+            alert(errorMessage)
          }
       }
    }
 
-   const checkPhoneHandler = async (e: { preventDefault: () => void; }) => {
+   const checkPhoneHandler = async (e: { preventDefault: () => void }) => {
       e.preventDefault()
 
       try {
@@ -60,10 +61,12 @@ const test = () => {
 
          const response = await customAxios.post('/api/sms', {
             phoneNumber
-         });
+         })
+
+         alert("인증번호가 전송되었습니다.")
 
       } catch (error: any) {
-         if (error.response.status === 500) {
+         if (error.response && error.response.data) {
             alert("이미 존재하는 전화번호 입니다.")
          }
       }
