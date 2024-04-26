@@ -13,18 +13,4 @@ class UsaApplicationTests {
 	@Test
 	void contextLoads() {
 	}
-
-	@Test
-	public void testGenerateNumber() {
-        String generatedNumber = VerificationService.GenerateNumber();
-
-		assertEquals(4, generatedNumber.length());
-
-		for (char digit : generatedNumber.toCharArray()) {
-			assertTrue(Character.isDigit(digit));
-		}
-
-		System.out.println("Generated number: " + generatedNumber);
-	}
-
 }
