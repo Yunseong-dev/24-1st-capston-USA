@@ -24,8 +24,7 @@ public class SmsService {
                       String secretKey,
                       @Value("${coolsms.to}")
                       String to,
-                      UserRepository userRepository)
-    {
+                      UserRepository userRepository) {
         this.userRepository = userRepository;
         this.apiKey = apiKey;
         this.secretKey = secretKey;
@@ -34,23 +33,18 @@ public class SmsService {
     }
 
     public SingleMessageSentResponse sendOne(PhoneDto dto) {
-        if (userRepository.findByPhoneNumber(dto.getPhoneNumber()) != null) {
-            throw new IllegalArgumentException("이미 존재하는 전화번호입니다.");
-        } else {
+        String VerificationCode = VerificationService.GenerateNumber(dto.getPhoneNumber());
+        String text = "[USA]인증번호는 " + VerificationCode + " 입니다.";
 
-            String VerificationCode = VerificationService.GenerateNumber(dto.getPhoneNumber());
-            String text = "[USA]인증번호는 " + VerificationCode + " 입니다.";
+        Message message = new Message();
+        message.setFrom(dto.getPhoneNumber());
+        message.setTo(to);
+        message.setText(text);
 
-            Message message = new Message();
-            message.setFrom(dto.getPhoneNumber());
-            message.setTo(to);
-            message.setText(text);
+        SingleMessageSentResponse response = this.messageService.sendOne(new SingleMessageSendingRequest(message));
+        System.out.println(response);
 
-            SingleMessageSentResponse response = this.messageService.sendOne(new SingleMessageSendingRequest(message));
-            System.out.println(response);
-
-            return response;
-        }
+        return response;
     }
 }
 
