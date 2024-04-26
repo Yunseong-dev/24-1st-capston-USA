@@ -15,16 +15,9 @@ import org.springframework.web.bind.annotation.*;
 @AllArgsConstructor
 public class UserController {
     public UserService userService;
-    public SmsService smsService;
-
-
-    @PostMapping("/signup")
-    public ResponseEntity<?> createUser(@RequestBody CreateUserDto dto) {
-        return userService.createUser(dto);
-    }
 
     @PostMapping("/signin")
-    public TokenDto loginUser(@RequestBody LoginUserDto dto){
-        return userService.loginWithAuthenticationManager(dto);
+    public ResponseEntity<?> createUser(@RequestBody CreateUserDto dto) {
+        return userService.loginUser(dto);
     }
 }
