@@ -37,10 +37,14 @@ public class SmsService {
         if (userRepository.findByPhoneNumber(dto.getPhoneNumber()) != null) {
             throw new IllegalArgumentException("이미 존재하는 전화번호입니다.");
         } else {
+
+            String VerificationCode = VerificationService.GenerateNumber(dto.getPhoneNumber());
+            String text = "[USA]인증번호는 " + VerificationCode + " 입니다.";
+
             Message message = new Message();
             message.setFrom(dto.getPhoneNumber());
             message.setTo(to);
-            message.setText("[USA]인증번호는 0000 입니다.");
+            message.setText(text);
 
             SingleMessageSentResponse response = this.messageService.sendOne(new SingleMessageSendingRequest(message));
             System.out.println(response);

@@ -17,11 +17,14 @@ public class UserService {
             throw new IllegalArgumentException("이미 존재하는 전화번호입니다.");
         }
         else {
-            User user = new User(
-                    dto.getName(),
-                    dto.getPhoneNumber()
-            );
-            return userRepository.save(user);
+            String savedVerificationCode = VerificationService.getVerificationCode(dto.getPhoneNumber());
+
+            if (savedVerificationCode != null && savedVerificationCode.equals(dto.getVerNumber())) {
+                User user = new User(dto.getName(), dto.getPhoneNumber());
+                return userRepository.save(user);
+            } else {
+                throw new IllegalArgumentException("인증번호가 일치하지 않습니다.");
+            }
         }
     }
 }
