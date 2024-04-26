@@ -1,13 +1,24 @@
-import { useState } from 'react'
+import { useEffect, useState } from "react"
 import { customAxios } from "../utils/axios"
 import { useNavigate } from 'react-router-dom'
+import useToken from "../hooks/useToken"
+
 
 const test = () => {
    const [name, setName] = useState("")
    const [phoneNumber, setPhone] = useState("")
    const [verNumber, setVerNumber] = useState("")
 
+   const { token, setToken } = useToken()
+
    const navigate = useNavigate()
+
+   useEffect(() => {
+      if (!!token) {
+         alert("이미 로그인이 되어있습니다.")
+         navigate("/")
+      }
+   }, [token, navigate])
 
    const isValidPhoneNumber = (phoneNumber: string) => {
       const regex = /^\d{11}$/
@@ -28,7 +39,7 @@ const test = () => {
             return
          }
 
-         const response = await customAxios.post('/api/user/signup', {
+         const response = await customAxios.post('/api/user/signin', {
             name,
             phoneNumber,
             verNumber
@@ -37,10 +48,12 @@ const test = () => {
          alert("회원가입에 성공하였습니다")
          navigate('/')
 
+         const token = response.data.token
+         setToken(token)
+
       } catch (error: any) {
          if (error.response && error.response.data) {
-            const errorMessage = error.response.data
-            alert(errorMessage)
+            alert(error.response.data)
          }
       }
    }
@@ -79,7 +92,7 @@ const test = () => {
             <input type="text" value={phoneNumber} onChange={(e) => setPhone(e.target.value)} placeholder="전화번호" />
             <input type="text" value={verNumber} onChange={(e) => setVerNumber(e.target.value)} placeholder="인증번호" />
             <button onClick={checkPhoneHandler}>인증코드 전송</button>
-            <button onClick={joinHandler}>회원가입</button>
+            <button onClick={joinHandler}>로그인</button>
          </form>
       </div>
    )
