@@ -44,8 +44,8 @@ const test = () => {
 
    const checkPhoneHandler = async (e: { preventDefault: () => void; }) => {
       e.preventDefault()
-      
-      const response = await customAxios.post('/api/user/SMS', {
+
+      const response = await customAxios.post('/api/sms', {
          phoneNumber
       });
    }
