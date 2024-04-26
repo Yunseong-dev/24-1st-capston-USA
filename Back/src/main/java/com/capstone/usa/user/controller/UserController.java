@@ -29,5 +29,4 @@ public class UserController {
     public TokenDto loginUser(@RequestBody LoginUserDto dto){
         return userService.loginWithAuthenticationManager(dto);
     }
-
 }
