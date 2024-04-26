@@ -1,4 +1,4 @@
-package com.capstone.usa.dto;
+package com.capstone.usa.user.dto;
 
 import lombok.Getter;
 

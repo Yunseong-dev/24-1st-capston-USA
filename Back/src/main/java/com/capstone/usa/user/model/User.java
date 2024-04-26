@@ -1,4 +1,4 @@
-package com.capstone.usa.model;
+package com.capstone.usa.user.model;
 
 
 import jakarta.persistence.*;
@@ -6,6 +6,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.security.core.userdetails.UserDetails;
 
 @Entity
 @Table(name = "users")

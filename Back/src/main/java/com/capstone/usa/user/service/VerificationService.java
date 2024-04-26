@@ -1,4 +1,4 @@
-package com.capstone.usa.service;
+package com.capstone.usa.user.service;
 
 import java.util.HashMap;
 import java.util.Map;
