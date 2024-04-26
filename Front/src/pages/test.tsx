@@ -16,12 +16,10 @@ const test = () => {
             name,
             phoneNumber
          });
-         if (response.status === 200) {
-            alert("회원가입에 성공하였습니다")
-            navigate('')
-         } else {
-            alert('가입은 성공적으로 되었으나 상태 코드가 200이 아닙니다.');
-         }
+
+         alert("회원가입에 성공하였습니다")
+         navigate('')
+
       } catch (error: any) {
          if (error.response.status === 500) {
             alert("이미 존재하는 전화번호 입니다.")
