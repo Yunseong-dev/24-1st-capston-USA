@@ -12,32 +12,31 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class SmsService {
-    private final UserRepository userRepository;
-    DefaultMessageService messageService;
-
-    @Value("${spring.coolsms.apiKey}")
     private String apiKey;
-
-    @Value("${spring.coolsms.apiSecret}")
-    private String secretkey;
-
-    @Value("${spring.coolsms.senderNumber}")
+    private String secretKey;
     private String to;
+    private final UserRepository userRepository;
+    private final DefaultMessageService messageService;
 
-
-    public void ExampleController() {
-        this.messageService = NurigoApp.INSTANCE.initialize(apiKey, secretkey, "https://api.coolsms.co.kr");
-    }
-
-    public SmsService(UserRepository userRepository) {
+    public SmsService(@Value("${coolsms.apiKey}")
+                      String apiKey,
+                      @Value("${coolsms.apiSecret}")
+                      String secretKey,
+                      @Value("${coolsms.to}")
+                      String to,
+                      UserRepository userRepository)
+    {
         this.userRepository = userRepository;
+        this.apiKey = apiKey;
+        this.secretKey = secretKey;
+        this.to = to;
+        this.messageService = NurigoApp.INSTANCE.initialize(apiKey, secretKey, "https://api.coolsms.co.kr");
     }
 
-    public SingleMessageSentResponse sendOne(PhoneDto dto){
+    public SingleMessageSentResponse sendOne(PhoneDto dto) {
         if (userRepository.findByPhoneNumber(dto.getPhoneNumber()) != null) {
             throw new IllegalArgumentException("이미 존재하는 전화번호입니다.");
-        }
-        else{
+        } else {
             Message message = new Message();
             message.setFrom(dto.getPhoneNumber());
             message.setTo(to);
@@ -50,3 +49,4 @@ public class SmsService {
         }
     }
 }
+
