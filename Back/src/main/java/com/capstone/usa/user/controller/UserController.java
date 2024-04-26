@@ -30,8 +30,4 @@ public class UserController {
         return userService.loginWithAuthenticationManager(dto);
     }
 
-    @PostMapping("/SMS")
-    public SingleMessageSentResponse sendSMS(@RequestBody PhoneDto dto) {
-        return smsService.sendOne(dto);
-    }
 }
