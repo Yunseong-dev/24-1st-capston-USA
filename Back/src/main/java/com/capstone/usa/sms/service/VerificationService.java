@@ -20,4 +20,8 @@ public class VerificationService {
     public static String getVerificationCode(String phoneNumber) {
         return verificationCodes.get(phoneNumber);
     }
+
+    public static void deleteVerificationCode(String phoneNumber) {
+        verificationCodes.remove(phoneNumber);
+    }
 }

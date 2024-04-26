@@ -32,6 +32,7 @@ public class UserService {
             if (savedVerificationCode != null && savedVerificationCode.equals(dto.getVerNumber())) {
                 User user = new User(dto.getName(), dto.getPhoneNumber());
                 userRepository.save(user);
+                VerificationService.deleteVerificationCode(dto.getPhoneNumber());
                 return ResponseEntity.ok().body("사용자가 성공적으로 생성되었습니다.");
             } else {
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("인증번호가 일치하지 않습니다.");
