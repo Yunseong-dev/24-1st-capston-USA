@@ -9,7 +9,7 @@ public class VerificationService {
 
     public static String GenerateNumber(String phoneNumber){
         Random random = new Random();
-        int randomNumber = random.nextInt(10000);
+        int randomNumber = random.nextInt(1000, 10000);
         String verificationCode = String.valueOf(randomNumber);
 
         verificationCodes.put(phoneNumber, verificationCode);
