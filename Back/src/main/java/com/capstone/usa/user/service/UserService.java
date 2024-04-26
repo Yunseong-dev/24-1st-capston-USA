@@ -1,5 +1,6 @@
 package com.capstone.usa.user.service;
 
+import com.capstone.usa.sms.service.VerificationService;
 import com.capstone.usa.user.dto.CreateUserDto;
 import com.capstone.usa.user.dto.LoginUserDto;
 import com.capstone.usa.user.dto.TokenDto;

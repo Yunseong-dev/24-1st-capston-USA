@@ -1,4 +1,4 @@
-package com.capstone.usa.user.service;
+package com.capstone.usa.sms.service;
 
 import com.capstone.usa.user.dto.PhoneDto;
 import com.capstone.usa.user.repository.UserRepository;

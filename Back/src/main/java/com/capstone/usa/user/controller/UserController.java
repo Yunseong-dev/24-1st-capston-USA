@@ -5,7 +5,7 @@ import com.capstone.usa.user.dto.LoginUserDto;
 import com.capstone.usa.user.dto.PhoneDto;
 import com.capstone.usa.user.dto.TokenDto;
 import com.capstone.usa.user.model.User;
-import com.capstone.usa.user.service.SmsService;
+import com.capstone.usa.sms.service.SmsService;
 import com.capstone.usa.user.service.UserService;
 import lombok.AllArgsConstructor;
 import net.nurigo.sdk.message.response.SingleMessageSentResponse;
