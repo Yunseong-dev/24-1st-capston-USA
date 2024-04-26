@@ -8,7 +8,7 @@ import com.capstone.usa.user.model.User;
 import com.capstone.usa.sms.service.SmsService;
 import com.capstone.usa.user.service.UserService;
 import lombok.AllArgsConstructor;
-import net.nurigo.sdk.message.response.SingleMessageSentResponse;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @CrossOrigin
@@ -21,7 +21,7 @@ public class UserController {
 
 
     @PostMapping("/signup")
-    public User createUser(@RequestBody CreateUserDto dto) {
+    public ResponseEntity<?> createUser(@RequestBody CreateUserDto dto) {
         return userService.createUser(dto);
     }
 

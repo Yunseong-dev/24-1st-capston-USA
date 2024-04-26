@@ -8,6 +8,8 @@ import com.capstone.usa.user.model.User;
 import com.capstone.usa.user.repository.UserRepository;
 import com.capstone.usa.user.util.JwtUtil;
 import lombok.AllArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.stereotype.Service;
@@ -20,18 +22,19 @@ public class UserService {
     private UserRepository userRepository;
     private final JwtUtil jwtUtil;
 
-    public User createUser(CreateUserDto dto) {
+    public ResponseEntity<?> createUser(CreateUserDto dto) {
         if (userRepository.findByPhoneNumber(dto.getPhoneNumber()) != null) {
-            throw new IllegalArgumentException("이미 존재하는 전화번호입니다.");
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("이미 존재하는 전화번호입니다.");
         }
         else {
             String savedVerificationCode = VerificationService.getVerificationCode(dto.getPhoneNumber());
 
             if (savedVerificationCode != null && savedVerificationCode.equals(dto.getVerNumber())) {
                 User user = new User(dto.getName(), dto.getPhoneNumber());
-                return userRepository.save(user);
+                userRepository.save(user);
+                return ResponseEntity.ok().body("사용자가 성공적으로 생성되었습니다.");
             } else {
-                throw new IllegalArgumentException("인증번호가 일치하지 않습니다.");
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("인증번호가 일치하지 않습니다.");
             }
         }
     }
