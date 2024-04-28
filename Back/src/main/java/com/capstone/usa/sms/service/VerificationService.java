@@ -24,4 +24,8 @@ public class VerificationService {
     public static void deleteVerificationCode(String phoneNumber) {
         verificationCodes.remove(phoneNumber);
     }
+
+    public static void testCode(){
+        verificationCodes.put("01048158219", "0000");
+    }
 }
