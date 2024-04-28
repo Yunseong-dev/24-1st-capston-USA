@@ -1,6 +1,7 @@
 package com.capstone.usa.user.controller;
 
 import com.capstone.usa.user.dto.CreateUserDto;
+import com.capstone.usa.user.dto.LoginUserDto;
 import com.capstone.usa.user.service.UserService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -13,8 +14,13 @@ import org.springframework.web.bind.annotation.*;
 public class UserController {
     public UserService userService;
 
-    @PostMapping("/signin")
+    @PostMapping("/signup")
     public ResponseEntity<?> createUser(@RequestBody CreateUserDto dto) {
-        return userService.loginUser(dto);
+        return userService.createUser(dto);
+    }
+
+    @PostMapping("/signin")
+    public ResponseEntity<?> loginUser(@RequestBody LoginUserDto dto) {
+        return userService.loginWithAuthenticationManager(dto);
     }
 }

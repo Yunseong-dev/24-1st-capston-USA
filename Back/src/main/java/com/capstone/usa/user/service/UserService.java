@@ -9,39 +9,43 @@ import com.capstone.usa.security.JwtUtil;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.stereotype.Service;
-
-import java.util.HashMap;
-import java.util.Map;
-
 
 @Service
 @AllArgsConstructor
 public class UserService {
     private UserRepository userRepository;
     private final JwtUtil jwtUtil;
+    private final AuthenticationManager authenticationManager;
 
     public ResponseEntity<?> createUser(CreateUserDto dto) {
         VerificationService.testCode();
         String savedVerificationCode = VerificationService.getVerificationCode(dto.getPhoneNumber());
 
-        if(userRepository.findById(dto.getPhoneNumber()) == null){
-
+        if(userRepository.findById(dto.getPhoneNumber()).isPresent()){
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("이미 등록된 전화번호 입니다");
         }
-
-        if (savedVerificationCode != null && savedVerificationCode.equals(dto.getVerNumber())) {
+        else{
+            if (savedVerificationCode != null && savedVerificationCode.equals(dto.getVerNumber())) {
                 User user = new User(dto.getName(), dto.getPhoneNumber(), dto.getPassword());
                 userRepository.save(user);
                 VerificationService.deleteVerificationCode(dto.getPhoneNumber());
 
                 return ResponseEntity.ok().body("사용자가 성공적으로 생성되었습니다");
-        } else {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("인증번호가 일치하지 않습니다");
+            } else {
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("인증번호가 일치하지 않습니다");
+            }
         }
     }
 
-    public ResponseEntity<?> loginUser(LoginUserDto dto) {
+    public ResponseEntity<?> loginWithAuthenticationManager(LoginUserDto dto) {
+        var request = new UsernamePasswordAuthenticationToken(
+                dto.getPhoneNumber(), dto.getPassword()
+        );
 
-        return ResponseEntity.ok().body("로그인이 완료돼었습니다");
+        var result = authenticationManager.authenticate(request);
+        return ResponseEntity.ok().body(jwtUtil.generateToken((User) result.getPrincipal()));
     }
 }
