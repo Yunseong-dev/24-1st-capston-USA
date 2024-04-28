@@ -3,6 +3,7 @@ package com.capstone.usa.user.service;
 import com.capstone.usa.sms.service.VerificationService;
 import com.capstone.usa.user.dto.CreateUserDto;
 import com.capstone.usa.user.dto.LoginUserDto;
+import com.capstone.usa.user.dto.TokenDto;
 import com.capstone.usa.user.model.User;
 import com.capstone.usa.user.repository.UserRepository;
 import com.capstone.usa.security.JwtUtil;
@@ -52,6 +53,7 @@ public class UserService {
         );
 
         var result = authenticationManager.authenticate(request);
-        return ResponseEntity.ok().body(jwtUtil.generateToken((User) result.getPrincipal()));
+        var token = new TokenDto(jwtUtil.generateToken((User) result.getPrincipal()));
+        return ResponseEntity.ok().body(token);
     }
 }

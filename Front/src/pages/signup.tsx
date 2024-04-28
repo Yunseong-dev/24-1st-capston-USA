@@ -34,7 +34,8 @@ const test = () => {
          const response = await customAxios.post('/api/user/signup', {
             name,
             phoneNumber,
-            verNumber
+            verNumber,
+            password
          })
 
          navigate('/')

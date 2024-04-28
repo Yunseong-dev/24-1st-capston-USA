@@ -18,7 +18,9 @@ const signin = () => {
       }
    }, [token, navigate])
 
-   const joinHandler = async () => {
+   const joinHandler = async (e: { preventDefault: () => void }) => {
+      e.preventDefault()
+      
       try {
          if (!phoneNumber || !password) {
             alert('모든 입력란을 작성해주세요')
@@ -30,12 +32,14 @@ const signin = () => {
             password
          })
 
+         const token = response.data.token
+         setToken(token);
          navigate("/")
          alert("로그인이 완료되었습니다")
 
       } catch (error: any) {
          if (error.response && error.response.data) {
-            alert(error.response.data)
+            alert("오류가 발생했습니다")
          }
       }
    }
