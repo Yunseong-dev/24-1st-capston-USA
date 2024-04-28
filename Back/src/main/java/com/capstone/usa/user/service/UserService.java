@@ -15,6 +15,9 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import org.springframework.security.core.AuthenticationException;
+import java.util.Optional;
+
 @Service
 @AllArgsConstructor
 public class UserService {
@@ -28,7 +31,7 @@ public class UserService {
         String savedVerificationCode = VerificationService.getVerificationCode(dto.getPhoneNumber());
 
         if(userRepository.findById(dto.getPhoneNumber()).isPresent()){
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("이미 등록된 전화번호 입니다");
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("이미 등록된 전화번호 입니다");
         }
         else{
             if (savedVerificationCode != null && savedVerificationCode.equals(dto.getVerNumber())) {
@@ -48,12 +51,19 @@ public class UserService {
     }
 
     public ResponseEntity<?> loginWithAuthenticationManager(LoginUserDto dto) {
+        Optional<User> userOptional = userRepository.findById(dto.getPhoneNumber());
+        if (userOptional.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED    ).body("존재하지 않는 전화번호입니다.");
+        }
         var request = new UsernamePasswordAuthenticationToken(
                 dto.getPhoneNumber(), dto.getPassword()
         );
-
-        var result = authenticationManager.authenticate(request);
-        var token = new TokenDto(jwtUtil.generateToken((User) result.getPrincipal()));
-        return ResponseEntity.ok().body(token);
+        try {
+            var result = authenticationManager.authenticate(request);
+            var token = new TokenDto(jwtUtil.generateToken((User) result.getPrincipal()));
+            return ResponseEntity.ok().body(token);
+        } catch (AuthenticationException e) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("올바르지 않은 비밀번호입니다.");
+        }
     }
 }
