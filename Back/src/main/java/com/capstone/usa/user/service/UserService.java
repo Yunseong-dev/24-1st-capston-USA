@@ -11,14 +11,16 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
 @AllArgsConstructor
 public class UserService {
     private UserRepository userRepository;
-    private final JwtUtil jwtUtil;
-    private final AuthenticationManager authenticationManager;
+    private JwtUtil jwtUtil;
+    private AuthenticationManager authenticationManager;
+    private PasswordEncoder passwordEncoder;
 
     public ResponseEntity<?> createUser(CreateUserDto dto) {
         VerificationService.testCode();
@@ -29,7 +31,11 @@ public class UserService {
         }
         else{
             if (savedVerificationCode != null && savedVerificationCode.equals(dto.getVerNumber())) {
-                User user = new User(dto.getName(), dto.getPhoneNumber(), dto.getPassword());
+                User user = new User(
+                        dto.getName(),
+                        dto.getPhoneNumber(),
+                        passwordEncoder.encode(dto.getPassword())
+                );
                 userRepository.save(user);
                 VerificationService.deleteVerificationCode(dto.getPhoneNumber());
 
