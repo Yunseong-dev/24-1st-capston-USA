@@ -11,16 +11,16 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class SmsService {
-    private final String to;
+    private final String from;
     private final DefaultMessageService messageService;
 
     public SmsService(@Value("${coolsms.apiKey}")
                       String apiKey,
                       @Value("${coolsms.apiSecret}")
                       String secretKey,
-                      @Value("${coolsms.to}")
-                      String to) {
-        this.to = to;
+                      @Value("${coolsms.from}")
+                      String from) {
+        this.from = from;
         this.messageService = NurigoApp.INSTANCE.initialize(apiKey, secretKey, "https://api.coolsms.co.kr");
     }
 
@@ -29,7 +29,7 @@ public class SmsService {
         String text = "[USA]인증번호는 " + VerificationCode + " 입니다.";
 
         Message message = new Message();
-        message.setFrom(to);
+        message.setFrom(from);
         message.setTo(dto.getPhoneNumber());
         message.setText(text);
 
