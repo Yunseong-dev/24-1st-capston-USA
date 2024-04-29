@@ -53,7 +53,7 @@ public class UserService {
     public ResponseEntity<?> loginWithAuthenticationManager(LoginUserDto dto) {
         Optional<User> userOptional = userRepository.findById(dto.getPhoneNumber());
         if (userOptional.isEmpty()) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED    ).body("존재하지 않는 전화번호입니다.");
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("존재하지 않는 전화번호입니다");
         }
         var request = new UsernamePasswordAuthenticationToken(
                 dto.getPhoneNumber(), dto.getPassword()
@@ -63,7 +63,7 @@ public class UserService {
             var token = new TokenDto(jwtUtil.generateToken((User) result.getPrincipal()));
             return ResponseEntity.ok().body(token);
         } catch (AuthenticationException e) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("올바르지 않은 비밀번호입니다.");
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("올바르지 않은 비밀번호입니다");
         }
     }
 }
