@@ -27,7 +27,6 @@ public class UserService {
     private PasswordEncoder passwordEncoder;
 
     public ResponseEntity<?> createUser(CreateUserDto dto) {
-        VerificationService.testCode();
         String savedVerificationCode = VerificationService.getVerificationCode(dto.getPhoneNumber());
 
         if(userRepository.findById(dto.getPhoneNumber()).isPresent()){
