@@ -13,8 +13,8 @@ const signin = () => {
 
    useEffect(() => {
       if (!!token) {
-         alert("이미 로그인이 되어있습니다.")
          navigate("/")
+         alert("이미 로그인이 되어있습니다.")
       }
    }, [token, navigate])
 
@@ -32,14 +32,13 @@ const signin = () => {
             password
          })
 
-         const token = response.data.token
-         setToken(token);
+         setToken(response.data.token);
          navigate("/")
          alert("로그인이 완료되었습니다")
 
       } catch (error: any) {
          if (error.response && error.response.data) {
-            alert("오류가 발생했습니다")
+            alert(error.response.data)
          }
       }
    }
