@@ -5,7 +5,7 @@ import java.util.Map;
 import java.util.Random;
 
 public class VerificationService {
-    private static Map<String, String> verificationCodes = new HashMap<>();
+    private static final Map<String, String> verificationCodes = new HashMap<>();
 
     public static String GenerateNumber(String phoneNumber){
         Random random = new Random();

@@ -13,9 +13,9 @@ import java.util.Date;
 
 @Component
 public class JwtUtil {
-    private String jwtSecret;
-    private Key jwtKey;
-    private long jwtExpirationInMs;
+    private final String jwtSecret;
+    private final Key jwtKey;
+    private final long jwtExpirationInMs;
 
     public JwtUtil(
             @Value("${app.jwtSecret}")

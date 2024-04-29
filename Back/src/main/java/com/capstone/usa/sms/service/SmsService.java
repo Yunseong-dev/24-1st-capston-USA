@@ -1,7 +1,6 @@
 package com.capstone.usa.sms.service;
 
 import com.capstone.usa.user.dto.PhoneDto;
-import com.capstone.usa.user.repository.UserRepository;
 import net.nurigo.sdk.NurigoApp;
 import net.nurigo.sdk.message.model.Message;
 import net.nurigo.sdk.message.request.SingleMessageSendingRequest;
@@ -12,9 +11,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class SmsService {
-    private String apiKey;
-    private String secretKey;
-    private String to;
+    private final String to;
     private final DefaultMessageService messageService;
 
     public SmsService(@Value("${coolsms.apiKey}")
@@ -22,10 +19,7 @@ public class SmsService {
                       @Value("${coolsms.apiSecret}")
                       String secretKey,
                       @Value("${coolsms.to}")
-                      String to,
-                      UserRepository userRepository) {
-        this.apiKey = apiKey;
-        this.secretKey = secretKey;
+                      String to) {
         this.to = to;
         this.messageService = NurigoApp.INSTANCE.initialize(apiKey, secretKey, "https://api.coolsms.co.kr");
     }
