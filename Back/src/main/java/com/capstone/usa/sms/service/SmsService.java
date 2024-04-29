@@ -15,7 +15,6 @@ public class SmsService {
     private String apiKey;
     private String secretKey;
     private String to;
-    private final UserRepository userRepository;
     private final DefaultMessageService messageService;
 
     public SmsService(@Value("${coolsms.apiKey}")
@@ -25,7 +24,6 @@ public class SmsService {
                       @Value("${coolsms.to}")
                       String to,
                       UserRepository userRepository) {
-        this.userRepository = userRepository;
         this.apiKey = apiKey;
         this.secretKey = secretKey;
         this.to = to;
@@ -37,8 +35,8 @@ public class SmsService {
         String text = "[USA]인증번호는 " + VerificationCode + " 입니다.";
 
         Message message = new Message();
-        message.setFrom(dto.getPhoneNumber());
-        message.setTo(to);
+        message.setFrom(to);
+        message.setTo(dto.getPhoneNumber());
         message.setText(text);
 
         SingleMessageSentResponse response = this.messageService.sendOne(new SingleMessageSendingRequest(message));
