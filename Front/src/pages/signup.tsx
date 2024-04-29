@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react"
 import { customAxios } from "../utils/axios"
 import { useNavigate } from 'react-router-dom'
-import useToken from "../hooks/useToken"
 
 const test = () => {
    const [name, setName] = useState("")
