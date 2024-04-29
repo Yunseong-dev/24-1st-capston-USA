@@ -1,4 +1,4 @@
-package com.capstone.usa.security;
+package com.capstone.usa.user.security;
 
 import com.capstone.usa.user.repository.UserRepository;
 import lombok.AllArgsConstructor;

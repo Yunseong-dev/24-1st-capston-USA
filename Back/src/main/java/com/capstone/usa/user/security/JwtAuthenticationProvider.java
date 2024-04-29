@@ -1,4 +1,4 @@
-package com.capstone.usa.security;
+package com.capstone.usa.user.security;
 
 import lombok.AllArgsConstructor;
 import org.springframework.security.authentication.AuthenticationProvider;

@@ -1,4 +1,4 @@
-package com.capstone.usa.security;
+package com.capstone.usa.user.security;
 
 import com.capstone.usa.user.model.User;
 import io.jsonwebtoken.Claims;
@@ -28,7 +28,7 @@ public class JwtUtil {
     {
         this.jwtSecret = Base64.getEncoder().encodeToString(jwtSecret.getBytes());
         this.jwtKey = Keys.hmacShaKeyFor(jwtSecret.getBytes());
-        this.jwtExpirationInMs = accessTokenExpirationInMs;
+        this.jwtExpirationInMs = refreshTokenExpirationInMs;
     }
 
     public String generateToken(User user) {

@@ -1,4 +1,4 @@
-package com.capstone.usa.security;
+package com.capstone.usa.user.security;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
