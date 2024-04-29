@@ -20,15 +20,13 @@ public class JwtUtil {
     public JwtUtil(
             @Value("${app.jwtSecret}")
             String jwtSecret,
-            @Value("${app.accessTokenExpirationInMs}")
-            long accessTokenExpirationInMs,
-            @Value("${app.refreshTokenExpirationInMs}")
-            long refreshTokenExpirationInMs
+            @Value("${app.jwtExpirationInMs}")
+            long jwtExpirationInMs
     )
     {
         this.jwtSecret = Base64.getEncoder().encodeToString(jwtSecret.getBytes());
         this.jwtKey = Keys.hmacShaKeyFor(jwtSecret.getBytes());
-        this.jwtExpirationInMs = refreshTokenExpirationInMs;
+        this.jwtExpirationInMs = jwtExpirationInMs;
     }
 
     public String generateToken(User user) {
