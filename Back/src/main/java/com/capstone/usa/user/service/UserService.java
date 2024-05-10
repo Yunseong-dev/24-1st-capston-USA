@@ -42,7 +42,7 @@ public class UserService {
                 userRepository.save(user);
                 VerificationService.deleteVerificationCode(dto.getPhoneNumber());
 
-                return ResponseEntity.ok().body("사용자가 성공적으로 생성되었습니다");
+                return ResponseEntity.ok().body("회원가입이 성공적으로 되었습니다");
             } else {
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("인증번호가 일치하지 않습니다");
             }
