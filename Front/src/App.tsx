@@ -1,4 +1,5 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import NotFound from './pages/404';
 import Signup from './pages/sign/signup';
 import Signin from './pages/sign/signin';
 import Main from './pages/main';
@@ -14,6 +15,7 @@ const App = () => {
         <Route path="/signin" element={<Signin />} />
         <Route path="/ArticleList" element={<ArticleList />} />
         <Route path="/createArticle" element={<CreateArticle />} />
+        <Route path="/*" element={<NotFound />} />
       </Routes>
     </Router>
   );
