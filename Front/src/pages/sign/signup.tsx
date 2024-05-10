@@ -1,5 +1,5 @@
-import { useEffect, useState } from "react"
-import { customAxios } from "../utils/axios"
+import { useState } from "react"
+import { customAxios } from "../../utils/axios"
 import { useNavigate } from 'react-router-dom'
 
 const test = () => {
@@ -7,7 +7,6 @@ const test = () => {
    const [phoneNumber, setPhone] = useState("")
    const [verNumber, setVerNumber] = useState("")
    const [password, setPassword] = useState("")
-   const [ckpassword, setCkPassword] = useState("")
 
    const navigate = useNavigate()
 
@@ -16,21 +15,15 @@ const test = () => {
       return regex.test(phoneNumber)
    }
 
-   const joinHandler = async (e: { preventDefault: () => void }) => {
+   const signup = async (e: { preventDefault: () => void }) => {
       e.preventDefault()
 
       try {
-         if (!name || !phoneNumber || !verNumber || !password || !ckpassword) {
-            alert('모든 입력란을 작성해주세요')
-            return
+         if (!name || !phoneNumber || !verNumber || !password) {
+            return alert('모든 입력란을 작성해주세요')
          }
 
-         if (password != ckpassword) {
-            alert('비밀번호와 비밀번호확인이 일치하지 않습니다')
-            return
-         }
-
-         const response = await customAxios.post('/api/user/signup', {
+         await customAxios.post('/api/user/signup', {
             name,
             phoneNumber,
             verNumber,
@@ -47,21 +40,19 @@ const test = () => {
       }
    }
 
-   const checkPhoneHandler = async (e: { preventDefault: () => void }) => {
+   const verificationCode = async (e: { preventDefault: () => void }) => {
       e.preventDefault()
 
       try {
          if (!phoneNumber) {
-            alert("전화번호를 작성해주세요")
-            return
+            return alert("전화번호를 작성해주세요")
          }
 
          if (!isValidPhoneNumber(phoneNumber)) {
-            alert("올바른 전화번호 형식이 아닙니다")
-            return
+            return alert("올바른 전화번호 형식이 아닙니다")
          }
 
-         const response = await customAxios.post('/api/sms', {
+         await customAxios.post('/api/sms', {
             phoneNumber
          })
 
@@ -69,21 +60,20 @@ const test = () => {
 
       } catch (error: any) {
          if (error.response && error.response.data) {
-            alert("오류가 발생했습니다")
+            alert("인증번호 전송 과정 중 오류가 발생했습니다")
          }
       }
    }
 
    return (
       <div>
-         <form>
+         <form onSubmit={signup}>
             <input type="text" value={name} onChange={(e) => setName(e.target.value)} placeholder="이름" />
             <input type="text" value={phoneNumber} onChange={(e) => setPhone(e.target.value)} placeholder="전화번호" />
-            <input type="text" value={verNumber} onChange={(e) => setVerNumber(e.target.value)} placeholder="인증번호" />
             <input type="text" value={password} onChange={(e) => setPassword(e.target.value)} placeholder="비밀번호" />
-            <input type="text" value={ckpassword} onChange={(e) => setCkPassword(e.target.value)} placeholder="비밀번호확인" />
-            <button onClick={checkPhoneHandler}>인증코드 전송</button>
-            <button onClick={joinHandler}>회원가입</button>
+            <input type="text" value={verNumber} onChange={(e) => setVerNumber(e.target.value)} placeholder="인증번호" />
+            <button onClick={verificationCode}>인증코드 전송</button>
+            <button type="submit">회원가입</button>
          </form>
       </div>
    )

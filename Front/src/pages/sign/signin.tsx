@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react"
-import { customAxios } from "../utils/axios"
+import { customAxios } from "../../utils/axios"
 import { useNavigate } from 'react-router-dom'
-import useToken from "../hooks/useToken"
+import useToken from "../../hooks/useToken"
 
 const signin = () => {
    const [phoneNumber, setPhone] = useState("")
@@ -14,11 +14,11 @@ const signin = () => {
    useEffect(() => {
       if (!!token) {
          navigate("/")
-         alert("이미 로그인이 되어있습니다.")
+         alert("이미 로그인이 되어있습니다")
       }
    }, [token, navigate])
 
-   const joinHandler = async (e: { preventDefault: () => void }) => {
+   const signin = async (e: { preventDefault: () => void }) => {
       e.preventDefault()
       
       try {
@@ -45,10 +45,10 @@ const signin = () => {
 
    return (
       <div>
-         <form>
+         <form onSubmit={signin}>
             <input type="text" value={phoneNumber} onChange={(e) => setPhone(e.target.value)} placeholder="전화번호" />
             <input type="text" value={password} onChange={(e) => setPassword(e.target.value)} placeholder="비밀번호" />
-            <button onClick={joinHandler}>로그인</button>
+            <button type="submit">로그인</button>
          </form>
       </div>
    )
