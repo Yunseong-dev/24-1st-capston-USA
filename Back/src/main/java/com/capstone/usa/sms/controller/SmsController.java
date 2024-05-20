@@ -1,7 +1,7 @@
 package com.capstone.usa.sms.controller;
 
 import com.capstone.usa.sms.service.SmsService;
-import com.capstone.usa.user.dto.PhoneDto;
+import com.capstone.usa.sms.dto.PhoneDto;
 import lombok.AllArgsConstructor;
 import net.nurigo.sdk.message.response.SingleMessageSentResponse;
 import org.springframework.web.bind.annotation.*;

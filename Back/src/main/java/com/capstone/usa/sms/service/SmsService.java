@@ -1,6 +1,6 @@
 package com.capstone.usa.sms.service;
 
-import com.capstone.usa.user.dto.PhoneDto;
+import com.capstone.usa.sms.dto.PhoneDto;
 import net.nurigo.sdk.NurigoApp;
 import net.nurigo.sdk.message.model.Message;
 import net.nurigo.sdk.message.request.SingleMessageSendingRequest;
