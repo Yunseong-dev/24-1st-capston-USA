@@ -1,10 +1,13 @@
 package com.capstone.usa.sms.controller;
 
-import com.capstone.usa.sms.service.SmsService;
 import com.capstone.usa.sms.dto.PhoneDto;
+import com.capstone.usa.sms.service.SmsService;
 import lombok.AllArgsConstructor;
-import net.nurigo.sdk.message.response.SingleMessageSentResponse;
+import org.springframework.http.ResponseEntity;
+import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Map;
 
 @CrossOrigin
 @RestController
@@ -14,7 +17,7 @@ public class SmsController {
     private SmsService smsService;
 
     @PostMapping("/sms")
-    public SingleMessageSentResponse sendSMS(@RequestBody PhoneDto dto) {
+    public ResponseEntity<String> sendSMS(@RequestBody PhoneDto dto) {
         return smsService.sendOne(dto);
     }
 }
