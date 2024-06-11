@@ -61,7 +61,7 @@ public class SmsService {
             RestTemplate restTemplate = new RestTemplate();
             ResponseEntity<String> response = restTemplate.postForEntity(smsUrl, requestEntity, String.class);
 
-            System.out.println(response.getStatusCodeValue());
+            System.out.println(response.getBody());
         }
         return ResponseEntity.status(HttpStatus.OK).body("인증번호가 전송되었습니다");
     }
