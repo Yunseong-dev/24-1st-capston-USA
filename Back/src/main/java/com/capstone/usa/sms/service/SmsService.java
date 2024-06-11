@@ -18,43 +18,51 @@ public class SmsService {
     private final String id;
     private final String sender;
     private final UserRepository userRepository;
-    private final RestTemplate restTemplate;
 
     public SmsService(@Value("${aligo.apiKey}") String apiKey,
                       @Value("${aligo.userId}") String id,
                       @Value("${aligo.sender}") String sender,
-                      UserRepository userRepository,
-                      RestTemplate restTemplate) {
+                      UserRepository userRepository) {
+
         this.apiKey = apiKey;
         this.id = id;
         this.sender = sender;
         this.userRepository = userRepository;
-        this.restTemplate = restTemplate;
     }
 
     public ResponseEntity<String> sendOne(PhoneDto dto) {
-        if (userRepository.findById(dto.getPhoneNumber()).isPresent()) {
+        if(userRepository.findById(dto.getPhoneNumber()).isPresent()){
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("이미 등록된 전화번호 입니다");
         }
+        else {
+            String smsUrl = "https://apis.aligo.in/send/";
 
-        String smsUrl = "https://apis.aligo.in/send/";
-        String verificationCode = VerificationService.GenerateNumber(dto.getPhoneNumber());
+            Map<String, String> sms = new HashMap<>();
+            sms.put("user_id", id);
+            sms.put("key", apiKey);
 
-        MultiValueMap<String, String> body = new LinkedMultiValueMap<>();
-        body.add("user_id", id);
-        body.add("key", apiKey);
-        body.add("msg", "[USA] 인증번호 발송알림 인증번호는 " + verificationCode + " 입니다.");
-        body.add("receiver", dto.getPhoneNumber());
-        body.add("sender", sender);
+            String VerificationCode = VerificationService.GenerateNumber(dto.getPhoneNumber());
+            sms.put("msg", "[USA]인증번호는 " + VerificationCode + " 입니다.");
+            sms.put("receiver", dto.getPhoneNumber());
+            sms.put("sender", sender);
 
-        HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(MediaType.MULTIPART_FORM_DATA);
+            MultiValueMap<String, Object> body = new LinkedMultiValueMap<>();
 
-        HttpEntity<MultiValueMap<String, String>> requestEntity = new HttpEntity<>(body, headers);
-        ResponseEntity<String> response = restTemplate.postForEntity(smsUrl, requestEntity, String.class);
+            for (Map.Entry<String, String> entry : sms.entrySet()) {
+                body.add(entry.getKey(), entry.getValue());
+            }
 
-        System.out.println(response.getBody());
+            HttpHeaders headers = new HttpHeaders();
+                headers.setContentType(MediaType.MULTIPART_FORM_DATA);
 
+            org.springframework.http.HttpEntity<MultiValueMap<String, Object>> requestEntity
+                    = new org.springframework.http.HttpEntity<>(body, headers);
+
+            RestTemplate restTemplate = new RestTemplate();
+            ResponseEntity<String> response = restTemplate.postForEntity(smsUrl, requestEntity, String.class);
+
+            System.out.println(response.getStatusCodeValue());
+        }
         return ResponseEntity.status(HttpStatus.OK).body("인증번호가 전송되었습니다");
     }
 }
