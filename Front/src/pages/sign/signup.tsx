@@ -60,7 +60,7 @@ const test = () => {
 
       } catch (error: any) {
          if (error.response && error.response.data) {
-            alert("인증번호 전송 과정 중 오류가 발생했습니다")
+            alert(error.response.data)
          }
       }
    }
@@ -70,7 +70,7 @@ const test = () => {
          <form onSubmit={signup}>
             <input type="text" value={name} onChange={(e) => setName(e.target.value)} placeholder="이름" />
             <input type="text" value={phoneNumber} onChange={(e) => setPhone(e.target.value)} placeholder="전화번호" />
-            <input type="text" value={password} onChange={(e) => setPassword(e.target.value)} placeholder="비밀번호" />
+            <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} placeholder="비밀번호" />
             <input type="text" value={verNumber} onChange={(e) => setVerNumber(e.target.value)} placeholder="인증번호" />
             <button onClick={verificationCode}>인증코드 전송</button>
             <button type="submit">회원가입</button>
