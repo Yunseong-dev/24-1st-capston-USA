@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import useToken from "../../hooks/useToken";
 import { customAxios } from "../../utils/axios";
@@ -6,19 +6,27 @@ import { customAxios } from "../../utils/axios";
 const CreateArticle = () => {
    const [title, setTitle] = useState('');
    const [content, setContent] = useState('');
+
    const navigate = useNavigate();
-   const { token } = useToken();
+
+   const { token } = useToken()
+
+   useEffect(() => {
+      if (!token) {
+         navigate("/")
+         alert("먼저 로그인을 해주세요")
+      }
+   }, [token, navigate])
 
    const createArticle = async (e: { preventDefault: () => void; }) => {
       e.preventDefault();
 
+      const data = { title, content };
+
       try {
-         await customAxios.post('/job/create', {
-            title,
-            content
-         }, {
+         await customAxios.post('/job/create', data, {
             headers: {
-               'Authorization': `${token}`,
+               'Authorization': `Bearer ${token}`
             }
          });
 
