@@ -6,6 +6,9 @@ import Main from './pages/main';
 import ArticleList from './pages/article/articleList';
 import CreateArticle from './pages/article/createArticle';
 import ArticleDetail from './pages/article/articleDetail';
+import JobPosts from './pages/job/JobPost';
+import CreateJobPost from './pages/job/CreateJobPost';
+import ChatRoom from './pages/job/ChatRoom';
 
 const App = () => {
   return (
@@ -17,6 +20,9 @@ const App = () => {
         <Route path="/ArticleList" element={<ArticleList />} />
         <Route path="/createArticle" element={<CreateArticle />} />
         <Route path="/article/:id" element={<ArticleDetail />} />
+        <Route path="/jobposts" element={<JobPosts />} />
+        <Route path="/create-jobpost" element={<CreateJobPost />} />
+        <Route path="/chat/:chatRoomId" element={<ChatRoom />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </Router>

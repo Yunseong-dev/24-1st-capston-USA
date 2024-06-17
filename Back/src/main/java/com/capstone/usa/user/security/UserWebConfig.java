@@ -13,7 +13,7 @@ public class UserWebConfig implements WebMvcConfigurer {
                 .allowedOrigins("http://localhost:5173", "http://localhost")
                 .allowedMethods("GET", "POST", "PUT", "DELETE")
                 .allowCredentials(true)
-                .exposedHeaders("Authorization"); // 허용할 추가적인 헤더
+                .exposedHeaders("Authorization");
 
     }
 }
