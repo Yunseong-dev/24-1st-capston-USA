@@ -8,21 +8,21 @@ import CreateArticle from './pages/article/createArticle';
 import ArticleDetail from './pages/article/articleDetail';
 import JobPosts from './pages/job/JobPost';
 import CreateJobPost from './pages/job/CreateJobPost';
-import ChatRoom from './pages/job/Chat';
+import ChatRoom from './pages/job/ChatRoom';
 
 const App = () => {
   return (
     <Router>
       <Routes>
         <Route path='/' element={<Main />} />
-        <Route path="/signup" element={<Signup />} />
-        <Route path="/signin" element={<Signin />} />
+        <Route path="/Signup" element={<Signup />} />
+        <Route path="/Signin" element={<Signin />} />
         <Route path="/ArticleList" element={<ArticleList />} />
-        <Route path="/createArticle" element={<CreateArticle />} />
-        <Route path="/article/:id" element={<ArticleDetail />} />
-        <Route path="/jobposts" element={<JobPosts />} />
-        <Route path="/create-jobpost" element={<CreateJobPost />} />
-        <Route path="/chat/:chatRoomId" element={<ChatRoom />} />
+        <Route path="/CreateArticle" element={<CreateArticle />} />
+        <Route path="/Article/:id" element={<ArticleDetail />} />
+        <Route path="/Jobposts" element={<JobPosts />} />
+        <Route path="/CreateJobpost" element={<CreateJobPost />} />
+        <Route path="/Chat/:chatRoomId" element={<ChatRoom />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </Router>
