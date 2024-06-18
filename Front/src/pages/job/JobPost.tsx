@@ -15,16 +15,18 @@ const JobPosts: React.FC = () => {
          try {
             const response = await customAxios.get<JobPost[]>('/job');
             setJobPosts(response.data);
-         } catch (error) {
-            console.error('Failed to fetch job posts', error);
+         } catch (error: any) {
+            if (error.response && error.response.data) {
+               alert(error.response.data)
+            }
          }
       };
       fetchJobPosts();
    }, []);
 
-   const handleChat = async (postId: number) => {
+   const handleChat = async (jobId: number) => {
       try {
-         const response = await customAxios.post(`/chat/create?jobId=${postId}`, {}, {
+         const response = await customAxios.post(`/chat/create/${jobId}`, {}, {
             headers: {
                'Authorization': `Bearer ${token}`
             }
