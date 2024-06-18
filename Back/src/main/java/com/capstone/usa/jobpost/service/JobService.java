@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @AllArgsConstructor
@@ -31,5 +32,10 @@ public class JobService {
         );
 
         jobRepository.save(job);
+    }
+
+    public Job findJobById(int jobId) {
+        Optional<Job> jobOptional = jobRepository.findById(String.valueOf(jobId));
+        return jobOptional.orElse(null);
     }
 }

@@ -8,7 +8,7 @@ import CreateArticle from './pages/article/createArticle';
 import ArticleDetail from './pages/article/articleDetail';
 import JobPosts from './pages/job/JobPost';
 import CreateJobPost from './pages/job/CreateJobPost';
-import ChatRoom from './pages/job/ChatRoom';
+import ChatRoom from './pages/job/Chat';
 
 const App = () => {
   return (

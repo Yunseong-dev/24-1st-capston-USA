@@ -1,26 +1,43 @@
-// src/pages/job/JobPosts.tsx
-
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { JobPost } from '../../interface/jobPost';
 import dayjs from 'dayjs';
 import { customAxios } from '../../utils/axios';
+import useToken from '../../hooks/useToken';
 
 const JobPosts: React.FC = () => {
    const [jobPosts, setJobPosts] = useState<JobPost[]>([]);
    const navigate = useNavigate();
+   const { token } = useToken();
 
    useEffect(() => {
-      const fetchJob = async () => {
+      const fetchJobPosts = async () => {
          try {
-            const response = await customAxios.get<JobPost[]>("/job");
+            const response = await customAxios.get<JobPost[]>('/job');
             setJobPosts(response.data);
          } catch (error) {
-            console.error(error);
+            console.error('Failed to fetch job posts', error);
          }
       };
-      fetchJob();
+      fetchJobPosts();
    }, []);
+
+   const handleChat = async (postId: number) => {
+      try {
+         const response = await customAxios.post(`/chat/create?jobId=${postId}`, {}, {
+            headers: {
+               'Authorization': `Bearer ${token}`
+            }
+         });
+
+         const roomId = response.data.roomId;
+         navigate(`/chat/${roomId}`);
+      } catch (error: any) {
+         if (error.response && error.response.data) {
+            alert(error.response.data)
+         }
+      }
+   };
 
    return (
       <div>
@@ -31,7 +48,8 @@ const JobPosts: React.FC = () => {
                <div key={post.id}>
                   <h2>{post.title}</h2>
                   <p>{post.content}</p>
-                  <p>{dayjs(post.createdAt).format("YYYY년 MM월 DD일")}</p>
+                  <p>{dayjs(post.createdAt).format('YYYY년 MM월 DD일')}</p>
+                  <button onClick={() => handleChat(post.id)}>채팅하기</button>
                </div>
             ))}
          </div>
