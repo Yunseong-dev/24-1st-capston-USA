@@ -13,10 +13,10 @@ public class CustomUserDetailsService implements UserDetailsService {
     private final UserRepository userRepository;
 
     @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        if (!userRepository.existsById(username)) {
-            throw new UsernameNotFoundException(username + "에 해당하는 사용자가 존재하지 않습니다.");
+    public UserDetails loadUserByUsername(String phoneNumber) throws UsernameNotFoundException {
+        if (!userRepository.existsById(phoneNumber)) {
+            throw new UsernameNotFoundException(phoneNumber + "에 해당하는 사용자가 존재하지 않습니다.");
         }
-        return userRepository.findById(username).get();
+        return userRepository.findById(phoneNumber).get();
     }
 }

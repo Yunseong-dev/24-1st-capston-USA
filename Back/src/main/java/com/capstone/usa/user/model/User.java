@@ -33,7 +33,7 @@ public class User implements UserDetails {
 
     @Override
     public String getUsername() {
-        return phoneNumber;
+        return name;
     }
 
     @Override
@@ -54,5 +54,9 @@ public class User implements UserDetails {
     @Override
     public boolean isEnabled() {
         return true;
+    }
+
+    public String getId() {
+        return phoneNumber;
     }
 }
