@@ -19,10 +19,18 @@ const ChatRoom: React.FC = () => {
             console.log('WebSocket 연결 성공');
             setWebSocket(ws);
             fetchMessages();
+
+            const enterMessage = {
+                chatRoomId: chatRoomId,
+                messageType: "ENTER",
+                message: "",
+            };
+            ws.send(JSON.stringify(enterMessage));
         };
 
         ws.onmessage = (event) => {
             const message = JSON.parse(event.data) as ChatMessage;
+            console.log('New message received:', message);  // 메시지 수신 로그 추가
             setMessages((prevMessages) => [...prevMessages, message]);
             scrollToBottom();
         };
@@ -57,13 +65,20 @@ const ChatRoom: React.FC = () => {
             return;
         }
 
+        if (!newMessage) {
+            alert("메세지를 입력해주세요");
+            return;
+        }
+
         const messageData = {
+            chatRoomId: chatRoomId,
+            messageType: "CHAT",
             message: newMessage,
         };
 
         await postWithToken(token, `/chat/sendMessage/${chatRoomId}`, messageData);
 
-        scrollToBottom();
+        webSocket.send(JSON.stringify(messageData));
         setNewMessage('');
     };
 
