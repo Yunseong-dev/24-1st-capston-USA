@@ -17,27 +17,16 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ChatRoom {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
     @ManyToOne
     private Job job;
-
     @ManyToOne
-    private User user1; // 첫 번째 사용자 (게시물 작성자)
-
+    private User user1;
     @ManyToOne
-    private User user2; // 두 번째 사용자 (현재 로그인한 사용자)
-
+    private User user2;
     @Column(unique = true)
-    private String roomId; // 채팅방 식별자 (UUID 형식)
-
+    private String roomId;
     private LocalDateTime createdAt;
-
-    @PrePersist
-    protected void onCreate() {
-        this.createdAt = LocalDateTime.now();
-    }
 }
