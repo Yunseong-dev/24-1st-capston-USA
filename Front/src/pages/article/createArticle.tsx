@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react"
 import { useNavigate } from 'react-router-dom'
 import useToken from "../../hooks/useToken"
-import { customAxios } from "../../utils/axios"
+import { postWithToken } from "../../utils/axios"
 
 
 const CreateArticle = () => {
@@ -43,12 +43,7 @@ const CreateArticle = () => {
       }
 
       try {
-         await customAxios.post('/articles/create', formData, {
-            headers: {
-               'Authorization': `Bearer ${token}`
-            }
-         });
-         
+         await postWithToken(token, '/articles/create', formData);
 
          navigate('/')
          alert("게시물을 등록했습니다")

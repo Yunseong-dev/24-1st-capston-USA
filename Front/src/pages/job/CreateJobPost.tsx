@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import useToken from "../../hooks/useToken";
-import { customAxios } from "../../utils/axios";
+import { postWithToken } from "../../utils/axios";
 
 const CreateArticle = () => {
    const [title, setTitle] = useState('');
@@ -24,11 +24,7 @@ const CreateArticle = () => {
       const data = { title, content };
 
       try {
-         await customAxios.post('/job/create', data, {
-            headers: {
-               'Authorization': `Bearer ${token}`
-            }
-         });
+         await postWithToken(token, '/job/create', data);
 
          navigate('/jobposts');
          alert("게시물이 성공적으로 등록되었습니다");
