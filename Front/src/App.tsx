@@ -6,8 +6,8 @@ import Home from './pages/Home';
 import ArticleList from './components/article/ArticleList';
 import CreateArticle from './components/article/CreateArticle';
 import ArticleDetail from './components/article/ArticleDetail';
-import JobPosts from './components/job/JobPost';
-import CreateJobPost from './components/job/CreateJobPost';
+import JobList from './components/job/JobList';
+import CreateJob from './components/job/CreateJob';
 import ChatRoom from './components/chat/ChatRoom';
 
 const App = () => {
@@ -20,8 +20,8 @@ const App = () => {
         <Route path="/ArticleList" element={<ArticleList />} />
         <Route path="/CreateArticle" element={<CreateArticle />} />
         <Route path="/Article/:id" element={<ArticleDetail />} />
-        <Route path="/JobList" element={<JobPosts />} />
-        <Route path="/CreateJob" element={<CreateJobPost />} />
+        <Route path="/JobList" element={<JobList />} />
+        <Route path="/CreateJob" element={<CreateJob />} />
         <Route path="/Chat/:chatRoomId" element={<ChatRoom />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
