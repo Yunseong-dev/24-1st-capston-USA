@@ -38,7 +38,7 @@ const JobPosts: React.FC = () => {
    return (
       <div>
          <h1>Job Posts</h1>
-         <button onClick={() => navigate('/CreateJobpost')}>Create Job Post</button>
+         <button onClick={() => navigate('/CreateJob')}>Create Job Post</button>
          <div>
             {jobPosts.map(post => (
                <div key={post.id}>

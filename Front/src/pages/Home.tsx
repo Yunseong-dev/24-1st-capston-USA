@@ -6,7 +6,7 @@ const main = () => {
          <a href="/signup">회원가입</a> <br/>
          <a href="/signin">로그인</a> <br/>
          <a href="/ArticleList">게시물</a> <br/>
-         <a href="/jobposts">구인구직</a>
+         <a href="/JobList">구인구직</a>
       </div>
    )
 }
