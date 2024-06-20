@@ -4,7 +4,6 @@ import com.capstone.usa.article.dto.CreateArticleDto;
 import com.capstone.usa.article.model.Article;
 import com.capstone.usa.article.repository.ArticleRepository;
 import com.capstone.usa.user.model.User;
-import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -24,14 +23,14 @@ public class ArticleService {
         return articleRepository.findAll();
     }
 
-   public void createArticle(User user, CreateArticleDto dto, MultipartFile image) throws IOException {
+    public void createArticle(User user, CreateArticleDto dto, MultipartFile image) throws IOException {
         String path = System.getProperty("user.dir") + "\\src\\main\\resources\\static\\imgFile";
         UUID uuid = UUID.randomUUID();
         String fileName = uuid + "_" + image.getOriginalFilename();
         File saveFile = new File(path , fileName);
         image.transferTo(saveFile);
 
-       LocalDateTime now = LocalDateTime.now();
+        LocalDateTime now = LocalDateTime.now();
 
         Article article = new Article(
                 0,
@@ -43,11 +42,9 @@ public class ArticleService {
                 now,
                 now
         );
-
         articleRepository.save(article);
-   }
+    }
 
-    @Transactional
     public Article getArticle(int id) {
         return articleRepository.findById(String.valueOf(id))
                 .orElseThrow(() -> new IllegalArgumentException("게시물이 없습니다."));
