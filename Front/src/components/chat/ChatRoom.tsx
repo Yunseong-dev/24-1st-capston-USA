@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom';
 import { postWithToken, fetcherWithToken } from '../../utils/axios';
 import useToken from '../../hooks/useToken';
 import { ChatMessage } from '../../interface/chatMessage';
+import dayjs from 'dayjs';
 
 const ChatRoom: React.FC = () => {
     const { chatRoomId } = useParams<{ chatRoomId: string }>();
@@ -62,7 +63,8 @@ const ChatRoom: React.FC = () => {
         }
     };
 
-    const sendMessage = async () => {
+    const sendMessage = async (e: { preventDefault: () => void; }) => {
+        e.preventDefault()
         if (!webSocket) {
             console.error('WebSocket 연결이 없습니다');
             return;
@@ -117,13 +119,15 @@ const ChatRoom: React.FC = () => {
                     >
                         <strong>{message.sender}: </strong> {message.message}
                         <br />
-                        <small>{new Date(message.sendAt).toLocaleString()}</small>
+                        <small>{dayjs(message.sendAt).format('DD일 hh시 mm분 ss초')}</small>
                     </div>
                 ))}
                 <div ref={messagesEndRef}></div>
             </div>
-            <input type="text" value={newMessage} onChange={handleInputChange} style={{ marginRight: '10px' }} />
-            <button onClick={sendMessage}>전송</button>
+            <form onSubmit={sendMessage}>
+                <input type="text" value={newMessage} onChange={handleInputChange} style={{ marginRight: '10px' }} />
+                <button type="submit">전송</button>
+            </form>
         </div>
     );
 };
