@@ -17,12 +17,12 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class ChatMessageService {
 
-    private final ChatRoomRepository ChatRoomRepository;
+    private final ChatRoomRepository chatRoomRepository;
     private final ChatMessageRepository ChatMessageRepository;
 
     @Transactional
     public void saveMessage(User user, MessageDto dto) {
-        Optional<ChatRoom> chatRoomOptional = ChatRoomRepository.findByRoomId(dto.getChatRoomId());
+        Optional<ChatRoom> chatRoomOptional = chatRoomRepository.findByRoomId(dto.getChatRoomId());
         ChatRoom chatRoom = chatRoomOptional.get();
 
         ChatMessage chat = new ChatMessage(

@@ -1,6 +1,6 @@
 package com.capstone.usa.chat.model;
 
-import com.capstone.usa.job.model.Job;
+import com.capstone.usa.article.model.Article;
 import com.capstone.usa.user.model.User;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -11,7 +11,7 @@ import lombok.Setter;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "job_chat")
+@Table(name = "chat_room")
 @Getter
 @Setter
 @NoArgsConstructor
@@ -20,8 +20,8 @@ public class ChatRoom {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @ManyToOne
-    private Job job;
+    private String chatType;
+    private Long referenceId;
     @ManyToOne
     private User user1;
     @ManyToOne
