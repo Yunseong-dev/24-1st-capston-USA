@@ -24,7 +24,7 @@ const ArticleList = () => {
          <a href="/CreateArticle">게시물 생성</a>
          <ul>
             {articles.map((article) => (
-               <li key={article.id}>
+               <div>
                   <Link to={`/article/${article.id}`}>
                      <h2>{article.title}</h2>
                      <p>{dayjs(article.createdAt).format("YYYY년 MM월 DD일")}</p>
@@ -36,7 +36,7 @@ const ArticleList = () => {
                         />
                      )}
                   </Link>
-               </li>
+               </div>
             ))}
          </ul>
       </div>
