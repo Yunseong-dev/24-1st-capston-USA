@@ -21,7 +21,7 @@ const JobPosts: React.FC = () => {
 
    return (
       <div>
-         <a href="/JobCreate">게시물 생성</a>
+         <a href="/CreateJob">게시물 생성</a>
          <div>
             {jobPosts.map(job => (
                <li key={job.id}>
