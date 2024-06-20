@@ -1,11 +1,11 @@
-package com.capstone.usa.chat.controller;
+package com.capstone.usa.job.controller;
 
 import com.capstone.usa.chat.dto.ChatRoomIdDto;
 import com.capstone.usa.chat.dto.UserNameDto;
 import com.capstone.usa.chat.dto.MessageDto;
-import com.capstone.usa.chat.model.JobChatMessage;
-import com.capstone.usa.chat.service.JobChatRoomService;
-import com.capstone.usa.chat.service.JobChatService;
+import com.capstone.usa.job.model.JobChatMessage;
+import com.capstone.usa.job.service.JobChatRoomService;
+import com.capstone.usa.job.service.JobChatService;
 import com.capstone.usa.user.model.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;

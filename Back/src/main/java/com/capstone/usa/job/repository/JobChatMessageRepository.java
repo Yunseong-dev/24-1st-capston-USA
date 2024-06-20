@@ -1,6 +1,6 @@
-package com.capstone.usa.chat.repository;
+package com.capstone.usa.job.repository;
 
-import com.capstone.usa.chat.model.JobChatMessage;
+import com.capstone.usa.job.model.JobChatMessage;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

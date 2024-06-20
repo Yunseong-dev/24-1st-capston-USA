@@ -1,10 +1,10 @@
-package com.capstone.usa.chat.service;
+package com.capstone.usa.job.service;
 
 import com.capstone.usa.chat.dto.MessageDto;
-import com.capstone.usa.chat.model.JobChatMessage;
-import com.capstone.usa.chat.model.JobChatRoom;
-import com.capstone.usa.chat.repository.JobChatMessageRepository;
-import com.capstone.usa.chat.repository.JobChatRoomRepository;
+import com.capstone.usa.job.model.JobChatMessage;
+import com.capstone.usa.job.model.JobChatRoom;
+import com.capstone.usa.job.repository.JobChatMessageRepository;
+import com.capstone.usa.job.repository.JobChatRoomRepository;
 import com.capstone.usa.user.model.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

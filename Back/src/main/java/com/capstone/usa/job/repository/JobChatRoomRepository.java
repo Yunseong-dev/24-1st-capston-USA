@@ -1,6 +1,6 @@
-package com.capstone.usa.chat.repository;
+package com.capstone.usa.job.repository;
 
-import com.capstone.usa.chat.model.JobChatRoom;
+import com.capstone.usa.job.model.JobChatRoom;
 import com.capstone.usa.job.model.Job;
 import com.capstone.usa.user.model.User;
 import org.springframework.data.jpa.repository.JpaRepository;
