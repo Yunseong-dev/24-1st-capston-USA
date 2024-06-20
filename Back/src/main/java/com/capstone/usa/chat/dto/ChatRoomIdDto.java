@@ -11,4 +11,5 @@ import lombok.Setter;
 @AllArgsConstructor
 public class ChatRoomIdDto {
     private String roomId;
+    private String jobTitle;
 }

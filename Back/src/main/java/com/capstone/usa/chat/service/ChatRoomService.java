@@ -18,6 +18,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -56,7 +57,7 @@ public class ChatRoomService {
             chatRoomRepository.save(chatRoom);
         }
 
-        return ResponseEntity.status(HttpStatus.OK).body(new ChatRoomIdDto(chatRoom.getRoomId()));
+        return ResponseEntity.status(HttpStatus.OK).body(new ChatRoomIdDto(chatRoom.getRoomId(), ""));
     }
 
     @Transactional(readOnly = true)
@@ -65,5 +66,13 @@ public class ChatRoomService {
         ChatRoom chatRoom = optionalChatRoom.get();
 
         return chatRepository.findByChatRoomId(chatRoom.getId());
+    }
+
+    @Transactional(readOnly = true)
+    public List<ChatRoomIdDto> getChatRoomsForUser(User user) {
+        List<ChatRoom> chatRooms = chatRoomRepository.findByUser1OrUser2(user, user);
+        return chatRooms.stream()
+                .map(chatRoom -> new ChatRoomIdDto(chatRoom.getRoomId(), chatRoom.getJob().getTitle()))
+                .collect(Collectors.toList());
     }
 }
