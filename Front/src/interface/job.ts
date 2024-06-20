@@ -1,5 +1,5 @@
 
-export interface JobPost {
+export interface Job {
    id: number;
    title: string;
    content: string;
