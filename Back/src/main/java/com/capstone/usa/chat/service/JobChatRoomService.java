@@ -2,10 +2,10 @@ package com.capstone.usa.chat.service;
 
 import com.capstone.usa.chat.dto.ChatRoomIdDto;
 import com.capstone.usa.chat.dto.UserNameDto;
-import com.capstone.usa.chat.model.Chat;
-import com.capstone.usa.chat.model.ChatRoom;
-import com.capstone.usa.chat.repository.ChatRepository;
-import com.capstone.usa.chat.repository.ChatRoomRepository;
+import com.capstone.usa.chat.model.JobChatMessage;
+import com.capstone.usa.chat.model.JobChatRoom;
+import com.capstone.usa.chat.repository.JobChatRepository;
+import com.capstone.usa.chat.repository.JobChatRoomRepository;
 import com.capstone.usa.job.model.Job;
 import com.capstone.usa.job.service.JobService;
 import com.capstone.usa.user.model.User;
@@ -23,10 +23,10 @@ import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
-public class ChatRoomService {
+public class JobChatRoomService {
 
-    private final ChatRoomRepository chatRoomRepository;
-    private final ChatRepository chatRepository;
+    private final JobChatRoomRepository chatRoomRepository;
+    private final JobChatRepository chatRepository;
     private final JobService jobService;
 
     @Transactional
@@ -42,12 +42,12 @@ public class ChatRoomService {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("자신이 작성한 게시물에 대한 채팅은 할 수 없습니다");
         }
 
-        Optional<ChatRoom> optionalChatRoom = chatRoomRepository.findByJobAndUser1AndUser2(job, postOwner, user);
-        ChatRoom chatRoom;
+        Optional<JobChatRoom> optionalChatRoom = chatRoomRepository.findByJobAndUser1AndUser2(job, postOwner, user);
+        JobChatRoom chatRoom;
         if (optionalChatRoom.isPresent()) {
             chatRoom = optionalChatRoom.get();
         } else {
-            chatRoom = new ChatRoom(
+            chatRoom = new JobChatRoom(
                     0L,
                     job,
                     postOwner,
@@ -62,16 +62,16 @@ public class ChatRoomService {
     }
 
     @Transactional(readOnly = true)
-    public List<Chat> getChatIncludeChatId(String roomId) {
-        Optional<ChatRoom> optionalChatRoom = chatRoomRepository.findByRoomId(roomId);
-        ChatRoom chatRoom = optionalChatRoom.get();
+    public List<JobChatMessage> getChatIncludeChatId(String roomId) {
+        Optional<JobChatRoom> optionalChatRoom = chatRoomRepository.findByRoomId(roomId);
+        JobChatRoom chatRoom = optionalChatRoom.get();
 
         return chatRepository.findByChatRoomId(chatRoom.getId());
     }
 
     @Transactional(readOnly = true)
     public List<ChatRoomIdDto> getChatRoomsForUser(User user) {
-        List<ChatRoom> chatRooms = chatRoomRepository.findByUser1OrUser2(user, user);
+        List<JobChatRoom> chatRooms = chatRoomRepository.findByUser1OrUser2(user, user);
         return chatRooms.stream()
                 .map(chatRoom -> new ChatRoomIdDto(chatRoom.getRoomId(), chatRoom.getJob().getTitle()))
                 .collect(Collectors.toList());

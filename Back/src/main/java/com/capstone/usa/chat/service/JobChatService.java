@@ -1,10 +1,10 @@
 package com.capstone.usa.chat.service;
 
 import com.capstone.usa.chat.dto.MessageDto;
-import com.capstone.usa.chat.model.Chat;
-import com.capstone.usa.chat.model.ChatRoom;
-import com.capstone.usa.chat.repository.ChatRepository;
-import com.capstone.usa.chat.repository.ChatRoomRepository;
+import com.capstone.usa.chat.model.JobChatMessage;
+import com.capstone.usa.chat.model.JobChatRoom;
+import com.capstone.usa.chat.repository.JobChatRepository;
+import com.capstone.usa.chat.repository.JobChatRoomRepository;
 import com.capstone.usa.user.model.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -15,24 +15,23 @@ import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
-public class ChatService {
+public class JobChatService {
 
-    private final ChatRoomRepository chatRoomRepository;
-    private final ChatRepository chatRepository;
+    private final JobChatRoomRepository chatRoomRepository;
+    private final JobChatRepository chatRepository;
 
     @Transactional
     public void saveMessage(User user, MessageDto dto) {
-        Optional<ChatRoom> chatRoomOptional = chatRoomRepository.findByRoomId(dto.getChatRoomId());
-        ChatRoom chatRoom = chatRoomOptional.get();
+        Optional<JobChatRoom> chatRoomOptional = chatRoomRepository.findByRoomId(dto.getChatRoomId());
+        JobChatRoom chatRoom = chatRoomOptional.get();
 
-        Chat chat = new Chat(
+        JobChatMessage chat = new JobChatMessage(
                 0L,
                 chatRoom,
                 user.getName(),
                 dto.getMessage(),
                 LocalDateTime.now()
         );
-
         chatRepository.save(chat);
     }
 }

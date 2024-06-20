@@ -9,17 +9,17 @@ import lombok.Setter;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "chatMessage")
+@Table(name = "Job_Message")
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class Chat {
+public class JobChatMessage {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @ManyToOne
-    private ChatRoom chatRoom;
+    private JobChatRoom JobchatRoom;
     private String sender;
     private String message;
     private LocalDateTime sendAt;

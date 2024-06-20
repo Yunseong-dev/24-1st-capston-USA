@@ -11,12 +11,12 @@ import lombok.Setter;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "chat_room")
+@Table(name = "job_chat")
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class ChatRoom {
+public class JobChatRoom {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
