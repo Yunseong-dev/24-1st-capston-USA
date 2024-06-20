@@ -35,12 +35,7 @@ public class JobService {
         jobRepository.save(job);
     }
 
-    public Job findJobById(int jobId) {
-        Optional<Job> jobOptional = jobRepository.findById(String.valueOf(jobId));
-        return jobOptional.orElse(null);
-    }
-
-    public Job getJob(int id) {
+    public Job getJob(Long id) {
         return jobRepository.findById(String.valueOf(id))
                 .orElseThrow(() -> new IllegalArgumentException("게시물이 없습니다."));
     }
