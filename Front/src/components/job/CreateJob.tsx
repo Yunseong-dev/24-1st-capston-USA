@@ -7,9 +7,9 @@ const CreateArticle = () => {
    const [title, setTitle] = useState('');
    const [content, setContent] = useState('');
 
-   const navigate = useNavigate();
-
    const { token } = useToken()
+   
+   const navigate = useNavigate();
 
    useEffect(() => {
       if (!token) {

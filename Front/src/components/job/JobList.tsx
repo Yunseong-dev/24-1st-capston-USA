@@ -1,14 +1,16 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
 import { Job } from '../../interface/job';
 import dayjs from 'dayjs';
 import { customAxios, postWithToken } from '../../utils/axios';
 import useToken from '../../hooks/useToken';
+import { useNavigate } from 'react-router-dom';
 
 const JobPosts: React.FC = () => {
    const [jobPosts, setJobPosts] = useState<Job[]>([]);
-   const navigate = useNavigate();
+
    const { token } = useToken();
+
+   const navigate = useNavigate()
 
    useEffect(() => {
       const fetchJobPosts = async () => {

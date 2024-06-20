@@ -2,11 +2,21 @@ import { useEffect, useState } from 'react';
 import { fetcherWithToken } from '../../utils/axios';
 import useToken from '../../hooks/useToken';
 import { Chat } from '../../interface/Chat';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 const ChatList = () => {
    const [chatRooms, setChatRooms] = useState<Chat[]>([]);
+
    const { token } = useToken();
+
+   const navigate = useNavigate();
+
+   useEffect(() => {
+      if (!token) {
+         navigate("/")
+         alert("먼저 로그인을 해주세요")
+      }
+   }, [token, navigate])
 
    useEffect(() => {
       const fetchChatRooms = async () => {

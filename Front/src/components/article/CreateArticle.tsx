@@ -9,9 +9,9 @@ const CreateArticle = () => {
    const [content, setContent] = useState("")
    const [image, setImage] = useState<File | null>(null)
 
-   const navigate = useNavigate()
-
    const { token } = useToken()
+
+   const navigate = useNavigate()
 
    useEffect(() => {
       if (!token) {

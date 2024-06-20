@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import { postWithToken, fetcherWithToken } from '../../utils/axios';
 import useToken from '../../hooks/useToken';
 import { ChatMessage } from '../../interface/chatMessage';
@@ -12,7 +12,17 @@ const ChatRoom: React.FC = () => {
     const [user, setUser] = useState('');
     const [webSocket, setWebSocket] = useState<WebSocket | null>(null);
     const messagesEndRef = useRef<HTMLDivElement>(null);
+    
     const { token } = useToken();
+
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        if (!token) {
+            navigate("/")
+            alert("먼저 로그인을 해주세요")
+        }
+    }, [token, navigate])
 
     useEffect(() => {
         const ws = new WebSocket(`ws://localhost:8080/chat/${chatRoomId}`);
@@ -27,7 +37,6 @@ const ChatRoom: React.FC = () => {
         ws.onmessage = (event) => {
             const receivedMessage = JSON.parse(event.data);
             setMessages(prevMessages => [...prevMessages, receivedMessage]);
-            scrollToBottom();
         };
 
         ws.onclose = () => {
@@ -44,11 +53,14 @@ const ChatRoom: React.FC = () => {
         };
     }, [chatRoomId]);
 
+    useEffect(() => {
+        scrollToBottom();
+    }, [messages]);
+
     const fetchMessages = async () => {
         try {
             const response = await fetcherWithToken(token, `/chat/messages/${chatRoomId}`);
             setMessages(response.data);
-            scrollToBottom();
         } catch (error) {
             console.error('메세지를 가져오는데 실패했습니다');
         }
@@ -63,8 +75,8 @@ const ChatRoom: React.FC = () => {
         }
     };
 
-    const sendMessage = async (e: { preventDefault: () => void; }) => {
-        e.preventDefault()
+    const sendMessage = async (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
         if (!webSocket) {
             console.error('WebSocket 연결이 없습니다');
             return;
