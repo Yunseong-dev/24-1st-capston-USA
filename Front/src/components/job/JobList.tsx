@@ -24,12 +24,12 @@ const JobPosts: React.FC = () => {
          <a href="/CreateJob">게시물 생성</a>
          <div>
             {jobPosts.map(job => (
-               <li key={job.id}>
-                  <Link to={`/article/${job.id}`}>
+               <div>
+                  <Link to={`/job/${job.id}`}>
                      <h2>{job.title}</h2>
                      <p>{dayjs(job.createdAt).format("YYYY년 MM월 DD일")}</p>
                   </Link>
-               </li>
+               </div>
             ))}
          </div>
       </div>
