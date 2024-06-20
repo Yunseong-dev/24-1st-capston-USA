@@ -1,5 +1,6 @@
 package com.capstone.usa.job.controller;
 
+import com.capstone.usa.article.model.Article;
 import com.capstone.usa.job.dto.CreateJobDto;
 import com.capstone.usa.job.model.Job;
 import com.capstone.usa.job.service.JobService;
@@ -19,7 +20,14 @@ public class JobController {
 
     @GetMapping
     public List<Job> getJob() {
-        return jobService.getJob();
+        return jobService.getJobs();
+    }
+
+    @GetMapping("/{id}")
+    public Job getArticle(
+            @PathVariable int id
+    ) {
+        return jobService.getJob(id);
     }
 
     @PostMapping("/create")

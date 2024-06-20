@@ -4,6 +4,7 @@ import com.capstone.usa.job.dto.CreateJobDto;
 import com.capstone.usa.job.model.Job;
 import com.capstone.usa.job.repository.JobRepository;
 import com.capstone.usa.user.model.User;
+import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -16,7 +17,7 @@ import java.util.Optional;
 public class JobService {
     private JobRepository jobRepository;
 
-    public List<Job> getJob() {
+    public List<Job> getJobs() {
         return jobRepository.findAll();
     }
 
@@ -37,5 +38,10 @@ public class JobService {
     public Job findJobById(int jobId) {
         Optional<Job> jobOptional = jobRepository.findById(String.valueOf(jobId));
         return jobOptional.orElse(null);
+    }
+
+    public Job getJob(int id) {
+        return jobRepository.findById(String.valueOf(id))
+                .orElseThrow(() -> new IllegalArgumentException("게시물이 없습니다."));
     }
 }
