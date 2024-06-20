@@ -1,6 +1,7 @@
 package com.capstone.usa.chat.service;
 
 import com.capstone.usa.chat.dto.ChatRoomIdDto;
+import com.capstone.usa.chat.dto.UserNameDto;
 import com.capstone.usa.chat.model.Chat;
 import com.capstone.usa.chat.model.ChatRoom;
 import com.capstone.usa.chat.repository.ChatRepository;
@@ -29,7 +30,7 @@ public class ChatRoomService {
     private final JobService jobService;
 
     @Transactional
-    public ResponseEntity<?> createChatRoom(int jobId, User currentUser) {
+    public ResponseEntity<?> createChatRoom(int jobId, User user) {
         Job job = jobService.findJobById(jobId);
         if (job == null) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("해당 게시물을 찾을 수 없습니다");
@@ -37,11 +38,11 @@ public class ChatRoomService {
 
         User postOwner = job.getUser();
 
-        if (currentUser.getId().equals(job.getUser().getId())) {
+        if (user.getId().equals(job.getUser().getId())) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("자신이 작성한 게시물에 대한 채팅은 할 수 없습니다");
         }
 
-        Optional<ChatRoom> optionalChatRoom = chatRoomRepository.findByJobAndUser1AndUser2(job, postOwner, currentUser);
+        Optional<ChatRoom> optionalChatRoom = chatRoomRepository.findByJobAndUser1AndUser2(job, postOwner, user);
         ChatRoom chatRoom;
         if (optionalChatRoom.isPresent()) {
             chatRoom = optionalChatRoom.get();
@@ -50,7 +51,7 @@ public class ChatRoomService {
                     0L,
                     job,
                     postOwner,
-                    currentUser,
+                    user,
                     UUID.randomUUID().toString(),
                     LocalDateTime.now()
             );
@@ -74,5 +75,9 @@ public class ChatRoomService {
         return chatRooms.stream()
                 .map(chatRoom -> new ChatRoomIdDto(chatRoom.getRoomId(), chatRoom.getJob().getTitle()))
                 .collect(Collectors.toList());
+    }
+
+    public UserNameDto getUserName(User user) {
+        return new UserNameDto(user.getName());
     }
 }
