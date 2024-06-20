@@ -21,7 +21,7 @@ export const tokenFetcher = (token: string) => {
 
 export const fetcherWithToken = async (token: string, url: string): Promise<any> => {
     const response: AxiosResponse = await customAxios.get(url, { headers: { 'Authorization': `Bearer ${token}` } });
-    return response.data;
+    return response;
 };
 
 export const postWithToken = async (token: string, url: string, data: any): Promise<any> => {
