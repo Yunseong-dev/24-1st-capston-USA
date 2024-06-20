@@ -21,14 +21,14 @@ public class ChatService {
     private final ChatRepository chatRepository;
 
     @Transactional
-    public void saveMessage(String chatRoomId, User sender, MessageDto dto) {
-        Optional<ChatRoom> chatRoomOptional = chatRoomRepository.findByRoomId(chatRoomId);
+    public void saveMessage(User user, MessageDto dto) {
+        Optional<ChatRoom> chatRoomOptional = chatRoomRepository.findByRoomId(dto.getChatRoomId());
         ChatRoom chatRoom = chatRoomOptional.get();
 
         Chat chat = new Chat(
                 0L,
                 chatRoom,
-                sender.getName(),
+                user.getName(),
                 dto.getMessage(),
                 LocalDateTime.now()
         );
