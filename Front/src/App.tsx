@@ -9,21 +9,28 @@ import ArticleDetail from './components/article/ArticleDetail';
 import JobList from './components/job/JobList';
 import CreateJob from './components/job/CreateJob';
 import ChatRoom from './components/chat/ChatRoom';
+import JobDetail from './components/job/JobDetail';
 import ChatList from './components/chat/ChatList';
 const App = () => {
   return (
     <Router>
       <Routes>
         <Route path='/' element={<Home />} />
+
         <Route path="/Signup" element={<Signup />} />
         <Route path="/Signin" element={<Signin />} />
+
         <Route path="/ArticleList" element={<ArticleList />} />
         <Route path="/CreateArticle" element={<CreateArticle />} />
         <Route path="/Article/:id" element={<ArticleDetail />} />
+
         <Route path="/JobList" element={<JobList />} />
         <Route path="/CreateJob" element={<CreateJob />} />
-        <Route path="/Chat/:chatRoomId" element={<ChatRoom />} />
+        <Route path="/Job/:id" element={<JobDetail />} />
+
         <Route path="/chatList" element={<ChatList />} />
+        <Route path="/Chat/:chatRoomId" element={<ChatRoom />} />
+        
         <Route path="*" element={<NotFound />} />
       </Routes>
     </Router>
