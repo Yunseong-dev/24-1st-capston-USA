@@ -25,7 +25,9 @@ public class ArticleController {
     }
 
     @GetMapping("/{id}")
-    public Article getArticle(@PathVariable int id) {
+    public Article getArticle(
+            @PathVariable int id
+    ) {
         return articleService.getArticle(id);
     }
 
@@ -33,8 +35,8 @@ public class ArticleController {
     public void createArticle(
             @AuthenticationPrincipal User user,
             @RequestPart CreateArticleDto dto,
-            @RequestPart(value = "image", required = false) MultipartFile image) throws IOException {
-
+            @RequestPart(value = "image", required = false) MultipartFile image
+    ) throws IOException {
         articleService.createArticle(user, dto, image);
     }
 }

@@ -17,12 +17,16 @@ public class UserController {
     public UserService userService;
 
     @PostMapping("/signup")
-    public ResponseEntity<?> createUser(@RequestBody CreateUserDto dto) {
+    public ResponseEntity<?> createUser(
+            @RequestBody CreateUserDto dto
+    ) {
         return userService.createUser(dto);
     }
 
     @PostMapping("/signin")
-    public ResponseEntity<?> loginUser(@RequestBody LoginUserDto dto) {
+    public ResponseEntity<?> loginUser(
+            @RequestBody LoginUserDto dto
+    ) {
         return userService.loginWithAuthenticationManager(dto);
     }
 
