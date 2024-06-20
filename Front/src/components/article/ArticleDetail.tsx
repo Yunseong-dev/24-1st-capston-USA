@@ -1,12 +1,16 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
-import { customAxios } from "../../utils/axios";
+import { useNavigate, useParams } from "react-router-dom";
+import { customAxios, postWithToken } from "../../utils/axios";
 import dayjs from "dayjs";
+import useToken from "../../hooks/useToken";
 import { Article } from "../../interface/article";
 
 const ArticleDetail = () => {
    const { id } = useParams<{ id: string }>();
    const [article, setArticle] = useState<Article | null>(null);
+
+   const navigate = useNavigate();
+   const { token } = useToken();
 
    useEffect(() => {
       const fetchArticle = async () => {
@@ -19,6 +23,19 @@ const ArticleDetail = () => {
       };
       fetchArticle();
    }, [id]);
+
+   const handleChat = async () => {
+      try {
+         const response = await postWithToken(token, `/chat/create/article/${id}`, {});
+
+         const roomId = response.data.roomId;
+         navigate(`/chat/${roomId}`);
+      } catch (error: any) {
+         if (error.response && error.response.data) {
+            alert(error.response.data)
+         }
+      }
+   };
 
    if (!article) {
       return <div>Loading...</div>;
@@ -36,6 +53,7 @@ const ArticleDetail = () => {
                style={{ maxWidth: "100px" }}
             />
          )}
+         <button onClick={handleChat}>채팅하기</button>
       </div>
    );
 };
