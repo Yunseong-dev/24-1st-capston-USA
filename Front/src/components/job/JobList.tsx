@@ -1,19 +1,19 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { JobPost } from '../../interface/jobPost';
+import { Job } from '../../interface/job';
 import dayjs from 'dayjs';
 import { customAxios, postWithToken } from '../../utils/axios';
 import useToken from '../../hooks/useToken';
 
 const JobPosts: React.FC = () => {
-   const [jobPosts, setJobPosts] = useState<JobPost[]>([]);
+   const [jobPosts, setJobPosts] = useState<Job[]>([]);
    const navigate = useNavigate();
    const { token } = useToken();
 
    useEffect(() => {
       const fetchJobPosts = async () => {
          try {
-            const response = await customAxios.get<JobPost[]>('/job');
+            const response = await customAxios.get<Job[]>('/job');
             setJobPosts(response.data);
          } catch (error) {
             alert("게시물을 가져올 수 없습니다")
