@@ -9,7 +9,7 @@ import ArticleDetail from './components/article/ArticleDetail';
 import JobList from './components/job/JobList';
 import CreateJob from './components/job/CreateJob';
 import ChatRoom from './components/chat/ChatRoom';
-
+import ChatList from './components/chat/ChatList';
 const App = () => {
   return (
     <Router>
@@ -23,6 +23,7 @@ const App = () => {
         <Route path="/JobList" element={<JobList />} />
         <Route path="/CreateJob" element={<CreateJob />} />
         <Route path="/Chat/:chatRoomId" element={<ChatRoom />} />
+        <Route path="/chatList" element={<ChatList />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </Router>
