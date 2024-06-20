@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useParams } from 'react-router-dom';
-import { customAxios, postWithToken } from '../../utils/axios';
+import { postWithToken, fetcherWithToken } from '../../utils/axios';
 import useToken from '../../hooks/useToken';
 import { ChatMessage } from '../../interface/chatMessage';
 
@@ -8,6 +8,7 @@ const ChatRoom: React.FC = () => {
     const { chatRoomId } = useParams<{ chatRoomId: string }>();
     const [messages, setMessages] = useState<ChatMessage[]>([]);
     const [newMessage, setNewMessage] = useState('');
+    const [user, setUser] = useState('');
     const [webSocket, setWebSocket] = useState<WebSocket | null>(null);
     const messagesEndRef = useRef<HTMLDivElement>(null);
     const { token } = useToken();
@@ -19,19 +20,12 @@ const ChatRoom: React.FC = () => {
             console.log('WebSocket 연결 성공');
             setWebSocket(ws);
             fetchMessages();
-
-            const enterMessage = {
-                chatRoomId: chatRoomId,
-                messageType: "ENTER",
-                message: "",
-            };
-            ws.send(JSON.stringify(enterMessage));
+            fetchUser();
         };
 
         ws.onmessage = (event) => {
-            const message = JSON.parse(event.data) as ChatMessage;
-            console.log('New message received:', message);  // 메시지 수신 로그 추가
-            setMessages((prevMessages) => [...prevMessages, message]);
+            const receivedMessage = JSON.parse(event.data);
+            setMessages(prevMessages => [...prevMessages, receivedMessage]);
             scrollToBottom();
         };
 
@@ -40,8 +34,8 @@ const ChatRoom: React.FC = () => {
             setWebSocket(null);
         };
 
-        ws.onerror = (error) => {
-            console.error('WebSocket 에러:', error);
+        ws.onerror = () => {
+            console.error('WebSocket 에러');
         };
 
         return () => {
@@ -51,11 +45,20 @@ const ChatRoom: React.FC = () => {
 
     const fetchMessages = async () => {
         try {
-            const response = await customAxios.get(`/chat/messages/${chatRoomId}`);
+            const response = await fetcherWithToken(token, `/chat/messages/${chatRoomId}`);
             setMessages(response.data);
             scrollToBottom();
         } catch (error) {
-            console.error('메세지를 가져오는데 실패했습니다', error);
+            console.error('메세지를 가져오는데 실패했습니다');
+        }
+    };
+
+    const fetchUser = async () => {
+        try {
+            const response = await fetcherWithToken(token, `/chat/getUser`);
+            setUser(response.data.name);
+        } catch (error) {
+            console.error('유저를 가져오는데 실패했습니다');
         }
     };
 
@@ -66,20 +69,26 @@ const ChatRoom: React.FC = () => {
         }
 
         if (!newMessage) {
-            alert("메세지를 입력해주세요");
+            alert('메세지를 입력해주세요');
             return;
         }
 
         const messageData = {
             chatRoomId: chatRoomId,
-            messageType: "CHAT",
+            sender: user,
+            messageType: 'CHAT',
             message: newMessage,
+            sendAt: new Date().toISOString(),
         };
 
-        await postWithToken(token, `/chat/sendMessage/${chatRoomId}`, messageData);
+        try {
+            await postWithToken(token, '/chat/sendMessage', messageData);
+            setNewMessage('');
+        } catch (error) {
+            console.error('메세지를 보내는데 실패했습니다', error);
+        }
 
         webSocket.send(JSON.stringify(messageData));
-        setNewMessage('');
     };
 
     const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -91,20 +100,29 @@ const ChatRoom: React.FC = () => {
     };
 
     return (
-        <div>
+        <div style={{ fontFamily: 'Arial, sans-serif' }}>
             <h2>채팅방</h2>
-            <div style={{ height: '400px', overflowY: 'scroll' }}>
+            <div style={{ height: '400px', overflowY: 'scroll', border: '1px solid #ccc', borderRadius: '5px', padding: '10px', marginBottom: '10px' }}>
                 {messages.map((message, index) => (
-                    <div key={index}>
-                        <strong>{message.sender}:</strong>
-                        {message.message}
+                    <div
+                        key={index}
+                        style={{
+                            marginBottom: '10px',
+                            padding: '5px',
+                            borderRadius: '5px',
+                            maxWidth: '70%',
+                            alignSelf: message.sender === user ? 'flex-end' : 'flex-start',
+                            backgroundColor: message.sender === user ? '#e6f2ff' : '#f0f0f0',
+                        }}
+                    >
+                        <strong>{message.sender}: </strong> {message.message}
                         <br />
                         <small>{new Date(message.sendAt).toLocaleString()}</small>
                     </div>
                 ))}
                 <div ref={messagesEndRef}></div>
             </div>
-            <input type="text" value={newMessage} onChange={handleInputChange} />
+            <input type="text" value={newMessage} onChange={handleInputChange} style={{ marginRight: '10px' }} />
             <button onClick={sendMessage}>전송</button>
         </div>
     );

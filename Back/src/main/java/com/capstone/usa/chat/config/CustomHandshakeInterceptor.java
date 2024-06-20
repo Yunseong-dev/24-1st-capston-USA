@@ -1,5 +1,6 @@
 package com.capstone.usa.chat.config;
 
+import org.jetbrains.annotations.NotNull;
 import org.springframework.http.server.ServerHttpRequest;
 import org.springframework.http.server.ServerHttpResponse;
 import org.springframework.stereotype.Component;
@@ -12,7 +13,12 @@ import java.util.Map;
 public class CustomHandshakeInterceptor implements HandshakeInterceptor {
 
     @Override
-    public boolean beforeHandshake(ServerHttpRequest request, ServerHttpResponse response, WebSocketHandler wsHandler, Map<String, Object> attributes) {
+    public boolean beforeHandshake(
+            ServerHttpRequest request,
+            @NotNull ServerHttpResponse response,
+            @NotNull WebSocketHandler wsHandler,
+            @NotNull Map<String, Object> attributes
+    ) {
         String path = request.getURI().getPath();
         String[] pathSegments = path.split("/");
         if (pathSegments.length >= 2) {
@@ -26,10 +32,11 @@ public class CustomHandshakeInterceptor implements HandshakeInterceptor {
 
     @Override
     public void afterHandshake(
-            ServerHttpRequest request,
-            ServerHttpResponse response,
-            WebSocketHandler wsHandler,
-            Exception exception) {
+            @NotNull ServerHttpRequest request,
+            @NotNull ServerHttpResponse response,
+            @NotNull WebSocketHandler wsHandler,
+            Exception exception
+    ) {
 
     }
 }
