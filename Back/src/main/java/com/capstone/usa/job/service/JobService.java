@@ -1,8 +1,8 @@
-package com.capstone.usa.jobpost.service;
+package com.capstone.usa.job.service;
 
-import com.capstone.usa.jobpost.dto.CreateJobDto;
-import com.capstone.usa.jobpost.model.Job;
-import com.capstone.usa.jobpost.repository.JobRepository;
+import com.capstone.usa.job.dto.CreateJobDto;
+import com.capstone.usa.job.model.Job;
+import com.capstone.usa.job.repository.JobRepository;
 import com.capstone.usa.user.model.User;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;

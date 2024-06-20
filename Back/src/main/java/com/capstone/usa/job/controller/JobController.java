@@ -1,8 +1,8 @@
-package com.capstone.usa.jobpost.controller;
+package com.capstone.usa.job.controller;
 
-import com.capstone.usa.jobpost.dto.CreateJobDto;
-import com.capstone.usa.jobpost.model.Job;
-import com.capstone.usa.jobpost.service.JobService;
+import com.capstone.usa.job.dto.CreateJobDto;
+import com.capstone.usa.job.model.Job;
+import com.capstone.usa.job.service.JobService;
 import com.capstone.usa.user.model.User;
 import lombok.AllArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;

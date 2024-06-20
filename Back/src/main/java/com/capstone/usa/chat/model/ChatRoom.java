@@ -1,6 +1,6 @@
 package com.capstone.usa.chat.model;
 
-import com.capstone.usa.jobpost.model.Job;
+import com.capstone.usa.job.model.Job;
 import com.capstone.usa.user.model.User;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;

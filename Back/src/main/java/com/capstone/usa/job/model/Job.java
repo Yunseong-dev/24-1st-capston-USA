@@ -1,4 +1,4 @@
-package com.capstone.usa.jobpost.model;
+package com.capstone.usa.job.model;
 
 import com.capstone.usa.user.model.User;
 import jakarta.persistence.*;
@@ -10,7 +10,7 @@ import lombok.Setter;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "jobPost")
+@Table(name = "job")
 @Getter
 @Setter
 @NoArgsConstructor
