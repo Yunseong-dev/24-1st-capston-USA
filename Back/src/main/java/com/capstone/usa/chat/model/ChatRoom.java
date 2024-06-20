@@ -1,5 +1,6 @@
-package com.capstone.usa.job.model;
+package com.capstone.usa.chat.model;
 
+import com.capstone.usa.job.model.Job;
 import com.capstone.usa.user.model.User;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -15,7 +16,7 @@ import java.time.LocalDateTime;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class JobChatRoom {
+public class ChatRoom {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
