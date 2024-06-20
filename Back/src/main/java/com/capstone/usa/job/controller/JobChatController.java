@@ -5,7 +5,7 @@ import com.capstone.usa.chat.dto.UserNameDto;
 import com.capstone.usa.chat.dto.MessageDto;
 import com.capstone.usa.job.model.JobChatMessage;
 import com.capstone.usa.job.service.JobChatRoomService;
-import com.capstone.usa.job.service.JobChatService;
+import com.capstone.usa.job.service.JobChatMessageService;
 import com.capstone.usa.user.model.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -21,7 +21,7 @@ import java.util.List;
 public class JobChatController {
 
     private final JobChatRoomService jobchatRoomService;
-    private final JobChatService jobchatService;
+    private final JobChatMessageService jobchatMessageService;
 
     @PostMapping("/create/{jobId}")
     public ResponseEntity<?> createChatRoom(
@@ -36,7 +36,7 @@ public class JobChatController {
             @RequestBody MessageDto dto,
             @AuthenticationPrincipal User user
     ) {
-        jobchatService.saveMessage(user, dto);
+        jobchatMessageService.saveMessage(user, dto);
     }
 
     @GetMapping("/messages/{roomId}")
