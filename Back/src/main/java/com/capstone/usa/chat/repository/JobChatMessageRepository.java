@@ -7,6 +7,6 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface JobChatRepository extends JpaRepository<JobChatMessage, Long> {
+public interface JobChatMessageRepository extends JpaRepository<JobChatMessage, Long> {
     List<JobChatMessage> findByChatRoomId(Long chatRoomId);
 }

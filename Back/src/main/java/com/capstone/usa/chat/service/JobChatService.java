@@ -3,7 +3,7 @@ package com.capstone.usa.chat.service;
 import com.capstone.usa.chat.dto.MessageDto;
 import com.capstone.usa.chat.model.JobChatMessage;
 import com.capstone.usa.chat.model.JobChatRoom;
-import com.capstone.usa.chat.repository.JobChatRepository;
+import com.capstone.usa.chat.repository.JobChatMessageRepository;
 import com.capstone.usa.chat.repository.JobChatRoomRepository;
 import com.capstone.usa.user.model.User;
 import lombok.RequiredArgsConstructor;
@@ -17,12 +17,12 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class JobChatService {
 
-    private final JobChatRoomRepository chatRoomRepository;
-    private final JobChatRepository chatRepository;
+    private final JobChatRoomRepository jobChatRoomRepository;
+    private final JobChatMessageRepository jobChatMessageRepository;
 
     @Transactional
     public void saveMessage(User user, MessageDto dto) {
-        Optional<JobChatRoom> chatRoomOptional = chatRoomRepository.findByRoomId(dto.getChatRoomId());
+        Optional<JobChatRoom> chatRoomOptional = jobChatRoomRepository.findByRoomId(dto.getChatRoomId());
         JobChatRoom chatRoom = chatRoomOptional.get();
 
         JobChatMessage chat = new JobChatMessage(
@@ -32,6 +32,6 @@ public class JobChatService {
                 dto.getMessage(),
                 LocalDateTime.now()
         );
-        chatRepository.save(chat);
+        jobChatMessageRepository.save(chat);
     }
 }

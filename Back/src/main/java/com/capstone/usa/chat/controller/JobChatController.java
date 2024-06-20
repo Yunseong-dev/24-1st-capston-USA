@@ -20,15 +20,15 @@ import java.util.List;
 @RequiredArgsConstructor
 public class JobChatController {
 
-    private final JobChatRoomService chatRoomService;
-    private final JobChatService chatService;
+    private final JobChatRoomService jobchatRoomService;
+    private final JobChatService jobchatService;
 
     @PostMapping("/create/{jobId}")
     public ResponseEntity<?> createChatRoom(
             @PathVariable int jobId,
             @AuthenticationPrincipal User user
     ) {
-        return chatRoomService.createChatRoom(jobId, user);
+        return jobchatRoomService.createChatRoom(jobId, user);
     }
 
     @PostMapping("/sendMessage")
@@ -36,14 +36,14 @@ public class JobChatController {
             @RequestBody MessageDto dto,
             @AuthenticationPrincipal User user
     ) {
-        chatService.saveMessage(user, dto);
+        jobchatService.saveMessage(user, dto);
     }
 
     @GetMapping("/messages/{roomId}")
     public ResponseEntity<List<JobChatMessage>> getChatMessages(
             @PathVariable String roomId
     ) {
-        List<JobChatMessage> messages = chatRoomService.getChatIncludeChatId(roomId);
+        List<JobChatMessage> messages = jobchatRoomService.getChatIncludeChatId(roomId);
         return ResponseEntity.status(HttpStatus.OK).body(messages);
     }
 
@@ -51,14 +51,14 @@ public class JobChatController {
     public UserNameDto getUserName(
             @AuthenticationPrincipal User user
     ) {
-        return chatRoomService.getUserName(user);
+        return jobchatRoomService.getUserName(user);
     }
 
     @GetMapping("/myRooms")
     public ResponseEntity<List<ChatRoomIdDto>> getMyChatRooms(
             @AuthenticationPrincipal User currentUser
     ) {
-        List<ChatRoomIdDto> chatRooms = chatRoomService.getChatRoomsForUser(currentUser);
+        List<ChatRoomIdDto> chatRooms = jobchatRoomService.getChatRoomsForUser(currentUser);
         return ResponseEntity.status(HttpStatus.OK).body(chatRooms);
     }
 
