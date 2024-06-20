@@ -1,16 +1,11 @@
-import React, { useState, useEffect } from 'react';
-import { Job } from '../../interface/job';
+import { useState, useEffect } from 'react';
+import { customAxios } from '../../utils/axios';
 import dayjs from 'dayjs';
-import { customAxios, postWithToken } from '../../utils/axios';
-import useToken from '../../hooks/useToken';
-import { useNavigate } from 'react-router-dom';
+import { Job } from '../../interface/job';
+import { Link } from 'react-router-dom';
 
 const JobPosts: React.FC = () => {
    const [jobPosts, setJobPosts] = useState<Job[]>([]);
-
-   const { token } = useToken();
-
-   const navigate = useNavigate()
 
    useEffect(() => {
       const fetchJobPosts = async () => {
@@ -24,31 +19,17 @@ const JobPosts: React.FC = () => {
       fetchJobPosts();
    }, []);
 
-   const handleChat = async (jobId: number) => {
-      try {
-         const response = await postWithToken(token, `/chat/create/${jobId}`, "");
-
-         const roomId = response.data.roomId;
-         navigate(`/chat/${roomId}`);
-      } catch (error: any) {
-         if (error.response && error.response.data) {
-            alert(error.response.data)
-         }
-      }
-   };
-
    return (
       <div>
-         <h1>Job Posts</h1>
-         <button onClick={() => navigate('/CreateJob')}>Create Job Post</button>
+         <a href="/JobCreate">게시물 생성</a>
          <div>
-            {jobPosts.map(post => (
-               <div key={post.id}>
-                  <h2>{post.title}</h2>
-                  <p>{post.content}</p>
-                  <p>{dayjs(post.createdAt).format('YYYY년 MM월 DD일')}</p>
-                  <button onClick={() => handleChat(post.id)}>채팅하기</button>
-               </div>
+            {jobPosts.map(job => (
+               <li key={job.id}>
+                  <Link to={`/article/${job.id}`}>
+                     <h2>{job.title}</h2>
+                     <p>{dayjs(job.createdAt).format("YYYY년 MM월 DD일")}</p>
+                  </Link>
+               </li>
             ))}
          </div>
       </div>
