@@ -1,10 +1,9 @@
 package com.capstone.usa.chat.controller;
 
-import com.capstone.usa.chat.config.WebSocketHandler;
 import com.capstone.usa.chat.dto.ChatRoomIdDto;
+import com.capstone.usa.chat.dto.UserNameDto;
 import com.capstone.usa.chat.dto.MessageDto;
 import com.capstone.usa.chat.model.Chat;
-import com.capstone.usa.chat.model.ChatRoom;
 import com.capstone.usa.chat.service.ChatRoomService;
 import com.capstone.usa.chat.service.ChatService;
 import com.capstone.usa.user.model.User;
@@ -23,22 +22,21 @@ public class ChatRoomController {
 
     private final ChatRoomService chatRoomService;
     private final ChatService chatService;
-    private final WebSocketHandler webSocketHandler;
 
     @PostMapping("/create/{jobId}")
     public ResponseEntity<?> createChatRoom(
             @PathVariable int jobId,
-            @AuthenticationPrincipal User currentUser
+            @AuthenticationPrincipal User user
     ) {
-        return chatRoomService.createChatRoom(jobId, currentUser);
+        return chatRoomService.createChatRoom(jobId, user);
     }
 
     @PostMapping("/sendMessage")
     public void sendMessage(
             @RequestBody MessageDto dto,
-            @AuthenticationPrincipal User currentUser
+            @AuthenticationPrincipal User user
     ) {
-        chatService.saveMessage(currentUser, dto);
+        chatService.saveMessage(user, dto);
     }
 
     @GetMapping("/messages/{roomId}")
@@ -47,6 +45,13 @@ public class ChatRoomController {
     ) {
         List<Chat> messages = chatRoomService.getChatIncludeChatId(roomId);
         return ResponseEntity.status(HttpStatus.OK).body(messages);
+    }
+
+    @GetMapping("/getUser")
+    public UserNameDto getUserName(
+            @AuthenticationPrincipal User user
+    ) {
+        return chatRoomService.getUserName(user);
     }
 
     @GetMapping("/myRooms")
