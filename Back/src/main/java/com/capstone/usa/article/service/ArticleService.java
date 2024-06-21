@@ -56,7 +56,8 @@ public class ArticleService {
                 LocalDateTime.now(),
                 LocalDateTime.now(),
                 null,
-                false
+                false,
+                null
         );
         articleRepository.save(article);
     }
@@ -123,6 +124,7 @@ public class ArticleService {
 
         article.setRented(true);
         article.setRentedBy(chatRoom.getUser());
+        article.setRentAt(LocalDateTime.now());
         articleRepository.save(article);
 
         return ResponseEntity.ok().build();

@@ -29,4 +29,5 @@ public class Article {
     @ManyToOne
     private User rentedBy;
     private boolean isRented;
+    private LocalDateTime rentAt;
 }
