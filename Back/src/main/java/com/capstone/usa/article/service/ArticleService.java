@@ -30,7 +30,7 @@ public class ArticleService {
     public ResponseEntity<Article> getArticle(Long id) {
         Optional<Article> oArticle = articleRepository.findById(id);
 
-        if (oArticle.isPresent()) {
+        if (oArticle.isEmpty()) {
             return ResponseEntity.notFound().build();
         }
 
@@ -52,7 +52,7 @@ public class ArticleService {
         articleRepository.save(article);
     }
 
-    public ResponseEntity<?> modifyArticle(Long id, User user, ArticleDto dto) {
+    private ResponseEntity<?> checkArticleOwnership(Long id, User user) {
         Optional<Article> oArticle = articleRepository.findById(id);
 
         if (oArticle.isEmpty()) {
@@ -64,6 +64,16 @@ public class ArticleService {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("내 글만 수정할 수 있습니다");
         }
 
+        return ResponseEntity.ok(article);
+    }
+
+    public ResponseEntity<?> modifyArticle(Long id, User user, ArticleDto dto) {
+        ResponseEntity<?> response = checkArticleOwnership(id, user);
+        if (response.getStatusCode() != HttpStatus.OK) {
+            return response;
+        }
+
+        Article article = (Article) response.getBody();
         article.setTitle(dto.getTitle());
         article.setContent(dto.getContent());
         article.setUpdatedAt(LocalDateTime.now());
@@ -73,18 +83,13 @@ public class ArticleService {
     }
 
     public ResponseEntity<?> deleteArticle(Long id, User user) {
-        Optional<Article> oArticle = articleRepository.findById(id);
-
-        if (oArticle.isEmpty()) {
-            return ResponseEntity.notFound().build();
+        ResponseEntity<?> response = checkArticleOwnership(id, user);
+        if (response.getStatusCode() != HttpStatus.OK) {
+            return response;
         }
 
-        Article article = oArticle.get();
-        if (!article.getUser().getId().equals(user.getId())) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("내 글만 삭제할 수 있습니다");
-        }
+        Article article = (Article) response.getBody();
         s3Service.deleteImage(article.getImgUrl());
-
         articleRepository.delete(article);
 
         return ResponseEntity.ok().build();
