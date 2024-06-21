@@ -71,6 +71,11 @@ public class UserService {
         if (!passwordEncoder.matches(dto.getCurrentPassword(), user.getPassword())) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("현재 비밀번호가 일치하지 않습니다");
         }
+
+        user.setName(dto.getName());
+        user.setPassword(passwordEncoder.encode(dto.getPassword()));
+        userRepository.save(user);
+
         return ResponseEntity.ok().build();
     }
 }
