@@ -2,6 +2,7 @@ package com.capstone.usa.auth.controller;
 
 import com.capstone.usa.auth.dto.CreateUserDto;
 import com.capstone.usa.auth.dto.LoginUserDto;
+import com.capstone.usa.auth.dto.ModifyUserDto;
 import com.capstone.usa.auth.model.User;
 import com.capstone.usa.auth.service.UserService;
 import lombok.AllArgsConstructor;
@@ -30,10 +31,18 @@ public class UserController {
         return userService.loginWithAuthenticationManager(dto);
     }
 
-    @GetMapping("/me")
+    @GetMapping
     public User getMyProfile(
             @AuthenticationPrincipal User user
     ) {
         return user;
+    }
+
+    @PutMapping
+    public ResponseEntity<?> modifyUser(
+            @RequestBody ModifyUserDto dto,
+            @AuthenticationPrincipal User user
+    ) {
+        return userService.modifyUser(dto, user);
     }
 }
