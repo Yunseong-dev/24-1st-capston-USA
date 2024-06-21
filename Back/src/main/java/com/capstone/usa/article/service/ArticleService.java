@@ -30,11 +30,7 @@ public class ArticleService {
     public ResponseEntity<Article> getArticle(Long id) {
         Optional<Article> oArticle = articleRepository.findById(id);
 
-        if (oArticle.isEmpty()) {
-            return ResponseEntity.notFound().build();
-        }
-
-        return ResponseEntity.ok(oArticle.get());
+        return oArticle.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
 
     public void createArticle(User user, ArticleDto dto, MultipartFile image) throws IOException {

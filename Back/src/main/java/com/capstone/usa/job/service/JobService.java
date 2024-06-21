@@ -27,11 +27,7 @@ public class JobService {
     public ResponseEntity<Job> getJob(Long id) {
         Optional<Job> oJob = jobRepository.findById(id);
 
-        if (oJob.isPresent()) {
-            return ResponseEntity.notFound().build();
-        }
-
-        return ResponseEntity.ok(oJob.get());
+        return oJob.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
 
     public void createJob(User user, JobDto dto) {
