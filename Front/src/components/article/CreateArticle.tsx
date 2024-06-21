@@ -47,7 +47,7 @@ const CreateArticle = () => {
       }
 
       try {
-         await postWithToken(token, '/articles/create', formData);
+         await postWithToken(token, '/articles', formData);
 
          navigate('/ArticleList')
          alert("게시물을 등록했습니다")

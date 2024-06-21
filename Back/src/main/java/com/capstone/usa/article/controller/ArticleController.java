@@ -1,6 +1,6 @@
 package com.capstone.usa.article.controller;
 
-import com.capstone.usa.article.dto.CreateArticleDto;
+import com.capstone.usa.article.dto.ArticleDto;
 import com.capstone.usa.article.model.Article;
 import com.capstone.usa.article.service.ArticleService;
 import com.capstone.usa.user.model.User;
@@ -31,10 +31,10 @@ public class ArticleController {
         return articleService.getArticle(id);
     }
 
-    @PostMapping("/create")
+    @PostMapping
     public void createArticle(
             @AuthenticationPrincipal User user,
-            @RequestPart CreateArticleDto dto,
+            @RequestPart ArticleDto dto,
             @RequestPart(value = "image", required = false) MultipartFile image
     ) throws IOException {
         articleService.createArticle(user, dto, image);

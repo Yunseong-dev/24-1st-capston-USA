@@ -29,7 +29,7 @@ public class JobController {
         return jobService.getJob(id);
     }
 
-    @PostMapping("/create")
+    @PostMapping
     public void createJob(
             @AuthenticationPrincipal User user,
             @RequestBody CreateJobDto dto

@@ -24,7 +24,7 @@ const CreateArticle = () => {
       const data = { title, content };
 
       try {
-         await postWithToken(token, '/job/create', data);
+         await postWithToken(token, '/job', data);
 
          navigate('/JobList');
          alert("게시물이 성공적으로 등록되었습니다");
