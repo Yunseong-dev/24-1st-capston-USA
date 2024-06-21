@@ -1,6 +1,5 @@
 package com.capstone.usa.job.service;
 
-import com.capstone.usa.article.dto.ArticleDto;
 import com.capstone.usa.job.dto.JobDto;
 import com.capstone.usa.job.model.Job;
 import com.capstone.usa.job.repository.JobRepository;
@@ -47,7 +46,7 @@ public class JobService {
         jobRepository.save(job);
     }
 
-    public ResponseEntity<?> modifyJob(Long id, User user, ArticleDto dto) {
+    private ResponseEntity<?> checkJobOwnership(Long id, User user) {
         Optional<Job> oJob = jobRepository.findById(id);
 
         if (oJob.isEmpty()) {
@@ -59,6 +58,16 @@ public class JobService {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("내 글만 수정할 수 있습니다");
         }
 
+        return ResponseEntity.ok(job);
+    }
+
+    public ResponseEntity<?> modifyJob(Long id, User user, JobDto dto) {
+        ResponseEntity<?> response = checkJobOwnership(id, user);
+        if (response.getStatusCode() != HttpStatus.OK) {
+            return response;
+        }
+
+        Job job = (Job) response.getBody();
         job.setTitle(dto.getTitle());
         job.setContent(dto.getContent());
         job.setUpdatedAt(LocalDateTime.now());
@@ -68,17 +77,12 @@ public class JobService {
     }
 
     public ResponseEntity<?> deleteJob(Long id, User user) {
-        Optional<Job> oJob = jobRepository.findById(id);
-
-        if (oJob.isEmpty()) {
-            return ResponseEntity.notFound().build();
+        ResponseEntity<?> response = checkJobOwnership(id, user);
+        if (response.getStatusCode() != HttpStatus.OK) {
+            return response;
         }
 
-        Job job = oJob.get();
-        if (!job.getUser().getId().equals(user.getId())) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("내 글만 수정할 수 있습니다");
-        }
-
+        Job job = (Job) response.getBody();
         jobRepository.delete(job);
 
         return ResponseEntity.ok().build();

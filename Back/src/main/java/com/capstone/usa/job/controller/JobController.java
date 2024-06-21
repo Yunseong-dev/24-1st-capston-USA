@@ -1,6 +1,5 @@
 package com.capstone.usa.job.controller;
 
-import com.capstone.usa.article.dto.ArticleDto;
 import com.capstone.usa.job.dto.JobDto;
 import com.capstone.usa.job.model.Job;
 import com.capstone.usa.job.service.JobService;
@@ -43,7 +42,7 @@ public class JobController {
     public ResponseEntity<?> modifyJob(
             @PathVariable Long id,
             @AuthenticationPrincipal User user,
-            @RequestBody ArticleDto dto
+            @RequestBody JobDto dto
     ) {
         return jobService.modifyJob(id, user, dto);
     }
