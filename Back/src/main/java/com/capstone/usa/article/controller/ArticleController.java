@@ -61,9 +61,9 @@ public class ArticleController {
     @PostMapping("/{id}/{roomId}/rent")
     public ResponseEntity<?> rentArticle(
             @PathVariable Long id,
-            @PathVariable String roomid,
+            @PathVariable String roomId,
             @AuthenticationPrincipal User user
     ) {
-        return articleService.rentArticle(id, roomid, user);
+        return articleService.rentArticle(id, roomId, user);
     }
 }
