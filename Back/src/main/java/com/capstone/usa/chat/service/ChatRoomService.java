@@ -45,7 +45,7 @@ public class ChatRoomService {
     }
 
     private ResponseEntity<?> createJobChatRoom(Long referenceId, User user) {
-        Job job = jobService.getJob(referenceId);
+        Job job = jobService.getJob(referenceId).getBody();
         if (job == null) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("유효하지 않은 요청입니다");
         }
@@ -106,7 +106,7 @@ public class ChatRoomService {
 
     private String getChatRoomTitle(ChatRoom chatRoom) {
         if (CHAT_TYPE_JOB.equals(chatRoom.getChatType())) {
-            Job job = jobService.getJob(chatRoom.getReferenceId());
+            Job job = jobService.getJob(chatRoom.getReferenceId()).getBody();
             return job != null ? job.getTitle() : "알 수 없는 채팅 제목";
         } else if (CHAT_TYPE_ARTICLE.equals(chatRoom.getChatType())) {
             Article article = articleService.getArticle(chatRoom.getReferenceId()).getBody();
