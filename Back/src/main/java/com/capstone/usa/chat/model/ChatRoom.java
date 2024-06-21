@@ -22,9 +22,9 @@ public class ChatRoom {
     private String chatType;
     private Long referenceId;
     @ManyToOne
-    private User user1;
+    private User postOwner;
     @ManyToOne
-    private User user2;
+    private User user;
     @Column(unique = true)
     private String roomId;
     private LocalDateTime createdAt;
