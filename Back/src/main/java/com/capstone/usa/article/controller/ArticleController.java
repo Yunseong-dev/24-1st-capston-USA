@@ -57,4 +57,13 @@ public class ArticleController {
     ) {
         return articleService.deleteArticle(id, user);
     }
+
+    @PostMapping("/{id}/{roomId}/rent")
+    public ResponseEntity<?> rentArticle(
+            @PathVariable Long id,
+            @PathVariable String roomid,
+            @AuthenticationPrincipal User user
+    ) {
+        return articleService.rentArticle(id, roomid, user);
+    }
 }

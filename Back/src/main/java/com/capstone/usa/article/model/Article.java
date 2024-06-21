@@ -26,4 +26,7 @@ public class Article {
     private String imgUrl;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
+    @ManyToOne
+    private User rentedBy;
+    private boolean isRented;
 }

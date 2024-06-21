@@ -4,6 +4,8 @@ import com.capstone.usa.article.dto.ArticleDto;
 import com.capstone.usa.article.model.Article;
 import com.capstone.usa.article.repository.ArticleRepository;
 import com.capstone.usa.auth.model.User;
+import com.capstone.usa.chat.model.ChatRoom;
+import com.capstone.usa.chat.repository.ChatRoomRepository;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -13,6 +15,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -20,10 +23,18 @@ import java.util.Optional;
 @AllArgsConstructor
 public class ArticleService {
     private final ArticleRepository articleRepository;
+    private final ChatRoomRepository chatRoomRepository;
     private final S3Service s3Service;
 
     public List<Article> getArticles() {
-        return articleRepository.findAll();
+        List<Article> articleList = articleRepository.findAll();
+        ArrayList<Article> rentedFalse = new ArrayList<>();
+        for (Article article : articleList) {
+            if (!article.isRented()) {
+                rentedFalse.add(article);
+            }
+        }
+        return rentedFalse;
     }
 
     @Transactional
@@ -43,7 +54,9 @@ public class ArticleService {
                 user,
                 imgUrl,
                 LocalDateTime.now(),
-                LocalDateTime.now()
+                LocalDateTime.now(),
+                null,
+                false
         );
         articleRepository.save(article);
     }
@@ -87,6 +100,30 @@ public class ArticleService {
         Article article = (Article) response.getBody();
         s3Service.deleteImage(article.getImgUrl());
         articleRepository.delete(article);
+
+        return ResponseEntity.ok().build();
+    }
+
+    public ResponseEntity<?> rentArticle(Long id,String roomId, User user) {
+        Optional<Article> oArticle = articleRepository.findById(id);
+        ChatRoom chatRoom = chatRoomRepository.findByRoomId(roomId).get();
+
+        if (oArticle.isEmpty()) {
+            return ResponseEntity.notFound().build();
+        }
+
+        Article article = oArticle.get();
+        if (!article.getUser().getId().equals(user.getId())) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("내 글만 대여할 수 있습니다");
+        }
+        if (article.isRented()) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("이미 대여가 완료됐습니다");
+        }
+
+
+        article.setRented(true);
+        article.setRentedBy(chatRoom.getUser());
+        articleRepository.save(article);
 
         return ResponseEntity.ok().build();
     }
