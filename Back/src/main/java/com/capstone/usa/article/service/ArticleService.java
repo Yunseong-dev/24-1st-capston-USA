@@ -55,7 +55,7 @@ public class ArticleService {
     public ResponseEntity<?> modifyArticle(Long id, User user, ArticleDto dto) {
         Optional<Article> oArticle = articleRepository.findById(id);
 
-        if (oArticle.isPresent()) {
+        if (oArticle.isEmpty()) {
             return ResponseEntity.notFound().build();
         }
 
@@ -75,7 +75,7 @@ public class ArticleService {
     public ResponseEntity<?> deleteArticle(Long id, User user) {
         Optional<Article> oArticle = articleRepository.findById(id);
 
-        if (oArticle.isPresent()) {
+        if (oArticle.isEmpty()) {
             return ResponseEntity.notFound().build();
         }
 
