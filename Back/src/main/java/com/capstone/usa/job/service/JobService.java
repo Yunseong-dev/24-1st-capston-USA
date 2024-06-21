@@ -1,7 +1,7 @@
 package com.capstone.usa.job.service;
 
 import com.capstone.usa.article.dto.ArticleDto;
-import com.capstone.usa.job.dto.CreateJobDto;
+import com.capstone.usa.job.dto.JobDto;
 import com.capstone.usa.job.model.Job;
 import com.capstone.usa.job.repository.JobRepository;
 import com.capstone.usa.auth.model.User;
@@ -35,7 +35,7 @@ public class JobService {
         return ResponseEntity.ok(oJob.get());
     }
 
-    public void createJob(User user, CreateJobDto dto) {
+    public void createJob(User user, JobDto dto) {
         Job job = new Job(
                 null,
                 dto.getTitle(),

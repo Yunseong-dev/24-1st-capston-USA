@@ -7,7 +7,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @AllArgsConstructor
-public class CreateJobDto {
+public class JobDto {
     private String title;
     private String content;
 }

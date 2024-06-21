@@ -1,7 +1,7 @@
 package com.capstone.usa.job.controller;
 
 import com.capstone.usa.article.dto.ArticleDto;
-import com.capstone.usa.job.dto.CreateJobDto;
+import com.capstone.usa.job.dto.JobDto;
 import com.capstone.usa.job.model.Job;
 import com.capstone.usa.job.service.JobService;
 import com.capstone.usa.auth.model.User;
@@ -34,7 +34,7 @@ public class JobController {
     @PostMapping
     public void createJob(
             @AuthenticationPrincipal User user,
-            @RequestBody CreateJobDto dto
+            @RequestBody JobDto dto
     ) {
         jobService.createJob(user, dto);
     }
