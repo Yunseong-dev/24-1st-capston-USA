@@ -28,9 +28,9 @@ const ArticleList = () => {
                   <Link to={`/article/${article.id}`}>
                      <h2>{article.title}</h2>
                      <p>{dayjs(article.createdAt).format("YYYY년 MM월 DD일")}</p>
-                     {article.filename && (
+                     {article.imgUrl && (
                         <img
-                           src={`http://localhost:8080/imgFile/${article.filename}`}
+                           src={article.imgUrl}
                            alt="Article Image"
                            style={{ maxWidth: "100px" }}
                         />

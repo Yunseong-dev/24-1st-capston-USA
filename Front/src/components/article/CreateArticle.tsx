@@ -36,6 +36,10 @@ const CreateArticle = () => {
    const createArticle = async (e: { preventDefault: () => void }) => {
       e.preventDefault()
 
+      if (!image) {
+         alert("이미지를 선택해주세요")
+      }
+
       const formData = new FormData();
       formData.append('dto', new Blob([JSON.stringify({ title, content })], { type: 'application/json' }));
       if (image) {
@@ -48,10 +52,8 @@ const CreateArticle = () => {
          navigate('/ArticleList')
          alert("게시물을 등록했습니다")
 
-      } catch (error: any) {
-         if (error.response && error.response.data) {
-            alert(error.response.data)
-         }
+      } catch (error) {
+         console.log(error)
       }
    }
 
@@ -74,7 +76,6 @@ const CreateArticle = () => {
             <br />
             <img
                src={imageSrc}
-               alt="이미지 미리보기"
             />
             <br />
             <input

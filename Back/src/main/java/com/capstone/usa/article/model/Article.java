@@ -23,8 +23,7 @@ public class Article {
     private String content;
     @ManyToOne
     private User user;
-    private String filename;
-    private String filepath;
+    private String imgUrl;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 }
