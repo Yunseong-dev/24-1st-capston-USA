@@ -39,4 +39,21 @@ public class ArticleController {
     ) throws IOException {
         articleService.createArticle(user, dto, image);
     }
+
+    @PutMapping("/{id}")
+    public void modifyArticle(
+            @PathVariable Long id,
+            @AuthenticationPrincipal User user,
+            @RequestBody ArticleDto dto
+    ) {
+        articleService.modifyArticle(id, user, dto);
+    }
+
+    @DeleteMapping("/{id}")
+    public void deleteArticle(
+            @PathVariable Long id,
+            @AuthenticationPrincipal User user
+    ) {
+        articleService.deleteArticle(id, user);
+    }
 }

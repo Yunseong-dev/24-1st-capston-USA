@@ -29,4 +29,10 @@ public class S3Service {
         amazonS3.putObject(bucket, originalFilename, image.getInputStream(), metadata);
         return amazonS3.getUrl(bucket, originalFilename).toString();
     }
+
+    public void deleteImage(String imgUrl) {
+        String key = imgUrl.substring(imgUrl.lastIndexOf("/") + 1);
+
+        amazonS3.deleteObject(bucket, key);
+    }
 }

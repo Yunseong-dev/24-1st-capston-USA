@@ -43,4 +43,34 @@ public class ArticleService {
         );
         articleRepository.save(article);
     }
+
+    public void modifyArticle(Long id, User user, ArticleDto dto) {
+        Article article = getArticle(id);
+
+        if (articleRepository.findById(id).isPresent()) {
+            throw new IllegalArgumentException("존재하지 않는 게시물입니다");
+        }
+        if (!article.getUser().getId().equals(user.getId())) {
+            throw new IllegalArgumentException("내 글만 수정 가능합니다.");
+        }
+
+        article.setTitle(dto.getTitle());
+        article.setContent(dto.getContent());
+        article.setUpdatedAt(LocalDateTime.now());
+        articleRepository.save(article);
+    }
+
+    public void deleteArticle(Long id, User user) {
+        Article article = getArticle(id);
+
+        if (articleRepository.findById(id).isPresent()) {
+            throw new IllegalArgumentException("존재하지 않는 게시물입니다");
+        }
+        if (!article.getUser().getId().equals(user.getId())) {
+            throw new IllegalArgumentException("내 글만 삭제 가능합니다.");
+        }
+        s3Service.deleteImage(article.getImgUrl());
+
+        articleRepository.delete(article);
+    }
 }
