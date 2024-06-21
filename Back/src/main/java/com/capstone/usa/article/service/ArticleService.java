@@ -25,7 +25,7 @@ public class ArticleService {
 
     @Transactional
     public Article getArticle(Long id) {
-        return articleRepository.findById(String.valueOf(id))
+        return articleRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("게시물이 없습니다."));
     }
 
