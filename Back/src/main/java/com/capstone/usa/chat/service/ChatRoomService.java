@@ -56,7 +56,7 @@ public class ChatRoomService {
     }
 
     private ResponseEntity<?> createArticleChatRoom(Long referenceId, User user) {
-        Article article = articleService.getArticle(referenceId);
+        Article article = articleService.getArticle(referenceId).getBody();
         if (article == null) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("유효하지 않은 요청입니다");
         }
@@ -109,7 +109,7 @@ public class ChatRoomService {
             Job job = jobService.getJob(chatRoom.getReferenceId());
             return job != null ? job.getTitle() : "알 수 없는 채팅 제목";
         } else if (CHAT_TYPE_ARTICLE.equals(chatRoom.getChatType())) {
-            Article article = articleService.getArticle(chatRoom.getReferenceId());
+            Article article = articleService.getArticle(chatRoom.getReferenceId()).getBody();
             return article != null ? article.getTitle() : "알 수 없는 채팅 제목";
         }
         return "알 수 없는 제목";

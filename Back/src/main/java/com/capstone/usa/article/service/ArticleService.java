@@ -6,12 +6,15 @@ import com.capstone.usa.article.repository.ArticleRepository;
 import com.capstone.usa.auth.model.User;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @AllArgsConstructor
@@ -24,9 +27,14 @@ public class ArticleService {
     }
 
     @Transactional
-    public Article getArticle(Long id) {
-        return articleRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("게시물이 없습니다."));
+    public ResponseEntity<Article> getArticle(Long id) {
+        Optional<Article> oArticle = articleRepository.findById(id);
+
+        if (oArticle.isPresent()) {
+            return ResponseEntity.notFound().build();
+        }
+
+        return ResponseEntity.ok(oArticle.get());
     }
 
     public void createArticle(User user, ArticleDto dto, MultipartFile image) throws IOException {
@@ -44,33 +52,41 @@ public class ArticleService {
         articleRepository.save(article);
     }
 
-    public void modifyArticle(Long id, User user, ArticleDto dto) {
-        Article article = getArticle(id);
+    public ResponseEntity<?> modifyArticle(Long id, User user, ArticleDto dto) {
+        Optional<Article> oArticle = articleRepository.findById(id);
 
-        if (articleRepository.findById(id).isPresent()) {
-            throw new IllegalArgumentException("존재하지 않는 게시물입니다");
+        if (oArticle.isPresent()) {
+            return ResponseEntity.notFound().build();
         }
+
+        Article article = oArticle.get();
         if (!article.getUser().getId().equals(user.getId())) {
-            throw new IllegalArgumentException("내 글만 수정 가능합니다.");
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("내 글만 수정할 수 있습니다");
         }
 
         article.setTitle(dto.getTitle());
         article.setContent(dto.getContent());
         article.setUpdatedAt(LocalDateTime.now());
         articleRepository.save(article);
+
+        return ResponseEntity.ok().build();
     }
 
-    public void deleteArticle(Long id, User user) {
-        Article article = getArticle(id);
+    public ResponseEntity<?> deleteArticle(Long id, User user) {
+        Optional<Article> oArticle = articleRepository.findById(id);
 
-        if (articleRepository.findById(id).isPresent()) {
-            throw new IllegalArgumentException("존재하지 않는 게시물입니다");
+        if (oArticle.isPresent()) {
+            return ResponseEntity.notFound().build();
         }
+
+        Article article = oArticle.get();
         if (!article.getUser().getId().equals(user.getId())) {
-            throw new IllegalArgumentException("내 글만 삭제 가능합니다.");
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("내 글만 삭제할 수 있습니다");
         }
         s3Service.deleteImage(article.getImgUrl());
 
         articleRepository.delete(article);
+
+        return ResponseEntity.ok().build();
     }
 }

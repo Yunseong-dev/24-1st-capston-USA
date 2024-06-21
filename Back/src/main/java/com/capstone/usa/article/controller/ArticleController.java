@@ -5,6 +5,7 @@ import com.capstone.usa.article.model.Article;
 import com.capstone.usa.article.service.ArticleService;
 import com.capstone.usa.auth.model.User;
 import lombok.AllArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -25,7 +26,7 @@ public class ArticleController {
     }
 
     @GetMapping("/{id}")
-    public Article getArticle(
+    public ResponseEntity<Article> getArticle(
             @PathVariable Long id
     ) {
         return articleService.getArticle(id);
@@ -41,19 +42,19 @@ public class ArticleController {
     }
 
     @PutMapping("/{id}")
-    public void modifyArticle(
+    public ResponseEntity<?> modifyArticle(
             @PathVariable Long id,
             @AuthenticationPrincipal User user,
             @RequestBody ArticleDto dto
     ) {
-        articleService.modifyArticle(id, user, dto);
+        return articleService.modifyArticle(id, user, dto);
     }
 
     @DeleteMapping("/{id}")
-    public void deleteArticle(
+    public ResponseEntity<?> deleteArticle(
             @PathVariable Long id,
             @AuthenticationPrincipal User user
     ) {
-        articleService.deleteArticle(id, user);
+        return articleService.deleteArticle(id, user);
     }
 }
