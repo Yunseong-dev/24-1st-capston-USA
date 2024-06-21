@@ -22,7 +22,7 @@ public class JobService {
     public void createJob(User user, CreateJobDto dto) {
         LocalDateTime now = LocalDateTime.now();
         Job job = new Job(
-                0L,
+                null,
                 dto.getTitle(),
                 dto.getContent(),
                 user,

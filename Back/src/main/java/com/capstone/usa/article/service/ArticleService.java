@@ -33,7 +33,7 @@ public class ArticleService {
         LocalDateTime now = LocalDateTime.now();
 
         Article article = new Article(
-                0,
+                null,
                 dto.getTitle(),
                 dto.getContent(),
                 user,
