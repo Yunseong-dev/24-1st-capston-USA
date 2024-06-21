@@ -1,4 +1,4 @@
-package com.capstone.usa.user.security;
+package com.capstone.usa.auth.security;
 
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.GrantedAuthority;

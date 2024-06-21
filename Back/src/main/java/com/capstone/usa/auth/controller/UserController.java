@@ -1,9 +1,9 @@
-package com.capstone.usa.user.controller;
+package com.capstone.usa.auth.controller;
 
-import com.capstone.usa.user.dto.CreateUserDto;
-import com.capstone.usa.user.dto.LoginUserDto;
-import com.capstone.usa.user.model.User;
-import com.capstone.usa.user.service.UserService;
+import com.capstone.usa.auth.dto.CreateUserDto;
+import com.capstone.usa.auth.dto.LoginUserDto;
+import com.capstone.usa.auth.model.User;
+import com.capstone.usa.auth.service.UserService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;

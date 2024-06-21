@@ -5,7 +5,7 @@ import com.capstone.usa.chat.model.ChatMessage;
 import com.capstone.usa.chat.model.ChatRoom;
 import com.capstone.usa.chat.repository.ChatMessageRepository;
 import com.capstone.usa.chat.repository.ChatRoomRepository;
-import com.capstone.usa.user.model.User;
+import com.capstone.usa.auth.model.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

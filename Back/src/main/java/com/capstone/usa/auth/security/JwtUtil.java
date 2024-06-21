@@ -1,6 +1,6 @@
-package com.capstone.usa.user.security;
+package com.capstone.usa.auth.security;
 
-import com.capstone.usa.user.model.User;
+import com.capstone.usa.auth.model.User;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
@@ -13,7 +13,6 @@ import java.util.Date;
 
 @Component
 public class JwtUtil {
-    private final String jwtSecret;
     private final Key jwtKey;
     private final long jwtExpirationInMs;
 
@@ -24,7 +23,6 @@ public class JwtUtil {
             long jwtExpirationInMs
     )
     {
-        this.jwtSecret = Base64.getEncoder().encodeToString(jwtSecret.getBytes());
         this.jwtKey = Keys.hmacShaKeyFor(jwtSecret.getBytes());
         this.jwtExpirationInMs = jwtExpirationInMs;
     }

@@ -1,4 +1,4 @@
-package com.capstone.usa.user.model;
+package com.capstone.usa.auth.model;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnore;

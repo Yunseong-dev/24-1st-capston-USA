@@ -1,4 +1,4 @@
-package com.capstone.usa.user.security;
+package com.capstone.usa.auth.security;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

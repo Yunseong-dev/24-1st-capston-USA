@@ -1,6 +1,6 @@
 package com.capstone.usa.article.model;
 
-import com.capstone.usa.user.model.User;
+import com.capstone.usa.auth.model.User;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;

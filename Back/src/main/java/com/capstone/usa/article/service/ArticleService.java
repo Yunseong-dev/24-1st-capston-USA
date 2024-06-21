@@ -3,7 +3,7 @@ package com.capstone.usa.article.service;
 import com.capstone.usa.article.dto.ArticleDto;
 import com.capstone.usa.article.model.Article;
 import com.capstone.usa.article.repository.ArticleRepository;
-import com.capstone.usa.user.model.User;
+import com.capstone.usa.auth.model.User;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;

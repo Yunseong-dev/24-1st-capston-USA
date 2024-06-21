@@ -3,7 +3,7 @@ package com.capstone.usa.article.controller;
 import com.capstone.usa.article.dto.ArticleDto;
 import com.capstone.usa.article.model.Article;
 import com.capstone.usa.article.service.ArticleService;
-import com.capstone.usa.user.model.User;
+import com.capstone.usa.auth.model.User;
 import lombok.AllArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;

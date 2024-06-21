@@ -3,7 +3,7 @@ package com.capstone.usa.job.controller;
 import com.capstone.usa.job.dto.CreateJobDto;
 import com.capstone.usa.job.model.Job;
 import com.capstone.usa.job.service.JobService;
-import com.capstone.usa.user.model.User;
+import com.capstone.usa.auth.model.User;
 import lombok.AllArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;

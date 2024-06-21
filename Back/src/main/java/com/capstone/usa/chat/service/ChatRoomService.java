@@ -10,7 +10,7 @@ import com.capstone.usa.chat.repository.ChatMessageRepository;
 import com.capstone.usa.chat.repository.ChatRoomRepository;
 import com.capstone.usa.job.model.Job;
 import com.capstone.usa.job.service.JobService;
-import com.capstone.usa.user.model.User;
+import com.capstone.usa.auth.model.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -37,14 +37,11 @@ public class ChatRoomService {
 
     @Transactional
     public ResponseEntity<?> createChatRoom(String chatType, Long referenceId, User user) {
-        switch (chatType) {
-            case CHAT_TYPE_JOB:
-                return createJobChatRoom(referenceId, user);
-            case CHAT_TYPE_ARTICLE:
-                return createArticleChatRoom(referenceId, user);
-            default:
-                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("지원하지 않는 채팅 타입입니다");
-        }
+        return switch (chatType) {
+            case CHAT_TYPE_JOB -> createJobChatRoom(referenceId, user);
+            case CHAT_TYPE_ARTICLE -> createArticleChatRoom(referenceId, user);
+            default -> ResponseEntity.status(HttpStatus.BAD_REQUEST).body("지원하지 않는 채팅 타입입니다");
+        };
     }
 
     private ResponseEntity<?> createJobChatRoom(Long referenceId, User user) {

@@ -6,7 +6,7 @@ import com.capstone.usa.chat.dto.MessageDto;
 import com.capstone.usa.chat.model.ChatMessage;
 import com.capstone.usa.chat.service.ChatMessageService;
 import com.capstone.usa.chat.service.ChatRoomService;
-import com.capstone.usa.user.model.User;
+import com.capstone.usa.auth.model.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

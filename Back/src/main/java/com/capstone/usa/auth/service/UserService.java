@@ -1,12 +1,12 @@
-package com.capstone.usa.user.service;
+package com.capstone.usa.auth.service;
 
 import com.capstone.usa.sms.service.VerificationService;
-import com.capstone.usa.user.dto.CreateUserDto;
-import com.capstone.usa.user.dto.LoginUserDto;
-import com.capstone.usa.user.dto.TokenDto;
-import com.capstone.usa.user.model.User;
-import com.capstone.usa.user.repository.UserRepository;
-import com.capstone.usa.user.security.JwtUtil;
+import com.capstone.usa.auth.dto.CreateUserDto;
+import com.capstone.usa.auth.dto.LoginUserDto;
+import com.capstone.usa.auth.dto.TokenDto;
+import com.capstone.usa.auth.model.User;
+import com.capstone.usa.auth.repository.UserRepository;
+import com.capstone.usa.auth.security.JwtUtil;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

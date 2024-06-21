@@ -1,7 +1,6 @@
 package com.capstone.usa.chat.model;
 
-import com.capstone.usa.article.model.Article;
-import com.capstone.usa.user.model.User;
+import com.capstone.usa.auth.model.User;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;

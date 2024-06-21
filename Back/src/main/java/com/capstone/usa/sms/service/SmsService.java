@@ -1,7 +1,7 @@
 package com.capstone.usa.sms.service;
 
 import com.capstone.usa.sms.dto.PhoneDto;
-import com.capstone.usa.user.repository.UserRepository;
+import com.capstone.usa.auth.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.*;
 import org.springframework.stereotype.Service;
