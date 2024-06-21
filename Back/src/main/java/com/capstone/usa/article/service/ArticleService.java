@@ -45,7 +45,7 @@ public class ArticleService {
         articleRepository.save(article);
     }
 
-    public Article getArticle(int id) {
+    public Article getArticle(Long id) {
         return articleRepository.findById(String.valueOf(id))
                 .orElseThrow(() -> new IllegalArgumentException("게시물이 없습니다."));
     }

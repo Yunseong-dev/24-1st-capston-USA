@@ -10,6 +10,6 @@ public class ArticleWebConfig implements WebMvcConfigurer {
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         registry.addResourceHandler("/imgFile/**")
-                .addResourceLocations("file:///C:/Users/User/OneDrive/me/Git%20Clone/24-1st-semester-capston-USA/Back/src/main/resources/static/imgFile/");
+                .addResourceLocations("file:///C:/Users/User/Desktop/24-1st-capston-USA/Back/src/main/resources/static/imgFile/");
     }
 }

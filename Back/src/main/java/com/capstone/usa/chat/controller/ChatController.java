@@ -16,19 +16,20 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/job/chat")
+@RequestMapping("/chat")
 @RequiredArgsConstructor
 public class ChatController {
 
     private final ChatRoomService chatRoomService;
     private final ChatMessageService chatMessageService;
 
-    @PostMapping("/create/{jobId}")
+    @PostMapping("/create/{chatType}/{referenceId}")
     public ResponseEntity<?> createChatRoom(
-            @PathVariable int jobId,
+            @PathVariable String chatType,
+            @PathVariable Long referenceId,
             @AuthenticationPrincipal User user
     ) {
-        return chatRoomService.createChatRoom(jobId, user);
+        return chatRoomService.createChatRoom(chatType, referenceId, user);
     }
 
     @PostMapping("/sendMessage")
@@ -43,7 +44,7 @@ public class ChatController {
     public ResponseEntity<List<ChatMessage>> getChatMessages(
             @PathVariable String roomId
     ) {
-        List<ChatMessage> messages = chatRoomService.getChatIncludeChatId(roomId);
+        List<ChatMessage> messages = chatRoomService.getChatMessagesByRoomId(roomId);
         return ResponseEntity.status(HttpStatus.OK).body(messages);
     }
 
@@ -61,5 +62,4 @@ public class ChatController {
         List<ChatRoomIdDto> chatRooms = chatRoomService.getChatRoomsForUser(currentUser);
         return ResponseEntity.status(HttpStatus.OK).body(chatRooms);
     }
-
 }
