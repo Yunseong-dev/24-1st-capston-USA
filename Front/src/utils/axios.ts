@@ -1,6 +1,6 @@
 import axios, { AxiosResponse } from "axios";
 
-const apiServer: string = 'http://localhost:8080';
+const apiServer: string = 'http://ec2-43-200-245-94.ap-northeast-2.compute.amazonaws.com:8080/';
 
 export const customAxios = axios.create({
     baseURL: apiServer
