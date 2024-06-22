@@ -1,5 +1,6 @@
 package com.capstone.usa.auth.service;
 
+import com.capstone.usa.auth.dto.ModifyUserDto;
 import com.capstone.usa.sms.service.VerificationService;
 import com.capstone.usa.auth.dto.CreateUserDto;
 import com.capstone.usa.auth.dto.LoginUserDto;
@@ -64,5 +65,17 @@ public class UserService {
         } catch (AuthenticationException e) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("올바르지 않은 비밀번호입니다");
         }
+    }
+
+    public ResponseEntity<?> modifyUser(ModifyUserDto dto, User user) {
+        if (!passwordEncoder.matches(dto.getCurrentPassword(), user.getPassword())) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("현재 비밀번호가 일치하지 않습니다");
+        }
+
+        user.setName(dto.getName());
+        user.setPassword(passwordEncoder.encode(dto.getPassword()));
+        userRepository.save(user);
+
+        return ResponseEntity.ok().build();
     }
 }

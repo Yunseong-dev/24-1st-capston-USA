@@ -67,7 +67,7 @@ public class ChatRoomService {
     }
 
     private ResponseEntity<?> handleChatRoomCreation(User postOwner, User user, String chatType, Long referenceId) {
-        Optional<ChatRoom> optionalChatRoom = chatRoomRepository.findByChatTypeAndReferenceIdAndUser1AndUser2(chatType, referenceId, postOwner, user);
+        Optional<ChatRoom> optionalChatRoom = chatRoomRepository.findByChatTypeAndReferenceIdAndUserAndPostOwner(chatType, referenceId, postOwner, user);
         if (optionalChatRoom.isEmpty()) {
             ChatRoom chatRoom = new ChatRoom(
                     null,
@@ -95,7 +95,7 @@ public class ChatRoomService {
 
     @Transactional(readOnly = true)
     public List<ChatRoomIdDto> getChatRoomsForUser(User user) {
-        List<ChatRoom> chatRooms = chatRoomRepository.findByUser1OrUser2(user, user);
+        List<ChatRoom> chatRooms = chatRoomRepository.findByUserOrPostOwner(user, user);
         return chatRooms.stream()
                 .map(chatRoom -> {
                     String title = getChatRoomTitle(chatRoom);

@@ -13,7 +13,7 @@ import java.util.List;
 
 @CrossOrigin
 @RestController
-@RequestMapping("/job")
+@RequestMapping("/jobs")
 @AllArgsConstructor
 public class JobController {
     private JobService jobService;
