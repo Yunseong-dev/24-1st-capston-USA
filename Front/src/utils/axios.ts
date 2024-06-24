@@ -1,6 +1,6 @@
 import axios, { AxiosResponse } from "axios";
 
-const apiServer: string = 'http://ec2-43-200-245-94.ap-northeast-2.compute.amazonaws.com:8080';
+const apiServer: string = 'http://ec2-52-79-253-128.ap-northeast-2.compute.amazonaws.com:8080';
 
 export const customAxios = axios.create({
     baseURL: apiServer
@@ -22,7 +22,7 @@ export const tokenFetcher = (token: string) => {
 export const fetcherWithToken = async (token: string, url: string): Promise<any> => {
     const response: AxiosResponse = await customAxios.get(url, { headers: { 'Authorization': `Bearer ${token}` } });
     return response;
-};
+}; 
 
 export const postWithToken = async (token: string, url: string, data: any): Promise<any> => {
     const response: AxiosResponse = await customAxios.post(url, data, {
