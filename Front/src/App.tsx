@@ -3,9 +3,9 @@ import NotFound from './pages/404';
 import Signup from './components/auth/Signup';
 import Signin from './components/auth/Signin';
 import Home from './pages/Home';
-import ArticleList from './components/article/ArticleList';
-import CreateArticle from './components/article/CreateArticle';
-import ArticleDetail from './components/article/ArticleDetail';
+import EquipmentList from './components/article/EquipmentList';
+import CreateEquipment from './components/article/CreateEquipment';
+import EquipmentDetail from './components/article/EquipmentDetail';
 import JobList from './components/job/JobList';
 import CreateJob from './components/job/CreateJob';
 import ChatRoom from './components/chat/ChatRoom';
@@ -20,9 +20,9 @@ const App = () => {
         <Route path="/Signup" element={<Signup />} />
         <Route path="/Signin" element={<Signin />} />
 
-        <Route path="/ArticleList" element={<ArticleList />} />
-        <Route path="/CreateArticle" element={<CreateArticle />} />
-        <Route path="/Article/:id" element={<ArticleDetail />} />
+        <Route path="/EquipmentList" element={<EquipmentList />} />
+        <Route path="/CreateEquipment" element={<CreateEquipment />} />
+        <Route path="/Equipment/:id" element={<EquipmentDetail />} />
 
         <Route path="/JobList" element={<JobList />} />
         <Route path="/CreateJob" element={<CreateJob />} />
