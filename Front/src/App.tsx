@@ -20,15 +20,15 @@ const App = () => {
         <Route path="/Signup" element={<Signup />} />
         <Route path="/Signin" element={<Signin />} />
 
-        <Route path="/EquipmentList" element={<EquipmentList />} />
+        <Route path="/Equipment" element={<EquipmentList />} />
         <Route path="/CreateEquipment" element={<CreateEquipment />} />
         <Route path="/Equipment/:id" element={<EquipmentDetail />} />
 
-        <Route path="/JobList" element={<JobList />} />
+        <Route path="/Job" element={<JobList />} />
         <Route path="/CreateJob" element={<CreateJob />} />
         <Route path="/Job/:id" element={<JobDetail />} />
 
-        <Route path="/chatList" element={<ChatList />} />
+        <Route path="/chat" element={<ChatList />} />
         <Route path="/Chat/:chatRoomId" element={<ChatRoom />} />
         
         <Route path="*" element={<NotFound />} />
