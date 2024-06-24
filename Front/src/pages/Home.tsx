@@ -1,15 +1,20 @@
+import Header from '../components/header';
+import styles from '../css/home.module.css';
 
-
-const main = () => {
+const home = () => {
    return (
       <div>
-         <a href="/signup">회원가입</a> <br/>
-         <a href="/signin">로그인</a> <br/>
-         <a href="/ArticleList">게시물</a> <br/>
-         <a href="/JobList">구인구직</a> <br />
-         <a href="/ChatList">채팅</a> <br />
+         <Header />
+         <main className={styles.main}>
+            <div className={styles.option_container}>
+               <a href="/job" className={styles.rectangle} id="opjob">구인공고</a>
+               <a href="/equipment" className={styles.rectangle} id="opequipment">장비임대</a>
+               <a href="/chat" className={styles.rectangle} id="opchat">채팅</a>
+               <a href="/my" className={styles.rectangle} id="opmy">내정보</a>
+            </div>
+         </main>
       </div>
-   )
+   );
 }
 
-export default main
+export default home;
