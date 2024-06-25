@@ -20,9 +20,11 @@ export const tokenFetcher = (token: string) => {
 };
 
 export const fetcherWithToken = async (token: string, url: string): Promise<any> => {
-    const response: AxiosResponse = await customAxios.get(url, { headers: { 'Authorization': `Bearer ${token}` } });
+    const response: AxiosResponse = await customAxios.get(url, 
+        { headers: { 'Authorization': `Bearer ${token}` } 
+    });
     return response;
-}; 
+};
 
 export const postWithToken = async (token: string, url: string, data: any): Promise<any> => {
     const response: AxiosResponse = await customAxios.post(url, data, {
@@ -30,3 +32,11 @@ export const postWithToken = async (token: string, url: string, data: any): Prom
     });
     return response;
 };
+
+export const putWithToken = async (token: string, url: string, data: any): Promise<any> => {
+    const response: AxiosResponse = await customAxios.put(url, data, {
+        headers: { 'Authorization': `Bearer ${token}` }
+    });
+    return response;
+};
+
