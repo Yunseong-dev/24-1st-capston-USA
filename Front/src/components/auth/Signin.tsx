@@ -53,7 +53,7 @@ const signin = () => {
    return (
       <div>
          <Header />
-         <main className={styles.main}>
+         <div className={styles.main}>
             <div className={styles.box_container}>
                <div className={styles.main_text}><p>로그인</p></div>
                <div className={styles.box}>
@@ -80,7 +80,7 @@ const signin = () => {
                   </form>
                </div>
             </div>
-         </main>
+         </div>
       </div>
    );
 };

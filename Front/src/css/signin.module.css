@@ -1,14 +1,4 @@
-body {
-   margin: 0;
-   padding-top: 50px;
-   display: flex;
-   justify-content: center;
-   align-items: center;
-   height: 100vh;
-   box-sizing: border-box;
-}
-
-main {
+.main {
    display: flex;
    justify-content: center;
    align-items: center;
@@ -20,7 +10,6 @@ main {
    display: flex;
    flex-direction: column;
    align-items: center;
-   margin-top: -100px;
 }
 
 .main_text {
@@ -43,22 +32,6 @@ main {
    justify-content: center
 }
 
-.number {
-   display: flex;
-   justify-content: center;
-}
-
-.number input {
-   width: 150%;
-   height: 80px;
-   padding: 30px;
-   margin-bottom: 10px;
-   font-size: 16px;
-   box-sizing: border-box;
-   border: 1.6px solid #000;
-   border-radius: 15px;
-}
-
 .password {
    display: flex;
    justify-content: center;
@@ -75,17 +48,34 @@ main {
    border-radius: 15px;
 }
 
+.number {
+   display: flex;
+   justify-content: center;
+}
+
+.number input {
+   width: 150%;
+   height: 80px;
+   padding: 30px;
+   margin-bottom: 10px;
+   font-size: 16px;
+   box-sizing: border-box;
+   border: 1.6px solid #000;
+   border-radius: 15px;
+}
+
 .login_button button {
    width: 450px;
-   height: 60px;
+   height: 50px;
    padding: 10px;
    background-color: #82cd47;
+   margin-bottom: 10px;
    font-size: 17px;
    border: 1.6px solid #000;
    border-radius: 15px;
    cursor: pointer;
 }
 
-.login_button button:hover{
-   background-color:#61b334;
+.login_button button:hover {
+   background-color: #61b334;
 }
