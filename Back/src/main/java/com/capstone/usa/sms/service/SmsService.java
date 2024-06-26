@@ -62,7 +62,15 @@ public class SmsService {
             ResponseEntity<String> response = restTemplate.postForEntity(smsUrl, requestEntity, String.class);
 
             System.out.println(response.getBody());
+
+            String responseBody = response.getBody();
+            if (responseBody.contains("\"result_code\":-101")) {
+                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("인증번호 전송 중 오류가 발생했습니다");
+            } else if (responseBody.contains("\"result_code\":1")) {
+                return ResponseEntity.status(HttpStatus.OK).body("인증번호가 전송되었습니다");
+            } else {
+                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("알 수 없는 오류가 발생했습니다.");
+            }
         }
-        return ResponseEntity.status(HttpStatus.OK).body("인증번호가 전송되었습니다");
     }
 }
