@@ -35,13 +35,3 @@ body{
 .rectangle:hover {
    background-color: #61b334;
 }
-
-#chat:hover,
-#main:hover,
-#job:hover,
-#my:hover,
-#equipment:hover,
-#login:hover,
-#signup:hover {
-   color: #82cd47;
-}
