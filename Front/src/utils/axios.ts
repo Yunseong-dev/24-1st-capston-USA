@@ -40,3 +40,9 @@ export const putWithToken = async (token: string, url: string, data: any): Promi
     return response;
 };
 
+export const deleteWithToken = async (token: string, url: string): Promise<any> => {
+    const response: AxiosResponse = await customAxios.delete(url, {
+        headers: { 'Authorization': `Bearer ${token}` }
+    });
+    return response;
+};
