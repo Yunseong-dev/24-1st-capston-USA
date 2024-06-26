@@ -50,7 +50,7 @@ const ArticleList = () => {
 
             <div className={styles.grid_container}>
                {filteredArticles.map((article) => (
-                  <a href={`/Equipment/${article.id}`} key={article.id}>
+                  <Link to={`/Equipment/${article.id}`} key={article.id}>
                      <div className={styles.grid_item}>
                         {article.imgUrl && (
                            <img src={article.imgUrl} alt="Article Image" className={styles.image} />
@@ -58,7 +58,7 @@ const ArticleList = () => {
                         <p>모델명: {article.title}</p>
                         <p>등록일: {dayjs(article.createdAt).format("YYYY년 MM월 DD일")}</p>
                      </div>
-                  </a>
+                  </Link>
                ))}
             </div>
          </div>
