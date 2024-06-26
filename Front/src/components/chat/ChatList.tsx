@@ -3,6 +3,9 @@ import { fetcherWithToken } from '../../utils/axios';
 import useToken from '../../hooks/useToken';
 import { Chat } from '../../interface/Chat';
 import { Link, useNavigate } from 'react-router-dom';
+import styles from '../../css/chatList.module.css';
+import profile from '../../assets/profile.png';
+import Header from '../header';
 
 const ChatList = () => {
    const [chatRooms, setChatRooms] = useState<Chat[]>([]);
@@ -35,18 +38,25 @@ const ChatList = () => {
 
    return (
       <div>
-         <h2>나의 채팅방 목록</h2>
-         {chatRooms.length > 0 ? (
-            <ul>
-               {chatRooms.map((room) => (
-                  <li key={room.roomId}>
-                     <Link to={`/chat/${room.roomId}`}>{room.jobTitle}</Link>
-                  </li>
-               ))}
-            </ul>
-         ) : (
-            <p>채팅방이 없습니다.</p>
-         )}
+         <Header />
+         <div className={styles.main}>
+            <div className={styles.chat_title}>나의 채팅방 목록</div>
+            {chatRooms.length > 0 ? (
+               <div className={styles.chat_container}>
+                  {chatRooms.map((room) => (
+                     <Link to={`/chat/${room.roomId}`}>
+                        <div className={styles.chat_box}>
+                           <img src={profile} alt="profile" />
+                           <h4>{room.userName}</h4>
+                           <p>{room.jobTitle}</p>
+                        </div>
+                     </Link>
+                  ))}
+               </div>
+            ) : (
+               <h3>채팅방이 없습니다.</h3>
+            )}
+         </div>
       </div>
    );
 };

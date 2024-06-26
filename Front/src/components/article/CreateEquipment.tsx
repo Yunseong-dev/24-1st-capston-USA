@@ -33,7 +33,7 @@ const CreateArticle = () => {
       };
    }
 
-   const createArticle = async (e: { preventDefault: () => void }) => {
+   const createArticle = async (e: any) => {
       e.preventDefault()
 
       if (!image) {
@@ -49,8 +49,8 @@ const CreateArticle = () => {
       try {
          await postWithToken(token, '/articles', formData);
 
-         navigate('/equipment')
          alert("게시물을 등록했습니다")
+         navigate('/equipment')
 
       } catch (error) {
          console.log(error)
