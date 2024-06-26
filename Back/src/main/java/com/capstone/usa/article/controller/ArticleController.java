@@ -66,4 +66,11 @@ public class ArticleController {
     ) {
         return articleService.rentArticle(id, roomId, user);
     }
+
+    @GetMapping("/rented")
+    public List<Article> getArticlesRentedByUser(
+            @AuthenticationPrincipal User user
+    ) {
+        return articleService.getArticlesByRenter(user);
+    }
 }

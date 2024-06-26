@@ -129,4 +129,8 @@ public class ArticleService {
 
         return ResponseEntity.ok().build();
     }
+
+    public List<Article> getArticlesByRenter(User user) {
+        return articleRepository.findByRentedBy(user);
+    }
 }
