@@ -5,6 +5,7 @@ import useToken from "../../hooks/useToken";
 import { Article } from "../../interface/article";
 import styles from "../../css/equipment.module.css";
 import Header from "../header";
+import { Link } from "react-router-dom";
 
 const EquipmentMe = () => {
    const [articles, setArticles] = useState<Article[]>([]);
@@ -38,7 +39,7 @@ const EquipmentMe = () => {
          <div className={styles.main}>
             <div className={`${styles.grid_container} ${styles.center}`}>
                {articles.map((article) => (
-                  <a href={`/equipment/${article.id}`} key={article.id}>
+                  <Link to={`/equipment/${article.id}`} key={article.id}>
                      <div className={styles.grid_item}>
                         {article.imgUrl && (
                            <img src={article.imgUrl} alt="Article Image" className={styles.image} />
@@ -46,7 +47,7 @@ const EquipmentMe = () => {
                         <p>모델명: {article.title}</p>
                         <p>등록일: {dayjs(article.createdAt).format("YYYY년 MM월 DD일")}</p>
                      </div>
-                  </a>
+                  </Link>
                ))}
             </div>
          </div>
