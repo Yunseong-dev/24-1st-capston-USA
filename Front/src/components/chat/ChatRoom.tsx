@@ -25,7 +25,7 @@ const ChatRoom: React.FC = () => {
     }, [token, navigate])
 
     useEffect(() => {
-        const ws = new WebSocket(`ws://localhost:8080/chat/${chatRoomId}`);
+        const ws = new WebSocket(`ws://ec2-43-203-248-226.ap-northeast-2.compute.amazonaws.com:8080/chat/${chatRoomId}`);
 
         ws.onopen = () => {
             console.log('WebSocket 연결 성공');
@@ -75,7 +75,7 @@ const ChatRoom: React.FC = () => {
         }
     };
 
-    const sendMessage = async (e: React.FormEvent<HTMLFormElement>) => {
+    const sendMessage = async (e: any) => {
         e.preventDefault();
         if (!webSocket) {
             console.error('WebSocket 연결이 없습니다');
