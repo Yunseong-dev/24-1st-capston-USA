@@ -15,7 +15,7 @@ const CreateArticle = () => {
 
    useEffect(() => {
       if (!token) {
-         navigate("/")
+         navigate("/signin")
          alert("먼저 로그인을 해주세요")
       }
    }, [token, navigate])
@@ -49,7 +49,7 @@ const CreateArticle = () => {
       try {
          await postWithToken(token, '/articles', formData);
 
-         navigate('/ArticleList')
+         navigate('/equipment')
          alert("게시물을 등록했습니다")
 
       } catch (error) {

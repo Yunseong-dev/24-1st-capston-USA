@@ -13,21 +13,21 @@ const CreateArticle = () => {
 
    useEffect(() => {
       if (!token) {
-         navigate("/")
+         navigate("/signin")
          alert("먼저 로그인을 해주세요")
       }
    }, [token, navigate])
 
-   const createArticle = async (e: { preventDefault: () => void; }) => {
+   const createArticle = async (e: any) => {
       e.preventDefault();
 
       const data = { title, content };
 
       try {
-         await postWithToken(token, '/job', data);
+         await postWithToken(token, '/jobs', data);
 
-         navigate('/JobList');
          alert("게시물이 성공적으로 등록되었습니다");
+         navigate('/job');
       } catch (error: any) {
          alert(error.response.data);
       }

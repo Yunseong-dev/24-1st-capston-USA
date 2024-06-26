@@ -42,14 +42,14 @@ const ArticleList = () => {
             </div>
 
             <div className={styles.write}>
-               <a href="/CreateEquipment">
+               <a href="/createEquipment">
                   <button className={styles.write_button}>글 작성하기</button>
                </a>
             </div>
 
             <div className={styles.grid_container}>
                {filteredArticles.map((article) => (
-                  <a href={`/Equipment/${article.id}`} key={article.id}>
+                  <a href={`/equipment/${article.id}`} key={article.id}>
                      <div className={styles.grid_item}>
                         {article.imgUrl && (
                            <img src={article.imgUrl} alt="Article Image" className={styles.image} />

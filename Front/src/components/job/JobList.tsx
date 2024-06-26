@@ -10,7 +10,7 @@ const JobPosts: React.FC = () => {
    useEffect(() => {
       const fetchJobPosts = async () => {
          try {
-            const response = await customAxios.get<Job[]>('/job');
+            const response = await customAxios.get<Job[]>('/jobs');
             setJobPosts(response.data);
          } catch (error) {
             alert("게시물을 가져올 수 없습니다")
@@ -21,7 +21,7 @@ const JobPosts: React.FC = () => {
 
    return (
       <div>
-         <a href="/CreateJob">게시물 생성</a>
+         <a href="/createJob">게시물 생성</a>
          <div>
             {jobPosts.map(job => (
                <div>
