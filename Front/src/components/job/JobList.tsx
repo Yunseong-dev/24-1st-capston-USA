@@ -52,7 +52,7 @@ const JobPosts: React.FC = () => {
                      <div className={styles.box_item}>
                         <p className={styles.title}>{job.title}</p>
                         <p>{job.content}</p>
-                        <p>{dayjs(job.createdAt).format("YYYY년 MM월 DD일")}</p>
+                        <p>등록일: {dayjs(job.createdAt).format("YYYY년 MM월 DD일")}</p>
                      </div>
                   </Link>
                ))}
