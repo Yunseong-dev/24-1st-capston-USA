@@ -1,10 +1,21 @@
 import { Link, useLocation } from 'react-router-dom';
 import styles from '../css/header.module.css';
 import logo from '../assets/logo.png';
+import useToken from '../hooks/useToken';
 
 const Header = () => {
    const location = useLocation();
+   const { token, removeToken } = useToken();
+   const isLoggedIn = !!token;
+
    const col = { color: '#82cd47' };
+
+   const handleLogout = () => {
+      const confirmDelete = window.confirm("로그아웃을 하시겠습니까?");
+      if (confirmDelete) {
+         removeToken();
+      }
+   };
 
    return (
       <header className={styles.header}>
@@ -40,36 +51,50 @@ const Header = () => {
                채팅
             </Link>
 
-            <Link
-               to="/me"
-               id={styles.my}
-               className={styles.text}
-               style={
-                  location.pathname === '/me' ||
-                  location.pathname === '/modifyMe' ||
-                  location.pathname === '/equipmentMe'
-                  ? col : {}}
-            >
-               내정보
-            </Link>
+            {isLoggedIn ? (
+               <>
+                  <Link
+                     to="/me"
+                     id={styles.my}
+                     className={styles.text}
+                     style={
+                        location.pathname === '/me' ||
+                        location.pathname === '/modifyMe' ||
+                        location.pathname === '/equipmentMe'
+                        ? col : {}}
+                  >
+                     내정보
+                  </Link>
+                  <span
+                     className={styles.text}
+                     id={styles.logout}
+                     onClick={handleLogout}
+                     style={{ cursor: 'pointer' }}
+                  >
+                     로그아웃
+                  </span>
+               </>
+            ) : (
+               <>
+                  <Link
+                     to="/signin"
+                     className={styles.text}
+                     id={styles.login}
+                     style={location.pathname === '/signin' ? col : {}}
+                  >
+                     로그인
+                  </Link>
 
-            <Link
-               to="/signin"
-               className={styles.text}
-               id={styles.login}
-               style={location.pathname === '/signin' ? col : {}}
-            >
-               로그인
-            </Link>
-
-            <Link
-               to="/signup"
-               className={styles.text}
-               id={styles.signup}
-               style={location.pathname === '/signup' ? col : {}}
-            >
-               회원가입
-            </Link>
+                  <Link
+                     to="/signup"
+                     className={styles.text}
+                     id={styles.signup}
+                     style={location.pathname === '/signup' ? col : {}}
+                  >
+                     회원가입
+                  </Link>
+               </>
+            )}
 
          </div>
       </header>
