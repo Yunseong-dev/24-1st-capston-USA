@@ -44,7 +44,7 @@ const EquipmentMe = () => {
                            <img src={article.imgUrl} alt="Article Image" className={styles.image} />
                         )}
                         <p>모델명: {article.title}</p>
-                        <p>등록일: {dayjs(article.rentAt).format("YYYY년 MM월 DD일")}</p>
+                        <p>등록일: {dayjs(article.createdAt).format("YYYY년 MM월 DD일")}</p>
                      </div>
                   </a>
                ))}
