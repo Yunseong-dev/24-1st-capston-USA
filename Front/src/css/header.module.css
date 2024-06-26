@@ -35,11 +35,6 @@
    color: inherit;
 }
 
-#job:hover,
-#equipment:hover,
-#chat:hover,
-#my:hover,
-#login:hover,
-#signup:hover {
+.text:hover {
    color: #82cd47;
 }
