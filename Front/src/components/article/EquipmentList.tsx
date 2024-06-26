@@ -4,7 +4,6 @@ import dayjs from "dayjs";
 import { Article } from "../../interface/article";
 import Header from "../header";
 import styles from "../../css/equipment.module.css";
-import search from "../../assets/search.png";
 import { Link } from "react-router-dom";
 
 const ArticleList = () => {
@@ -39,7 +38,6 @@ const ArticleList = () => {
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
                />
-               <img src={search} className={styles.search_img} alt="Search" />
             </div>
 
             <div className={styles.write}>
