@@ -66,11 +66,11 @@ const Signup = () => {
             return alert("올바른 전화번호 형식이 아닙니다");
          }
 
-         await customAxios.post('/api/sms', {
+         const response = await customAxios.post('/api/sms', {
             phoneNumber
          });
 
-         alert("인증번호가 전송되었습니다");
+         alert(response.data);
 
       } catch (error: any) {
          if (error.response && error.response.data) {
