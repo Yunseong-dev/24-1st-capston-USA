@@ -84,7 +84,7 @@ const Signup = () => {
          <Header />
          <div className={styles.main}>
             <div className={styles.box_container}>
-               <div className={styles.main_text}><p>회원가입</p></div>
+               <h1>회원가입</h1>
                <div className={styles.box}>
                   <form onSubmit={signup}>
                      <div className={styles.name}>

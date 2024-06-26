@@ -55,7 +55,7 @@ const signin = () => {
          <Header />
          <div className={styles.main}>
             <div className={styles.box_container}>
-               <div className={styles.main_text}><p>로그인</p></div>
+               <h1>로그인</h1>
                <div className={styles.box}>
                   <form onSubmit={signin}>
                      <div className={styles.number}>

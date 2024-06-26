@@ -39,7 +39,7 @@ const ModifyMe = () => {
          <Header />
          <div className={Styles.main}>
             <div className={Styles.box_container}>
-               <div className={Styles.main_text}><p>정보 변경</p></div>
+               <h1>정보 변경</h1>
                <div className={Styles.box}>
                   <form onSubmit={handleSubmit}>
                      <div className={Styles.name}>

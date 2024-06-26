@@ -12,14 +12,8 @@
     align-items: center;
 }
 
-.main_text {
-    font-weight: normal;
-    font-size: 36px;
-    margin-bottom: 5px;
-}
-
 .box {
-    width: 600px;
+    width: 800px;
     height: auto;
     border: 1.6px solid #000;
     border-radius: 20px;
@@ -36,9 +30,9 @@
 }
 
 .name input {
-    width: 100%;
-    height: 60px;
-    padding: 20px;
+    width: 150%;
+    height: 80px;
+    padding: 30px;
     margin-bottom: 10px;
     font-size: 16px;
     box-sizing: border-box;
@@ -52,9 +46,9 @@
 }
 
 .number input {
-    width: 100%;
-    height: 60px;
-    padding: 20px;
+    width: 150%;
+    height: 80px;
+    padding: 30px;
     margin-bottom: 10px;
     font-size: 16px;
     box-sizing: border-box;
@@ -68,9 +62,9 @@
 }
 
 .password input {
-    width: 100%;
-    height: 60px;
-    padding: 20px;
+    width: 150%;
+    height: 80px;
+    padding: 30px;
     margin-bottom: 10px;
     font-size: 16px;
     box-sizing: border-box;
@@ -86,9 +80,9 @@
 
 .certified input {
     flex: 1;
-    height: 60px;
-    width: 250px;
-    padding: 20px;
+    height: 80px;
+    width: 350px;
+    padding: 30px;
     margin-bottom: 10px;
     font-size: 16px;
     box-sizing: border-box;
@@ -98,12 +92,12 @@
 }
 
 .cerbutton button {
-    width: 80px;
-    height: 60px;
+    width: 95px;
+    height: 80px;
     padding: 10px;
     background-color: #82cd47;
     margin-bottom: 10px;
-    font-size: 14px;
+    font-size: 17px;
     box-sizing: border-box;
     border: 1.6px solid #000;
     border-radius: 15px;
@@ -111,11 +105,11 @@
 }
 
 .subbutton button {
-    width: 350px;
-    height: 50px;
+    width: 455px;
+    height: 60px;
     padding: 10px;
     background-color: #82cd47;
-    font-size: 16px;
+    font-size: 17px;
     border: 1.6px solid #000;
     border-radius: 15px;
     cursor: pointer;
