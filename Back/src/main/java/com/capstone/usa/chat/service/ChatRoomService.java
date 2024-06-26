@@ -66,8 +66,8 @@ public class ChatRoomService {
         return handleChatRoomCreation(article.getUser(), user, CHAT_TYPE_ARTICLE, referenceId);
     }
 
-    private ResponseEntity<?> handleChatRoomCreation(User postOwner, User user, String chatType, Long referenceId) {
-        Optional<ChatRoom> optionalChatRoom = chatRoomRepository.findByChatTypeAndReferenceIdAndUserAndPostOwner(chatType, referenceId, postOwner, user);
+    public ResponseEntity<?> handleChatRoomCreation(User postOwner, User user, String chatType, Long referenceId) {
+        Optional<ChatRoom> optionalChatRoom = chatRoomRepository.findByChatTypeAndReferenceIdAndPostOwnerAndUser(chatType, referenceId, postOwner, user);
         if (optionalChatRoom.isEmpty()) {
             ChatRoom chatRoom = new ChatRoom(
                     null,
@@ -78,9 +78,9 @@ public class ChatRoomService {
                     UUID.randomUUID().toString(),
                     LocalDateTime.now());
             chatRoomRepository.save(chatRoom);
-            return ResponseEntity.status(HttpStatus.OK).body(new ChatRoomIdDto(chatRoom.getRoomId(), ""));
+            return ResponseEntity.status(HttpStatus.OK).body(new ChatRoomIdDto(chatRoom.getRoomId(), "", ""));
         }
-        return ResponseEntity.status(HttpStatus.OK).body(new ChatRoomIdDto(optionalChatRoom.get().getRoomId(), ""));
+        return ResponseEntity.status(HttpStatus.OK).body(new ChatRoomIdDto(optionalChatRoom.get().getRoomId(), "", ""));
     }
 
     @Transactional(readOnly = true)
@@ -95,16 +95,23 @@ public class ChatRoomService {
 
     @Transactional(readOnly = true)
     public List<ChatRoomIdDto> getChatRoomsForUser(User user) {
-        List<ChatRoom> chatRooms = chatRoomRepository.findByUserOrPostOwner(user, user);
+        List<ChatRoom> chatRooms = chatRoomRepository.findByPostOwnerOrUser(user, user);
         return chatRooms.stream()
+
                 .map(chatRoom -> {
                     String title = getChatRoomTitle(chatRoom);
-                    return new ChatRoomIdDto(chatRoom.getRoomId(), title);
+                    String userName;
+                    if (chatRoom.getPostOwner().getId().equals(user.getId())) {
+                        userName = chatRoom.getUser().getUsername();
+                    } else {
+                        userName = chatRoom.getPostOwner().getUsername();
+                    }
+                    return new ChatRoomIdDto(chatRoom.getRoomId(), title, userName);
                 })
                 .collect(Collectors.toList());
     }
 
-    private String getChatRoomTitle(ChatRoom chatRoom) {
+    public String getChatRoomTitle(ChatRoom chatRoom) {
         if (CHAT_TYPE_JOB.equals(chatRoom.getChatType())) {
             Job job = jobService.getJob(chatRoom.getReferenceId()).getBody();
             return job != null ? job.getTitle() : "알 수 없는 채팅 제목";

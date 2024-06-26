@@ -12,4 +12,5 @@ import lombok.Setter;
 public class ChatRoomIdDto {
     private String roomId;
     private String jobTitle;
+    private String userName;
 }
