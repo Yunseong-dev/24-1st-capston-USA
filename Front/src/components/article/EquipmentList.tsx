@@ -1,45 +1,56 @@
 import { useEffect, useState } from "react";
-import { fetcherWithToken } from "../../utils/axios";
+import { customAxios } from "../../utils/axios";
 import dayjs from "dayjs";
-import useToken from "../../hooks/useToken";
 import { Article } from "../../interface/article";
-import styles from "../../css/equipment.module.css";
 import Header from "../header";
+import styles from "../../css/equipment.module.css";
+import search from "../../assets/search.png";
 import { Link } from "react-router-dom";
 
-const EquipmentMe = () => {
+const ArticleList = () => {
    const [articles, setArticles] = useState<Article[]>([]);
-
-   const { token } = useToken();
+   const [searchTerm, setSearchTerm] = useState("");
 
    useEffect(() => {
       const fetchArticles = async () => {
          try {
-            const response = await fetcherWithToken(token, `/articles`);
+            const response = await customAxios.get<Article[]>("/articles");
             setArticles(response.data);
          } catch (error) {
             console.error(error);
          }
       };
       fetchArticles();
-   }, [token]);
+   }, []);
 
-   if (articles.length === 0) {
-      return (
-         <div>
-            <Header />
-            <h3>올라온 게시물이 없습니다</h3>
-         </div>
-      );
-   }
+   const filteredArticles = articles.filter((article) =>
+      article.title.toLowerCase().includes(searchTerm.toLowerCase())
+   );
 
    return (
       <div>
          <Header />
          <div className={styles.main}>
-            <div className={`${styles.grid_container} ${styles.center}`}>
-               {articles.map((article) => (
-                  <Link to={`/equipment/${article.id}`} key={article.id}>
+            <div className={styles.search_container}>
+               <input
+                  type="text"
+                  className={styles.search_input}
+                  placeholder="검색어를 입력해 주세요."
+                  value={searchTerm}
+                  onChange={(e) => setSearchTerm(e.target.value)}
+               />
+               <img src={search} className={styles.search_img} alt="Search" />
+            </div>
+
+            <div className={styles.write}>
+               <Link to="/CreateEquipment">
+                  <button className={styles.write_button}>글 작성하기</button>
+               </Link>
+            </div>
+
+            <div className={styles.grid_container}>
+               {filteredArticles.map((article) => (
+                  <a href={`/Equipment/${article.id}`} key={article.id}>
                      <div className={styles.grid_item}>
                         {article.imgUrl && (
                            <img src={article.imgUrl} alt="Article Image" className={styles.image} />
@@ -47,7 +58,7 @@ const EquipmentMe = () => {
                         <p>모델명: {article.title}</p>
                         <p>등록일: {dayjs(article.createdAt).format("YYYY년 MM월 DD일")}</p>
                      </div>
-                  </Link>
+                  </a>
                ))}
             </div>
          </div>
@@ -55,4 +66,4 @@ const EquipmentMe = () => {
    );
 };
 
-export default EquipmentMe;
+export default ArticleList;
