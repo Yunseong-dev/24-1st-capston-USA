@@ -1,6 +1,6 @@
 import axios, { AxiosResponse } from "axios";
 
-const apiServer: string = 'http://ec2-43-203-248-226.ap-northeast-2.compute.amazonaws.com:8080';
+const apiServer: string = 'https://bright-etti-yunseong-15726c73.koyeb.app';
 
 export const customAxios = axios.create({
     baseURL: apiServer
