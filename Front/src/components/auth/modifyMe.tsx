@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { putWithToken } from "../../utils/axios";
+import { useEffect, useState } from "react";
+import { fetcherWithToken, putWithToken } from "../../utils/axios";
 import { useNavigate } from 'react-router-dom';
 import useToken from "../../hooks/useToken";
 import Header from "../header";
@@ -12,6 +12,18 @@ const ModifyMe = () => {
 
    const { token } = useToken();
    const navigate = useNavigate();
+
+   useEffect(() => {
+      const checkToken = async () => {
+         if (!token) {
+            alert("먼저 로그인을 해주세요")
+            navigate("/signin")
+         }
+         const response = await fetcherWithToken(token, 'api/user')
+         setName(response.data.name)  
+      };
+      checkToken();
+   }, [token, navigate]);
 
    const handleSubmit = async (e: any) => {
       e.preventDefault();
