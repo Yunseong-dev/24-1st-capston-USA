@@ -105,9 +105,9 @@ public class ArticleService {
         return ResponseEntity.ok().build();
     }
 
-    public ResponseEntity<?> rentArticle(Long id,String roomId, User user) {
-        Optional<Article> oArticle = articleRepository.findById(id);
+    public ResponseEntity<?> rentArticle(String roomId, User user) {
         ChatRoom chatRoom = chatRoomRepository.findByRoomId(roomId).get();
+        Optional<Article> oArticle = articleRepository.findById(chatRoom.getReferenceId());
 
         if (oArticle.isEmpty()) {
             return ResponseEntity.notFound().build();
