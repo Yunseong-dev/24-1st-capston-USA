@@ -1,0 +1,89 @@
+.main{
+   font-family: Arial, sans-serif;
+   display: flex;
+   flex-direction: column;
+   align-items: center;
+}
+
+.profile-section-container {
+   display: flex;
+   justify-content: center;
+   width: 100%;
+   padding: 20px 0;
+}
+
+.profile-section {
+   display: flex;
+   align-items: center;
+   padding: 20px;
+   margin: 20px;
+   border-radius: 10px;
+   border-bottom: 1px rgba(0, 0, 0, 0.1);
+   position: relative;
+   width: 600px;
+   box-sizing: border-box;
+}
+
+.profile-section img {
+   border-radius: 50%;
+   margin-right: 40px;
+}
+
+.profile-section span {
+   margin-right: 50px;
+   flex-grow: 1;
+}
+
+.profile-section button {
+   background-color: #82cd47;
+   border: none;
+   padding: 15px 20px;
+   border-radius: 10px;
+   cursor: pointer;
+   margin-left: 50px;
+}
+
+.profile-section::after {
+   content: "";
+   display: block;
+   width: 100%;
+   height: 1.4px;
+   background-color: rgba(0, 0, 0, 0.1);
+   position: absolute;
+   bottom: 0;
+   left: 0;
+}
+
+.message-input {
+   display: flex;
+   align-items: center;
+   padding: 10px;
+   position: fixed;
+   bottom: 0;
+   width: 600px;
+}
+
+.message-input input {
+   width: 500px;
+   padding: 20px;
+   border: 1px solid #ccc;
+   background-color: #ccc;
+   border-radius: 30px;
+}
+
+.message-input button {
+   background-color: #82cd47;
+   border: none;
+   padding: 20px 23px;
+   border-radius: 50%;
+   cursor: pointer;
+   margin-left: 30px;
+}
+
+.profile-section button:hover {
+   background-color: #61b334;
+}
+
+.message-input button:hover {
+   background-color: #61b334;
+}
