@@ -4,7 +4,7 @@ import { postWithToken, fetcherWithToken } from '../../utils/axios';
 import useToken from '../../hooks/useToken';
 import { ChatMessage } from '../../interface/chatMessage';
 import dayjs from 'dayjs';
-import styles from "../../css/ChatRoom.module.css"
+import styles from "../../css/chatRoom.module.css"
 import profile from "../../assets/profile.png"
 
 const ChatRoom: React.FC = () => {
@@ -116,7 +116,10 @@ const ChatRoom: React.FC = () => {
     };
 
     const rent = () => {
+
     }
+
+
     return (
         <div className={styles.main}>
             <div className={styles.profile_section}>
