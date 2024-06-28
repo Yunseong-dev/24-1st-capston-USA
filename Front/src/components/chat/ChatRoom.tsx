@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams, useNavigate, useLocation } from 'react-router-dom';
 import { postWithToken, fetcherWithToken } from '../../utils/axios';
 import useToken from '../../hooks/useToken';
 import { ChatMessage } from '../../interface/chatMessage';
@@ -15,19 +15,22 @@ const ChatRoom: React.FC = () => {
     const [webSocket, setWebSocket] = useState<WebSocket | null>(null);
     const messagesEndRef = useRef<HTMLDivElement>(null);
 
+    const location = useLocation();
+    const { userName } = location.state || {};
+
     const { token } = useToken();
 
     const navigate = useNavigate();
 
     useEffect(() => {
         if (!token) {
-            navigate("/signin")
             alert("먼저 로그인을 해주세요")
+            navigate("/signin")
         }
     }, [token, navigate])
 
     useEffect(() => {
-        const ws = new WebSocket(`ws://married-betti-yunseong-1041f081.koyeb.app/chat/${chatRoomId}`);
+        const ws = new WebSocket(`ws://ec2-43-203-248-226.ap-northeast-2.compute.amazonaws.com:8080/chat/${chatRoomId}`);
 
         ws.onopen = () => {
             console.log('WebSocket 연결 성공');
@@ -115,37 +118,38 @@ const ChatRoom: React.FC = () => {
         messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
     };
 
-    const rent = () => {
+    const rent = async () => {
+        await postWithToken(token, `/${chatRoomId}/rent`, {})
 
+        const confirmDelete = window.confirm("정말로 대여해주시겠습니까?");
+        if (confirmDelete) {
+            alert("대여가 완료되었습니다")
+        }
     }
 
 
     return (
         <div className={styles.main}>
-            <div className={styles.profile_section}>
-                <img src={profile} width="50" />
-                <span>장희철</span>
-                <button onClick={rent}>대여해주기</button>
+            <div className="container">
+                <div className={styles.profile_section}>
+                    <img src={profile} width="50" />
+                    <span>{userName}</span>
+                    <button onClick={rent}>대여해주기</button>
+                </div>
+                <div className={styles.messages_container}>
+                    {messages.map((message, index) => (
+                        <div
+                            key={index}
+                            className={`${styles.message} ${message.sender === user ? styles.sent : styles.received}`}
+                        >
+                            <strong>{message.sender}: </strong> {message.message}
+                            <br />
+                            <small>{dayjs(message.sendAt).format('DD일 hh시 mm분 ss초')}</small>
+                        </div>
+                    ))}
+                    <div ref={messagesEndRef}></div>
+                </div>
             </div>
-
-            <div className={styles.messages}>
-                {messages.map((message, index) => (
-                    <div
-                        key={index}
-                        className={styles.message}
-                        style={{
-                            alignSelf: message.sender === user ? 'flex-end' : 'flex-start',
-                            backgroundColor: message.sender === user ? '#e6f2ff' : '#f0f0f0',
-                        }}
-                    >
-                        <strong>{message.sender}: </strong> {message.message}
-                        <br />
-                        <small>{dayjs(message.sendAt).format('DD일 hh시 mm분 ss초')}</small>
-                    </div>
-                ))}
-                <div ref={messagesEndRef}></div>
-            </div>
-
             <div className={styles.message_input}>
                 <form onSubmit={sendMessage}>
                     <input

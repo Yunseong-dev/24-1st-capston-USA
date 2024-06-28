@@ -44,7 +44,7 @@ const ChatList = () => {
             {chatRooms.length > 0 ? (
                <div className={styles.chat_container}>
                   {chatRooms.map((room) => (
-                     <Link to={`/chat/${room.roomId}`}>
+                     <Link to={`/chat/${room.roomId}`} state={{ userName: room.userName }}>
                         <div className={styles.chat_box}>
                            <img src={profile} alt="profile" />
                            <h4>{room.userName}</h4>
