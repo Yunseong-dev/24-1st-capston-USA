@@ -65,9 +65,9 @@ const ArticleDetail = () => {
                      </div>
                      <p>{article.user.name}</p>
                   </div>
-                  <p id="title">{article.title}</p>
-                  <p id="date">{dayjs(article.createdAt).format("YYYY년 MM월 DD일")}</p>
-                  <p id="content">{article.content}</p>
+                  <p id={styles.title}>{article.title}</p>
+                  <p id={styles.date}>{dayjs(article.createdAt).format("YYYY년 MM월 DD일")}</p>
+                  <p id={styles.content}>{article.content}</p>
                   <div className={styles.buttons}>
                      <button onClick={handleChat} className={styles.chat_btn}>채팅하기</button>
                   </div>
