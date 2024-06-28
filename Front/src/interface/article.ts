@@ -1,3 +1,7 @@
+export interface User{
+   name: string;
+}
+
 export interface Article {
    id: number;
    title: string;
@@ -6,4 +10,5 @@ export interface Article {
    createdAt: string;
    updatedAt: string;
    rentAt: string;
+   user: User;
 }

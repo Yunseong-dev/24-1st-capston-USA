@@ -4,6 +4,9 @@ import { customAxios, postWithToken } from "../../utils/axios";
 import dayjs from "dayjs";
 import useToken from "../../hooks/useToken";
 import { Article } from "../../interface/article";
+import styles from "../../css/EqDetail.module.css"
+import Header from "../header";
+import profile from "../../assets/profile.png"
 
 const ArticleDetail = () => {
    const { id } = useParams<{ id: string }>();
@@ -43,17 +46,34 @@ const ArticleDetail = () => {
 
    return (
       <div>
-         <h2>{article.title}</h2>
-         <p>{article.content}</p>
-         <p>{dayjs(article.createdAt).format("YYYY년 MM월 DD일")}</p>
-         {article.imgUrl && (
-            <img
-               src={article.imgUrl}
-               alt="Article Image"
-               style={{ maxWidth: "100px" }}
-            />
-         )}
-         <button onClick={handleChat}>채팅하기</button>
+         <Header />
+         <div className={styles.main}>
+            <div className={styles.main_container}>
+               <div className={styles.image_slider}>
+                  {article.imgUrl && (
+                     <img
+                        src={article.imgUrl}
+                        alt="Article Image"
+                        className={styles.main_img}
+                     />
+                  )}
+               </div>
+               <div className={styles.details}>
+                  <div className={styles.user_info}>
+                     <div className={styles.user_icon}>
+                        <img src={profile} />
+                     </div>
+                     <p>{article.user.name}</p>
+                  </div>
+                  <p id="title">{article.title}</p>
+                  <p id="date">{dayjs(article.createdAt).format("YYYY년 MM월 DD일")}</p>
+                  <p id="content">{article.content}</p>
+                  <div className={styles.buttons}>
+                     <button onClick={handleChat} className={styles.chat_btn}>채팅하기</button>
+                  </div>
+               </div>
+            </div>
+         </div>
       </div>
    );
 };
