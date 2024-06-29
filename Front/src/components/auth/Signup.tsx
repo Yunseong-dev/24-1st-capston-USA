@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { customAxios } from "../../utils/axios";
 import { useNavigate } from 'react-router-dom';
 import styles from '../../css/signup.module.css';
@@ -9,6 +9,7 @@ const Signup = () => {
    const [phoneNumber, setPhoneNumber] = useState("");
    const [verNumber, setVerNumber] = useState("");
    const [password, setPassword] = useState("");
+   const [cooldownEndTime, setCooldownEndTime] = useState<Date | null>(null);
 
    const navigate = useNavigate();
 
@@ -57,6 +58,15 @@ const Signup = () => {
    const verificationCode = async (e: any) => {
       e.preventDefault();
 
+      if (cooldownEndTime) {
+         const currentTime = new Date();
+         const remainingTime = Math.round((cooldownEndTime.getTime() - currentTime.getTime()) / 1000);
+
+         if (remainingTime > 0) {
+            return alert(`인증번호 요청이 너무 빠릅니다. ${remainingTime}초 후에 다시 시도해주세요.`);
+         }
+      }
+
       try {
          if (!phoneNumber) {
             return alert("전화번호를 작성해주세요");
@@ -71,6 +81,7 @@ const Signup = () => {
          });
 
          alert(response.data);
+         setCooldownEndTime(new Date(new Date().getTime() + 60000)); // Set cooldown for 1 minute
 
       } catch (error: any) {
          if (error.response && error.response.data) {
