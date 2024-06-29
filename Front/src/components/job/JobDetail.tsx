@@ -28,16 +28,23 @@ const JobDetail = () => {
    }, [id]);
 
 
-   const handleChat = async () => {
+   const handleChat = async (userName: string) => {
       try {
          const response = await postWithToken(token, `/chat/create/job/${id}`, {});
 
+         if(!token) {
+            alert('로그인을 먼저 해주세요')
+            navigate("/signin")
+         }
+
          const roomId = response.data.roomId;
-         navigate(`/chat/${roomId}`);
+         navigate(`/chat/${roomId}`, { state: { userName: userName } });
       } catch (error: any) {
-         alert(error.response.data)
+         if (error.response && error.response.data) {
+            alert(error.response.data)
+         }
       }
-   };
+   };   
 
    const deleteJob = async () => {
       try {
@@ -70,7 +77,7 @@ const JobDetail = () => {
                <p id="content">{job.content}</p>
                <p id="date">등록일: {dayjs(job.createdAt).format("YYYY년 MM월 DD일")}</p>
                <div className={styles.button}>
-                  <button className={styles.btn} onClick={handleChat}>채팅하기</button>
+               <button onClick={() => handleChat(job.user.name)} className={styles.btn}>채팅하기</button>
                   <button className={styles.btn} onClick={deleteJob}>모집완료</button>
                </div>
             </div>
