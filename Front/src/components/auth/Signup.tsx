@@ -81,7 +81,7 @@ const Signup = () => {
          });
 
          alert(response.data);
-         setCooldownEndTime(new Date(new Date().getTime() + 60000)); // Set cooldown for 1 minute
+         setCooldownEndTime(new Date(new Date().getTime() + 60000));
 
       } catch (error: any) {
          if (error.response && error.response.data) {
