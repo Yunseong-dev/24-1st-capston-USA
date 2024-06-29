@@ -41,7 +41,7 @@ const JobPosts: React.FC = () => {
             </div>
 
             <div className={styles.write}>
-               <Link to="/CreateJob">
+               <Link to="/createJob">
                   <button className={styles.write_button}>글 작성하기</button>
                </Link>
             </div>

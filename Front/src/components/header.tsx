@@ -14,6 +14,8 @@ const Header = () => {
       const confirmDelete = window.confirm("로그아웃을 하시겠습니까?");
       if (confirmDelete) {
          removeToken();
+         alert('로그아웃이 완료되었습니다');
+         window.location.href = '/';
       }
    };
 
@@ -23,12 +25,13 @@ const Header = () => {
             <Link to="/"><img src={logo} alt="logo" /></Link>
          </div>
          <div className={styles.container}>
-            
+
             <Link
                to="/job"
                className={styles.text}
                id={styles.job}
-               style={location.pathname === '/job' ? col : {}}
+               style={location.pathname === '/job' ||
+                  location.pathname === '/createJob' ? col : {}}
             >
                구인공고
             </Link>
@@ -37,7 +40,8 @@ const Header = () => {
                to="/equipment"
                className={styles.text}
                id={styles.equipment}
-               style={location.pathname === '/equipment' ? col : {}}
+               style={location.pathname === '/equipment' ||
+                  location.pathname === '/createEquipment' ? col : {}}
             >
                장비임대
             </Link>
@@ -59,9 +63,9 @@ const Header = () => {
                      className={styles.text}
                      style={
                         location.pathname === '/me' ||
-                        location.pathname === '/modifyMe' ||
-                        location.pathname === '/equipmentMe'
-                        ? col : {}}
+                           location.pathname === '/modifyMe' ||
+                           location.pathname === '/equipmentMe'
+                           ? col : {}}
                   >
                      내정보
                   </Link>

@@ -25,7 +25,11 @@ const EquipmentMe = () => {
     }, [token]);
 
     if (articles.length === 0) {
-        return <h3>빌린 장비가 없습니다</h3>;
+        return <div>
+                <Header />
+                <h3>빌린 장비가 없습니다</h3>
+                </div>
+                ;
     }
 
     return (

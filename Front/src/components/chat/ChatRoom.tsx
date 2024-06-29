@@ -6,6 +6,7 @@ import { ChatMessage } from '../../interface/chatMessage';
 import dayjs from 'dayjs';
 import styles from "../../css/chatRoom.module.css"
 import profile from "../../assets/profile.png"
+import Header from '../header';
 
 const ChatRoom: React.FC = () => {
     const { chatRoomId } = useParams<{ chatRoomId: string }>();
@@ -129,37 +130,40 @@ const ChatRoom: React.FC = () => {
 
 
     return (
-        <div className={styles.main}>
-            <div className="container">
+        <div>
+            <Header />
+            <div className={styles.main}>
                 <div className={styles.profile_section}>
                     <img src={profile} width="50" />
                     <span>{userName}</span>
                     <button onClick={rent}>대여해주기</button>
                 </div>
-                <div className={styles.messages_container}>
-                    {messages.map((message, index) => (
-                        <div
-                            key={index}
-                            className={`${styles.message} ${message.sender === user ? styles.sent : styles.received}`}
-                        >
-                            <strong>{message.sender}: </strong> {message.message}
-                            <br />
-                            <small>{dayjs(message.sendAt).format('DD일 hh시 mm분 ss초')}</small>
-                        </div>
-                    ))}
-                    <div ref={messagesEndRef}></div>
+                <div className={styles.container}>
+                    <div className={styles.messages_container}>
+                        {messages.map((message, index) => (
+                            <div
+                                key={index}
+                                className={`${styles.message} ${message.sender === user ? styles.sent : styles.received}`}
+                            >
+                                <strong>{message.sender}: </strong> {message.message}
+                                <br />
+                                <small>{dayjs(message.sendAt).format('DD일 hh시 mm분 ss초')}</small>
+                            </div>
+                        ))}
+                        <div ref={messagesEndRef}></div>
+                    </div>
                 </div>
-            </div>
-            <div className={styles.message_input}>
-                <form onSubmit={sendMessage}>
-                    <input
-                        type="text"
-                        placeholder="메시지를 입력해주세요."
-                        value={newMessage}
-                        onChange={handleInputChange}
-                    />
-                    <button type="submit">⬆</button>
-                </form>
+                <div className={styles.message_input}>
+                    <form onSubmit={sendMessage}>
+                        <input
+                            type="text"
+                            placeholder="메시지를 입력해주세요."
+                            value={newMessage}
+                            onChange={handleInputChange}
+                        />
+                        <button type="submit">⬆</button>
+                    </form>
+                </div>
             </div>
         </div>
     );
