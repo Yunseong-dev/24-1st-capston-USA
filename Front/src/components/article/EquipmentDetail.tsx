@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { customAxios, postWithToken } from "../../utils/axios";
+import { customAxios, postWithToken, deleteWithToken } from "../../utils/axios";
 import dayjs from "dayjs";
 import useToken from "../../hooks/useToken";
 import { Article } from "../../interface/article";
@@ -45,6 +45,21 @@ const ArticleDetail = () => {
       }
    };
 
+   const deleteArticle = async () => {
+      try {
+         const confirmDelete = window.confirm("게시물을 삭제 하시겠습니까?");
+         if (confirmDelete) {
+            await deleteWithToken(token, `/articles/${id}`);
+            alert('삭제가 완료되었습니다');
+            navigate("/equipment");
+         }
+      } catch (error: any) {
+         if (error.response && error.response.data) {
+            alert(error.response.data)
+         }
+      }
+   }
+
    if (!article) {
       return <div>Loading...</div>;
    }
@@ -75,6 +90,7 @@ const ArticleDetail = () => {
                   <p id={styles.content}>{article.content}</p>
                   <div className={styles.buttons}>
                      <button onClick={() => handleChat(article.user.name)} className={styles.chat_btn}>채팅하기</button>
+                     <button onClick={deleteArticle} className={styles.chat_btn}>삭제하기</button>
                   </div>
                </div>
             </div>
