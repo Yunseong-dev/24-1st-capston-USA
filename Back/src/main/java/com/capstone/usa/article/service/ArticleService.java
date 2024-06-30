@@ -71,7 +71,7 @@ public class ArticleService {
 
         Article article = oArticle.get();
         if (!article.getUser().getId().equals(user.getId())) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("내 글만 수정할 수 있습니다");
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("내 글만 수정, 삭제 할 수 있습니다");
         }
 
         return ResponseEntity.ok(article);
